@@ -3,14 +3,14 @@ package com.alex.musicart.model.entity;
 public class User extends CustomEntity {
 
     public enum UserRole {
-        CLIENT(1), ADMIN(2);
-        private long roleId;
+        CLIENT((short) 1), ADMIN((short) 2);
+        private short roleId;
 
-        UserRole(long id){
+        UserRole(short id){
             roleId = id;
         }
 
-        public long getRoleId(){
+        public short getRoleId(){
             return roleId;
         }
     }

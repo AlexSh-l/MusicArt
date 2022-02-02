@@ -11,9 +11,9 @@ public interface UserService {
 
     List<User> findAllClients() throws ServiceException;
 
-    Optional<User> findClientByLoginAndPassword() throws ServiceException;
+    Optional<User> findClientByLoginAndPassword(String login, String password) throws ServiceException;
 
-    Optional<User> isClientPresent() throws ServiceException;
+    boolean isClientPresent(String login) throws ServiceException;
 
     boolean updateName(long id, String newName, String password) throws ServiceException;
 
@@ -25,5 +25,5 @@ public interface UserService {
 
     boolean updatePhone(long id, String newPhone, String password) throws ServiceException;
 
-    boolean registerUser(Map<String, String> formValues) throws ServiceException;
+    boolean registerUser(User user) throws ServiceException;
 }

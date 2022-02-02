@@ -10,9 +10,9 @@ public interface UserDao extends RootDAO<User> {
 
     List<User> findAllClients() throws DaoException;
 
-    Optional<User> findClientByLoginAndPassword() throws DaoException;
+    Optional<User> findClientByLoginAndPassword(String login, String password) throws DaoException;
 
-    Optional<User> findClientByLogin() throws DaoException;
+    boolean findClientByLogin(String login) throws DaoException;
 
     boolean updateName(long id, String newName, String password) throws DaoException;
 

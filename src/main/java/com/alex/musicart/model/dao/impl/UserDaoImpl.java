@@ -20,54 +20,54 @@ import java.util.Optional;
 public class UserDaoImpl implements UserDao {
 
     private static final String SQL_SELECT_ALL_CLIENTS =
-            "SELECT us_id, us_name, us_login, us_password, us_email, us_phone, us_role_id"+
-            "FROM users"+
-            "JOIN roles ON roles.ro_id = users.us_role_id"+
-            "WHERE ro_name = 'client'";
+            "SELECT us_id, us_name, us_login, us_password, us_email, us_phone, us_role_id " +
+                    "FROM users " +
+                    "JOIN roles ON roles.ro_id = users.us_role_id " +
+                    "WHERE ro_name = 'client'";
     private static final String SQL_SELECT_CLIENT_BY_LOGIN_AND_PASSWORD =
-            "SELECT us_id, us_name, us_login, us_password, us_email, us_phone, us_role_id"+
-            "FROM users"+
-            "JOIN roles ON roles.ro_id = users.us_role_id"+
-            "WHERE ro_name = 'client'"+
-                  "AND us_login = (?)"+
-                  "AND us_password = (?)";
+            "SELECT us_id, us_name, us_login, us_password, us_email, us_phone, us_role_id " +
+                    "FROM users " +
+                    "JOIN roles ON roles.ro_id = users.us_role_id " +
+                    "WHERE ro_name = 'client' " +
+                    "AND us_login = (?) " +
+                    "AND us_password = (?)";
     private static final String SQL_SELECT_CLIENT_BY_LOGIN =
-            "SELECT us_id, us_name, us_login, us_password, us_email, us_phone, us_role_id"+
-            "FROM users"+
-            "JOIN roles ON roles.ro_id = users.us_role_id"+
-            "WHERE ro_name = 'client'"+
-                  "AND us_login = (?)";
+            "SELECT us_id, us_name, us_login, us_password, us_email, us_phone, us_role_id " +
+                    "FROM users " +
+                    "JOIN roles ON roles.ro_id = users.us_role_id " +
+                    "WHERE ro_name = 'client' " +
+                    "AND us_login = (?)";
 
     private static final String SQL_UPDATE_USER_NAME =
-            "UPDATE users"+
-            "SET us_name = (?)"+
-            "WHERE us_id = (?)"+
-                  "AND us_password = (?)";
+            "UPDATE users " +
+                    "SET us_name = (?) " +
+                    "WHERE us_id = (?) " +
+                    "AND us_password = (?)";
     private static final String SQL_UPDATE_USER_LOGIN =
-            "UPDATE users"+
-            "SET us_login = (?)"+
-            "WHERE us_id = (?)"+
-                  "AND us_password = (?)";
+            "UPDATE users " +
+                    "SET us_login = (?) " +
+                    "WHERE us_id = (?) " +
+                    "AND us_password = (?) ";
     private static final String SQL_UPDATE_USER_PASSWORD =
-            "UPDATE users"+
-            "SET us_password = (?)"+
-            "WHERE us_id = (?)"+
-                  "AND us_password = (?)";
+            "UPDATE users " +
+                    "SET us_password = (?) " +
+                    "WHERE us_id = (?) " +
+                    "AND us_password = (?)";
     private static final String SQL_UPDATE_USER_EMAIL =
-            "UPDATE users"+
-            "SET us_email = (?)"+
-            "WHERE us_id = (?)"+
-                  "AND us_password = (?)";
+            "UPDATE users " +
+                    "SET us_email = (?) " +
+                    "WHERE us_id = (?) " +
+                    "AND us_password = (?)";
     private static final String SQL_UPDATE_USER_PHONE =
-            "UPDATE users"+
-            "SET us_phone = (?)"+
-            "WHERE us_id = (?)"+
-                  "AND us_password = (?)";
+            "UPDATE users " +
+                    "SET us_phone = (?) " +
+                    "WHERE us_id = (?) " +
+                    "AND us_password = (?)";
 
     private static final String SQL_INSERT_USER =
-            "INSERT INTO users"+
-                    "(us_name, us_login, us_password, us_email, us_phone, us_role_id)"+
-            "VALUES ((?), (?), (?), (?), (?), (?))";
+            "INSERT INTO users " +
+                    "(us_name, us_login, us_password, us_email, us_phone, us_role_id) " +
+                    "VALUES ((?), (?), (?), (?), (?), (?))";
 
     private static final Logger logger = LogManager.getLogger();
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -88,23 +88,27 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findClientByLoginAndPassword() throws DaoException {
+    public Optional<User> findClientByLoginAndPassword(String login, String password) throws DaoException {
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CLIENT_BY_LOGIN_AND_PASSWORD)) {
+            statement.setString(1, login);
+            statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             return mapper.map(resultSet);
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Unable to find all clients.");
-            throw new DaoException("Unable to find all clients.", e);
+            logger.log(Level.ERROR, "Unable to find client.");
+            throw new DaoException("Unable to find client.", e);
         }
     }
 
     @Override
-    public Optional<User> findClientByLogin() throws DaoException {
+    public boolean findClientByLogin(String login) throws DaoException {
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CLIENT_BY_LOGIN)) {
+            statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
-            return mapper.map(resultSet);
+            Optional<User> optionalUser = mapper.map(resultSet);
+            return optionalUser.isPresent();
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Unable to find client with set login.");
             throw new DaoException("Unable to find client with set login.", e);

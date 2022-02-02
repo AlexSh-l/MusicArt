@@ -2,6 +2,8 @@ package com.alex.musicart.controller.command;
 
 import com.alex.musicart.controller.command.impl.general.NonExistentCommand;
 import com.alex.musicart.controller.command.impl.general.ToMainCommand;
+import com.alex.musicart.controller.command.impl.guest.RegisterCommand;
+import com.alex.musicart.controller.command.impl.guest.SignInCommand;
 import com.alex.musicart.controller.command.impl.guest.ToSignInCommand;
 import com.alex.musicart.model.entity.User;
 
@@ -23,8 +25,9 @@ public enum CommandType {
     /* guest commands */
     /*GO_TO_REGISTRATION(new GoToRegistrationCommand(), EnumSet.of(GUEST)),
     REGISTRATION(new RegistrationCommand(), EnumSet.of(GUEST)),*/
-    SIGN_IN(new ToSignInCommand(), EnumSet.of(CLIENT));
-
+    TO_SIGN_IN(new ToSignInCommand(), EnumSet.of(CLIENT)),
+    SIGN_IN(new SignInCommand(), EnumSet.of(CLIENT)),
+    REGISTER(new RegisterCommand(), EnumSet.of(CLIENT));
 
     /* customer commands */
     /*SHOW_BASKET(new ShowBasketCommand(), EnumSet.of(CUSTOMER)),

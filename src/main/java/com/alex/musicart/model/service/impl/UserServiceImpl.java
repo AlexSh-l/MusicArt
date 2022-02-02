@@ -41,9 +41,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findClientByLoginAndPassword() throws ServiceException {
+    public Optional<User> findClientByLoginAndPassword(String login, String password) throws ServiceException {
         try {
-            return userDao.findClientByLoginAndPassword();
+            return userDao.findClientByLoginAndPassword(login, password);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Unable to find user with set login and password.");
             throw new ServiceException("Unable to find user with set login and password.", e);
@@ -51,9 +51,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> isClientPresent() throws ServiceException {
+    public boolean isClientPresent(String login) throws ServiceException {
         try {
-            return userDao.findClientByLogin();
+            return userDao.findClientByLogin(login);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Unable to find user with set login.");
             throw new ServiceException("Unable to find user with set login.", e);
@@ -111,7 +111,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean registerUser(Map<String, String> formValues) throws ServiceException {
-        return false;
+    public boolean registerUser(User user) throws ServiceException {
+        try {
+            String name = user.getName();
+            String login = user.getLogin();
+            String password = user.getPassword();
+            String email = user.getEmail();
+            String phone = user.getPhone();
+            User.UserRole userRole = user.getRole();
+            short roleId = userRole.getRoleId();
+            return userDao.createUser(name, login, password, email, phone, roleId);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Unable to register user.");
+            throw new ServiceException("Unable to register user.", e);
+        }
     }
 }
