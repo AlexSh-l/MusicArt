@@ -7,6 +7,7 @@ import com.alex.musicart.exception.CommandException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +32,6 @@ public class Controller extends HttpServlet {
 
     private void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandName = request.getParameter(ParameterName.COMMAND);
-        logger.log(Level.INFO, commandName);
         Command command = CommandFactory.getCommand(commandName);
         Router router;
         try {

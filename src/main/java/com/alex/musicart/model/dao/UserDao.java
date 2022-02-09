@@ -6,7 +6,7 @@ import com.alex.musicart.model.entity.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDao extends RootDAO<User> {
+public interface UserDao extends RootDao<User> {
 
     List<User> findAllClients() throws DaoException;
 

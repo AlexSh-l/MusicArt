@@ -11,6 +11,6 @@
     <title>Index</title>
 </head>
 <body>
-<jsp:forward page="/jsp/main.jsp"/>
+<jsp:forward page="/controller?command=to_main"/>
 </body>
 </html>

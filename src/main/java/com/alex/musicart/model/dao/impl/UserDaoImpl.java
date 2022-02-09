@@ -19,17 +19,20 @@ import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
 
+    private static final Logger logger = LogManager.getLogger();
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private final EntityMapper<User> mapper = new UserMapper();
+
     private static final String SQL_SELECT_ALL_CLIENTS =
             "SELECT us_id, us_name, us_login, us_password, us_email, us_phone, us_role_id " +
                     "FROM users " +
                     "JOIN roles ON roles.ro_id = users.us_role_id " +
                     "WHERE ro_name = 'client'";
-    private static final String SQL_SELECT_CLIENT_BY_LOGIN_AND_PASSWORD =
+    private static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
             "SELECT us_id, us_name, us_login, us_password, us_email, us_phone, us_role_id " +
                     "FROM users " +
                     "JOIN roles ON roles.ro_id = users.us_role_id " +
-                    "WHERE ro_name = 'client' " +
-                    "AND us_login = (?) " +
+                    "WHERE us_login = (?) " +
                     "AND us_password = (?)";
     private static final String SQL_SELECT_CLIENT_BY_LOGIN =
             "SELECT us_id, us_name, us_login, us_password, us_email, us_phone, us_role_id " +
@@ -69,10 +72,6 @@ public class UserDaoImpl implements UserDao {
                     "(us_name, us_login, us_password, us_email, us_phone, us_role_id) " +
                     "VALUES ((?), (?), (?), (?), (?), (?))";
 
-    private static final Logger logger = LogManager.getLogger();
-    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
-    private final EntityMapper<User> mapper = new UserMapper();
-
     @Override
     public List<User> findAllClients() throws DaoException {
         Connection connection = connectionPool.getConnection();
@@ -90,7 +89,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> findClientByLoginAndPassword(String login, String password) throws DaoException {
         Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CLIENT_BY_LOGIN_AND_PASSWORD)) {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD)) {
             statement.setString(1, login);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();

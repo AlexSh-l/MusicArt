@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public interface RootDAO<T extends CustomEntity> {
+public interface RootDao<T extends CustomEntity> {
 
     Logger logger = LogManager.getLogger();
 

@@ -14,52 +14,39 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static com.alex.musicart.controller.command.PagePath.*;
 import static com.alex.musicart.controller.command.ParameterName.*;
 import static com.alex.musicart.controller.command.SessionAttributeName.*;
+import static com.alex.musicart.controller.command.SessionAttributeName.SIGN_IN_RESULT;
 
-public class SignInCommand implements Command {
+public class ItemSearchCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
-
-    private final UserServiceImpl userService = UserServiceImpl.getInstance();
     private final ItemServiceImpl itemService = ItemServiceImpl.getInstance();
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         HttpSession session = request.getSession();
-        String login = request.getParameter(LOGIN);
-        String password = request.getParameter(PASSWORD);
+        String itemName = request.getParameter(ITEM_NAME);
         try {
-            Optional<User> optionalUser = userService.findClientByLoginAndPassword(login, password);
-            if (optionalUser.isPresent()) {
-                User user = optionalUser.get();
-                session.setAttribute(USER, user);
-                session.setAttribute(SIGN_IN_RESULT, true);
-                if (user.getRole() == User.UserRole.ADMIN) {
-
-                    List<Item> items = itemService.findAllItems();
-                    session.setAttribute(ITEMS, items);
-
-                    router.setPagePath(ITEM_MANAGEMENT_PAGE);
-                } else {
-                    router.setPagePath(MAIN_PAGE);
-                }
-            } else {
-                session.setAttribute(SIGN_IN_RESULT, false);
-                router.setPagePath(REGISTRATION_PAGE);
+            Optional<Item> optionalItem = itemService.findItemByName(itemName);
+            if (optionalItem.isPresent()) {
+                Item item = optionalItem.get();
+                List<Item> items = new ArrayList<>();
+                items.add(item);
+                session.setAttribute(ITEMS, items);
             }
-            //router.setPagePath(REGISTRATION_PAGE);
-            router.setRoute(Router.RouteType.REDIRECT);
+            router.setPagePath(MAIN_PAGE);
+            router.setRoute(Router.RouteType.FORWARD);
             return router;
         } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Could not authenticate client.");
-            throw new CommandException("Could not authenticate client.", e);
+            logger.log(Level.ERROR, "Could not find any items with this name.");
+            throw new CommandException("Could not find any items with this name.", e);
         }
     }
 }

@@ -16,6 +16,7 @@ public class UserMapper implements EntityMapper {
 
     @Override
     public Optional<User> map(ResultSet resultSet) throws SQLException {
+        //resultSet.last()
         if(resultSet.next()) {
             User user = new User();
             user.setUserId(resultSet.getLong(USERS_ID));

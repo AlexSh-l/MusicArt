@@ -9,7 +9,8 @@ public final class PagePath {
     public static final String MAIN_PAGE = "/jsp/main.jsp";
     public static final String SIGN_IN_PAGE = "/jsp/sign_in.jsp";
     public static final String REGISTRATION_PAGE = "/jsp/registration.jsp";
-    public static final String ABOUT_US_PAGE = "/jsp/about_us.jsp";
+    public static final String ITEM_MANAGEMENT_PAGE = "/jsp/item_management.jsp";
+    public static final String order_MANAGEMENT_PAGE = "/jsp/order_management.jsp";
 
 
     private PagePath(){

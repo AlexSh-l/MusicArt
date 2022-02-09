@@ -6,13 +6,15 @@ public final class ParameterName {
     public static final String SIGN_IN = "sign_in";
     public static final String TO_SIGN_IN = "to_sign_in";
     public static final String REGISTER = "register";
+    public static final String TO_REGISTRATION = "to_registration";
     public static final String NAME = "name";
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
     public static final String CONFIRM_PASSWORD = "confirm_password";
     public static final String EMAIL = "email";
     public static final String PHONE = "phone";
-
+    public static final String ITEM_SEARCH = "item_search";
+    public static final String ITEM_NAME = "item_name";
 
     public static final String INVALID_FIRST_NAME_RESULT = "invalidName";
 
