@@ -1,6 +1,7 @@
 package com.alex.musicart.model.dao.impl;
 
 import com.alex.musicart.exception.DaoException;
+import com.alex.musicart.model.dao.SubcategoryDao;
 import com.alex.musicart.model.entity.Item;
 import com.alex.musicart.model.entity.Subcategory;
 import com.alex.musicart.model.entity.User;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class SubcategoryDaoImpl {
+public class SubcategoryDaoImpl implements SubcategoryDao {
     private static final Logger logger = LogManager.getLogger();
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private final EntityMapper<Subcategory> mapper = new SubcategoryMapper();
@@ -45,8 +46,8 @@ public class SubcategoryDaoImpl {
                     "WHERE su_id = (?)";
 
     public List<Subcategory> findAllSubcategories() throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_SUBCATEGORIES)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_SUBCATEGORIES)) {
             ResultSet resultSet = statement.executeQuery();
             List<Subcategory> subcategories;
             subcategories = mapper.mapList(resultSet);
@@ -58,8 +59,8 @@ public class SubcategoryDaoImpl {
     }
 
     public Optional<Subcategory> findSubcategoryByName(String subcategory) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_SUBCATEGORY_BY_NAME)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_SUBCATEGORY_BY_NAME)) {
             statement.setString(1, subcategory);
             ResultSet resultSet = statement.executeQuery();
             return mapper.map(resultSet);
@@ -70,8 +71,8 @@ public class SubcategoryDaoImpl {
     }
 
     public Optional<Subcategory> findSubcategoryById(int subcategoryId) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_SUBCATEGORY_BY_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_SUBCATEGORY_BY_ID)) {
             statement.setInt(1, subcategoryId);
             ResultSet resultSet = statement.executeQuery();
             return mapper.map(resultSet);
@@ -82,8 +83,8 @@ public class SubcategoryDaoImpl {
     }
 
     public List<Subcategory> findSubcategoriesOfCategory(int categoryId) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_SUBCATEGORIES_BY_CATEGORY_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_SUBCATEGORIES_BY_CATEGORY_ID)) {
             List<Subcategory> subcategories;
             statement.setInt(1, categoryId);
             ResultSet resultSet = statement.executeQuery();
@@ -96,8 +97,8 @@ public class SubcategoryDaoImpl {
     }
 
     public boolean updateSubcategoryName(long id, String name) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_SUBCATEGORY_NAME)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_SUBCATEGORY_NAME)) {
             statement.setString(1, name);
             statement.setLong(2, id);
             boolean isUpdated = statement.executeUpdate() == 1;

@@ -1,6 +1,7 @@
 package com.alex.musicart.model.dao.impl;
 
 import com.alex.musicart.exception.DaoException;
+import com.alex.musicart.model.dao.CategoryDao;
 import com.alex.musicart.model.entity.Category;
 import com.alex.musicart.model.entity.Subcategory;
 import com.alex.musicart.model.mapper.EntityMapper;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CategoryDaoImpl {
+public class CategoryDaoImpl implements CategoryDao {
     private static final Logger logger = LogManager.getLogger();
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private final EntityMapper<Category> mapper = new CategoryMapper();
@@ -43,8 +44,8 @@ public class CategoryDaoImpl {
                     "WHERE ca_id = (?)";
 
     public List<Category> findAllCategories() throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_CATEGORIES)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_CATEGORIES)) {
             ResultSet resultSet = statement.executeQuery();
             List<Category> categories;
             categories = mapper.mapList(resultSet);
@@ -56,8 +57,8 @@ public class CategoryDaoImpl {
     }
 
     public Optional<Category> findCategoryByName(String category) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CATEGORY_BY_NAME)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CATEGORY_BY_NAME)) {
             statement.setString(1, category);
             ResultSet resultSet = statement.executeQuery();
             return mapper.map(resultSet);
@@ -68,8 +69,8 @@ public class CategoryDaoImpl {
     }
 
     public Optional<Category> findCategoryById(int categoryId) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CATEGORY_BY_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CATEGORY_BY_ID)) {
             statement.setInt(1, categoryId);
             ResultSet resultSet = statement.executeQuery();
             return mapper.map(resultSet);
@@ -80,8 +81,8 @@ public class CategoryDaoImpl {
     }
 
     public boolean updateCategoryName(long id, String name) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_CATEGORY_NAME)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_CATEGORY_NAME)) {
             statement.setString(1, name);
             statement.setLong(2, id);
             boolean isUpdated = statement.executeUpdate() == 1;

@@ -77,6 +77,32 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
+    public Optional<Item> findItemById(long id) throws ServiceException {
+        try {
+            Optional<Item> optionalItem = itemDao.findItemById(id);
+            if (optionalItem.isPresent()) {
+                Item item = optionalItem.get();
+                int itemSubcategoryId = item.getSubcategoryId();
+                Optional<Subcategory> optionalSubcategory = subCategoryDao.findSubcategoryById(itemSubcategoryId);
+                if(optionalSubcategory.isPresent()) {
+                    Subcategory subcategory = optionalSubcategory.get();
+                    item.setSubcategory(subcategory.getName());
+                    Optional<Category> optionalCategory = categoryDao.findCategoryById(subcategory.getCategoryId());
+                    if(optionalCategory.isPresent()) {
+                        Category category = optionalCategory.get();
+                        item.setCategory(category.getName());
+                        //return Optional.of(item);
+                    }
+                }
+                return Optional.of(item);
+            }
+            return optionalItem;
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Unable to find item with set id.");
+            throw new ServiceException("Unable to find item with set id.", e);
+        }
+    }
+
     /*@Override
     public boolean updateName(long id, String newName, String password) throws ServiceException {
         try {

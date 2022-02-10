@@ -4,6 +4,7 @@ import com.alex.musicart.controller.Router;
 import com.alex.musicart.controller.command.Command;
 import com.alex.musicart.exception.CommandException;
 import com.alex.musicart.exception.ServiceException;
+import com.alex.musicart.model.entity.Cart;
 import com.alex.musicart.model.entity.Item;
 import com.alex.musicart.model.entity.User;
 import com.alex.musicart.model.service.impl.ItemServiceImpl;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import static com.alex.musicart.controller.command.PagePath.*;
 import static com.alex.musicart.controller.command.ParameterName.*;
 import static com.alex.musicart.controller.command.SessionAttributeName.*;
+import static com.alex.musicart.controller.command.SessionAttributeName.CART;
 
 public class SignInCommand implements Command {
 
@@ -48,6 +50,8 @@ public class SignInCommand implements Command {
 
                     router.setPagePath(ITEM_MANAGEMENT_PAGE);
                 } else {
+                    Cart cart = new Cart();
+                    session.setAttribute(CART, cart);
                     router.setPagePath(MAIN_PAGE);
                 }
             } else {

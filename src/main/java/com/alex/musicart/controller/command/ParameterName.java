@@ -15,6 +15,10 @@ public final class ParameterName {
     public static final String PHONE = "phone";
     public static final String ITEM_SEARCH = "item_search";
     public static final String ITEM_NAME = "item_name";
+    public static final String ITEM_ID = "item_id";
+    public static final String CART = "cart";
+    public static final String ADD_TO_CART = "add_to_cart";
+    public static final String REMOVE_FROM_CART = "remove_from_cart";
 
     public static final String INVALID_FIRST_NAME_RESULT = "invalidName";
 

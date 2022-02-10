@@ -11,6 +11,7 @@ public final class PagePath {
     public static final String REGISTRATION_PAGE = "/jsp/registration.jsp";
     public static final String ITEM_MANAGEMENT_PAGE = "/jsp/item_management.jsp";
     public static final String order_MANAGEMENT_PAGE = "/jsp/order_management.jsp";
+    public static final String CART_PAGE = "/jsp/cart.jsp";
 
 
     private PagePath(){

@@ -1,6 +1,7 @@
 package com.alex.musicart.model.dao.impl;
 
 import com.alex.musicart.exception.DaoException;
+import com.alex.musicart.model.dao.BrandDao;
 import com.alex.musicart.model.entity.Brand;
 import com.alex.musicart.model.mapper.EntityMapper;
 import com.alex.musicart.model.mapper.impl.BrandMapper;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class BrandDaoImpl {
+public class BrandDaoImpl implements BrandDao {
 
     private static final Logger logger = LogManager.getLogger();
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -36,8 +37,8 @@ public class BrandDaoImpl {
                     "WHERE br_id = (?)";
 
     public List<Brand> findAllBrands() throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_BRANDS)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_BRANDS)) {
             ResultSet resultSet = statement.executeQuery();
             List<Brand> brands;
             brands = mapper.mapList(resultSet);
@@ -49,8 +50,8 @@ public class BrandDaoImpl {
     }
 
     public Optional<Brand> findBrandByName(String name) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BRAND)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BRAND)) {
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             return mapper.map(resultSet);
@@ -61,8 +62,8 @@ public class BrandDaoImpl {
     }
 
     public boolean updateBrandName(long id, String name) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_BRAND_NAME)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_BRAND_NAME)) {
             statement.setString(1, name);
             statement.setLong(2, id);
             boolean isUpdated = statement.executeUpdate() == 1;

@@ -1,6 +1,7 @@
 package com.alex.musicart.model.dao.impl;
 
 import com.alex.musicart.exception.DaoException;
+import com.alex.musicart.model.dao.ItemDao;
 import com.alex.musicart.model.entity.Brand;
 import com.alex.musicart.model.entity.Item;
 import com.alex.musicart.model.entity.User;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class ItemDaoImpl {
+public class ItemDaoImpl implements ItemDao {
     private static final Logger logger = LogManager.getLogger();
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private final EntityMapper<Item> mapper = new ItemMapper();
@@ -37,6 +38,13 @@ public class ItemDaoImpl {
                     "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
                     "JOIN brands ON brands.br_id = (SELECT m2m_brand_id FROM items_m2m_brands WHERE it_id = m2m_item_id) " +
                     "WHERE it_name = (?)";
+    private static final String SQL_SELECT_ITEM_BY_ID =
+            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock, br_name " +
+                    "FROM items " +
+                    "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
+                    "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
+                    "JOIN brands ON brands.br_id = (SELECT m2m_brand_id FROM items_m2m_brands WHERE it_id = m2m_item_id) " +
+                    "WHERE it_id = (?)";
     private static final String SQL_SELECT_ITEM_BY_CATEGORY =
             "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock, br_name " +
                     "FROM items " +
@@ -52,8 +60,6 @@ public class ItemDaoImpl {
                     "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
                     "JOIN brands ON brands.br_id = (SELECT m2m_brand_id FROM items_m2m_brands WHERE it_id = m2m_item_id)" +
                     "WHERE it_is_in_stock = b'1'";
-
-
 
 
     private static final String SQL_UPDATE_ITEM_NAME =
@@ -74,10 +80,9 @@ public class ItemDaoImpl {
                     "WHERE it_id = (?)";
 
 
-
     public List<Item> findAllItems() throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_ITEMS)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_ITEMS)) {
             ResultSet resultSet = statement.executeQuery();
             List<Item> items;
             items = mapper.mapList(resultSet);
@@ -89,8 +94,8 @@ public class ItemDaoImpl {
     }
 
     public Optional<Item> findItemByName(String name) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_NAME)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_NAME)) {
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             return mapper.map(resultSet);
@@ -100,9 +105,21 @@ public class ItemDaoImpl {
         }
     }
 
+    public Optional<Item> findItemById(long id) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_ID)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            return mapper.map(resultSet);
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to find item with that id.");
+            throw new DaoException("Unable to find item with that id.", e);
+        }
+    }
+
     public Optional<Item> findItemByCategory(String category) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_CATEGORY)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_CATEGORY)) {
             statement.setString(1, category);
             ResultSet resultSet = statement.executeQuery();
             return mapper.map(resultSet);
@@ -113,8 +130,8 @@ public class ItemDaoImpl {
     }
 
     public List<Item> findAllItemsInStock() throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_ITEMS_IN_STOCK)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_ITEMS_IN_STOCK)) {
             ResultSet resultSet = statement.executeQuery();
             List<Item> items;
             items = mapper.mapList(resultSet);
@@ -126,8 +143,8 @@ public class ItemDaoImpl {
     }
 
     public boolean updateItemStock(long id, boolean isInStock) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_STOCK)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_STOCK)) {
             if (isInStock) {
                 statement.setString(1, "1");
             } else {
@@ -148,8 +165,8 @@ public class ItemDaoImpl {
     }
 
     public boolean updateItemName(long id, String name) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_NAME)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_NAME)) {
             statement.setString(1, name);
             statement.setLong(2, id);
             boolean isUpdated = statement.executeUpdate() == 1;
@@ -166,8 +183,8 @@ public class ItemDaoImpl {
     }
 
     public boolean updateItemDescription(long id, String description) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_DESCRIPTION)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_DESCRIPTION)) {
             statement.setString(1, description);
             statement.setLong(2, id);
             boolean isUpdated = statement.executeUpdate() == 1;
@@ -184,8 +201,8 @@ public class ItemDaoImpl {
     }
 
     public boolean updateItemPrice(long id, BigDecimal price) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_PRICE)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_PRICE)) {
             statement.setBigDecimal(1, price);
             statement.setLong(2, id);
             boolean isUpdated = statement.executeUpdate() == 1;

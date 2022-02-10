@@ -56,7 +56,7 @@ public class ConnectionPool {
             throw new RuntimeException();
         } else if (freeConnections.size() < POOL_SIZE) {
             int connectionSize = freeConnections.size();
-            while (connectionSize != POOL_SIZE) { //Question
+            while (connectionSize != POOL_SIZE) {
                 try {
                     ProxyConnection connection = new ProxyConnection(ConnectionFactory.getConnection());
                     freeConnections.offer(connection);

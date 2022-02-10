@@ -74,8 +74,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAllClients() throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_CLIENTS)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_CLIENTS)) {
             ResultSet resultSet = statement.executeQuery();
             List<User> clients;
             clients = mapper.mapList(resultSet);
@@ -88,8 +88,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findClientByLoginAndPassword(String login, String password) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD)) {
             statement.setString(1, login);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
@@ -102,8 +102,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean findClientByLogin(String login) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CLIENT_BY_LOGIN)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CLIENT_BY_LOGIN)) {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             Optional<User> optionalUser = mapper.map(resultSet);
@@ -116,8 +116,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean updateName(long id, String newName, String password) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_NAME)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_NAME)) {
             statement.setString(1, newName);
             statement.setLong(2, id);
             statement.setString(3, password);
@@ -136,8 +136,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean updatePassword(long id, String oldPassword, String newPassword) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_PASSWORD)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_PASSWORD)) {
             statement.setString(1, newPassword);
             statement.setLong(2, id);
             statement.setString(3, oldPassword);
@@ -156,8 +156,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean updateLogin(long id, String newLogin, String password) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_LOGIN)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_LOGIN)) {
             statement.setString(1, newLogin);
             statement.setLong(2, id);
             statement.setString(3, password);
@@ -176,8 +176,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean updateEmail(long id, String newEmail, String password) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_EMAIL)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_EMAIL)) {
             statement.setString(1, newEmail);
             statement.setLong(2, id);
             statement.setString(3, password);
@@ -196,8 +196,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean updatePhone(long id, String newPhone, String password) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_PHONE)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_PHONE)) {
             statement.setString(1, newPhone);
             statement.setLong(2, id);
             statement.setString(3, password);
@@ -216,8 +216,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean createUser(String name, String login, String password, String email, String phone, short roleId) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER)) {
             statement.setString(1, name);
             statement.setString(2, login);
             statement.setString(3, password);

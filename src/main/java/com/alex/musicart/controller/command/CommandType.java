@@ -1,5 +1,8 @@
 package com.alex.musicart.controller.command;
 
+import com.alex.musicart.controller.command.impl.client.AddItemToCart;
+import com.alex.musicart.controller.command.impl.client.RemoveItemFromCart;
+import com.alex.musicart.controller.command.impl.client.ToCart;
 import com.alex.musicart.controller.command.impl.general.NonExistentCommand;
 import com.alex.musicart.controller.command.impl.general.ToMainCommand;
 import com.alex.musicart.controller.command.impl.guest.*;
@@ -20,7 +23,10 @@ public enum CommandType {
     SIGN_IN(new SignInCommand(), EnumSet.of(CLIENT)),
     REGISTER(new RegisterCommand(), EnumSet.of(CLIENT)),
     TO_REGISTRATION(new ToRegistrationCommand(), EnumSet.of(CLIENT)),
-    ITEM_SEARCH(new ItemSearchCommand(), EnumSet.of(CLIENT));
+    ITEM_SEARCH(new ItemSearchCommand(), EnumSet.of(CLIENT)),
+    ADD_TO_CART(new AddItemToCart(), EnumSet.of(CLIENT)),
+    TO_CART(new ToCart(), EnumSet.of(CLIENT)),
+    REMOVE_FROM_CART(new RemoveItemFromCart(), EnumSet.of(CLIENT));
     /* customer commands */
 
 

@@ -79,4 +79,34 @@ public class Item extends CustomEntity {
     public void setInStock(boolean inStock) {
         this.inStock = inStock;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Item item = (Item) o;
+
+        if (itemId != item.itemId) return false;
+        if (subcategoryId != item.subcategoryId) return false;
+        if (inStock != item.inStock) return false;
+        if (!name.equals(item.name)) return false;
+        if (category != null ? !category.equals(item.category) : item.category != null) return false;
+        if (subcategory != null ? !subcategory.equals(item.subcategory) : item.subcategory != null) return false;
+        if (description != null ? !description.equals(item.description) : item.description != null) return false;
+        return price != null ? price.equals(item.price) : item.price == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (itemId ^ (itemId >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (subcategory != null ? subcategory.hashCode() : 0);
+        result = 31 * result + subcategoryId;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (inStock ? 1 : 0);
+        return result;
+    }
 }
