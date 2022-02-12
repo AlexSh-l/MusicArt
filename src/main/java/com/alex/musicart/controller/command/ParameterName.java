@@ -15,10 +15,18 @@ public final class ParameterName {
     public static final String PHONE = "phone";
     public static final String ITEM_SEARCH = "item_search";
     public static final String ITEM_NAME = "item_name";
+    public static final String ITEM_DESCRIPTION = "item_description";
+    public static final String ITEM_CATEGORY = "item_category";
+    public static final String ITEM_SUBCATEGORY = "item_subcategory";
+    public static final String ITEM_PRICE = "item_price";
+    public static final String ITEM_IN_STOCK = "item_in_stock";
     public static final String ITEM_ID = "item_id";
+    public static final String ADD_ITEM = "add_item";
     public static final String CART = "cart";
     public static final String ADD_TO_CART = "add_to_cart";
     public static final String REMOVE_FROM_CART = "remove_from_cart";
+    public static final String ADDRESS = "address";
+    public static final String PAYMENT_TYPE = "payment_type";
 
     public static final String INVALID_FIRST_NAME_RESULT = "invalidName";
 

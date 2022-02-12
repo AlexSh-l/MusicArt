@@ -40,9 +40,18 @@
         </div>
         <c:choose>
             <c:when test="${sign_in_result eq true}">
-                <div class="nav-link">
-                    <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_cart">${cart.cartSize} items in your cart</a>
-                </div>
+                <c:if test="${user.role eq 'CLIENT'}">
+                    <div class="nav-link">
+                        <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_cart">${cart.cartSize} items
+                            in your cart</a>
+                    </div>
+                </c:if>
+                <c:if test="${user.role eq 'ADMIN'}">
+                    <form class="nav-link" action="${abs}/controller" method="get">
+                        <input type="hidden" name="command" value="to_add_item">
+                        <button class="btn btn-primary" type="submit">Add new item</button>
+                    </form>
+                </c:if>
                 <form class="nav-link" action="${abs}/controller" method="get">
                     <input type="hidden" name="command" value="sign_out">
                     <button class="btn btn-primary" type="submit">Sign Out</button>
@@ -61,6 +70,7 @@
         </c:choose>
     </div>
 </nav>
+
 <c:forEach var="item" items="${items}">
     <div class="container">
         <div class="row">
@@ -83,13 +93,21 @@
                 <c:if test="${item.inStock eq true}">In stock</c:if>
                 <c:if test="${item.inStock eq false}">Sold out</c:if>
             </div>
-            <c:if test="${sign_in_result eq true}">
+            <c:if test="${sign_in_result eq true and item.inStock eq true and user.role eq 'CLIENT'}">
                 <div class="col">
                     <form class="nav-link" action="${abs}/controller" method="get">
                         <input type="hidden" name="command" value="add_to_cart">
-
                         <input type="hidden" name="item_id" value="${item.itemId}">
                         <button class="btn btn-primary" type="submit">Add to cart</button>
+                    </form>
+                </div>
+            </c:if>
+            <c:if test="${sign_in_result eq true and user.role eq 'ADMIN'}">
+                <div class="col">
+                    <form class="nav-link" action="${abs}/controller" method="get">
+                        <input type="hidden" name="command" value="to_item_edit">
+                        <input type="hidden" name="item_id" value="${item.itemId}">
+                        <button class="btn btn-outline-primary" type="submit">Edit</button>
                     </form>
                 </div>
             </c:if>
@@ -97,6 +115,7 @@
         <br>
     </div>
 </c:forEach>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
         crossorigin="anonymous"></script>

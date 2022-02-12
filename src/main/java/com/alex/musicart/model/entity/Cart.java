@@ -14,12 +14,12 @@ public class Cart extends CustomEntity {
 
     public void add(Item item) {
         items.add(item);
-        this.cartSize++;
+        this.cartSize = items.size();
     }
 
     public void remove(Item item) {
         items.remove(item);
-        this.cartSize--;
+        this.cartSize = items.size();
     }
 
     public void clear() {

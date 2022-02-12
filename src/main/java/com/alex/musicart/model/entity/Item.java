@@ -64,7 +64,7 @@ public class Item extends CustomEntity {
         this.description = description;
     }
 
-    public Number getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 

@@ -118,9 +118,12 @@ public class UserServiceImpl implements UserService {
             String password = user.getPassword();
             String email = user.getEmail();
             String phone = user.getPhone();
-            User.UserRole userRole = user.getRole();
-            short roleId = userRole.getRoleId();
-            return userDao.createUser(name, login, password, email, phone, roleId);
+            if (UserValidator.isNameValid(name) && UserValidator.isLoginValid(login) && UserValidator.isPasswordValid(password) && UserValidator.isEmailValid(email) && UserValidator.isPhoneValid(phone)) {
+                User.UserRole userRole = user.getRole();
+                short roleId = userRole.getRoleId();
+                return userDao.createUser(name, login, password, email, phone, roleId);
+            }
+            return false;
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Unable to register user.");
             throw new ServiceException("Unable to register user.", e);

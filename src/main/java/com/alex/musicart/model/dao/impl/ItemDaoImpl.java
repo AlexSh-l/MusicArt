@@ -62,6 +62,11 @@ public class ItemDaoImpl implements ItemDao {
                     "WHERE it_is_in_stock = b'1'";
 
 
+    private static final String SQL_INSERT_NEW_ITEM =
+            "INSERT INTO items " +
+                    "(it_name, it_subcategory_id, it_description, it_price, it_is_in_stock) "+
+                    "VALUES (?, ?, ?, ?, ?)";
+
     private static final String SQL_UPDATE_ITEM_NAME =
             "UPDATE items " +
                     "SET it_name = (?)" +
@@ -215,6 +220,27 @@ public class ItemDaoImpl implements ItemDao {
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Unable to update item's price. Database error.", e);
             throw new DaoException("Unable to update item's price. Database error.", e);
+        }
+    }
+
+    public boolean addNewItem(Item item) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_ITEM)) {
+            statement.setString(1, item.getName());
+            statement.setInt(2, item.getSubcategoryId());
+            statement.setString(3, item.getDescription());
+            statement.setBigDecimal(4, item.getPrice());
+            statement.setBoolean(5, item.isInStock());
+            boolean isCreated = statement.executeUpdate() == 1;
+            if (!isCreated) {
+                logger.log(Level.INFO, "Unable to create item.");
+                return false;
+            }
+            logger.log(Level.INFO, "Item created.");
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to create item. Database error.", e);
+            throw new DaoException("Unable to create item. Database error.", e);
         }
     }
 }

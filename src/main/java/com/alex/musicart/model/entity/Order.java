@@ -1,7 +1,7 @@
 package com.alex.musicart.model.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public class Order extends CustomEntity {
 
@@ -12,7 +12,8 @@ public class Order extends CustomEntity {
     private long userId;
     private User user;
     private String address;
-    private LocalDateTime dateTime;
+    private Timestamp timestamp;
+    private short paymentTypeId;
 
     public Order() {
     }
@@ -73,11 +74,19 @@ public class Order extends CustomEntity {
         this.address = address;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public short getPaymentTypeId() {
+        return paymentTypeId;
+    }
+
+    public void setPaymentTypeId(short paymentTypeId) {
+        this.paymentTypeId = paymentTypeId;
     }
 }

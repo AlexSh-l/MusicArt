@@ -18,6 +18,22 @@
     <title>Registration</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse">
+            <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main">MusicArt</a>
+
+        </div>
+        <form class="nav-link" action="${abs}/controller" method="get">
+            <input type="hidden" name="command" value="to_main">
+            <button class="btn btn-primary" type="submit">To catalog</button>
+        </form>
+        <form class="nav-link" action="${abs}/controller" method="get">
+            <input type="hidden" name="command" value="sign_out">
+            <button class="btn btn-primary" type="submit">Sign Out</button>
+        </form>
+    </div>
+</nav>
 <div class="d-flex justify-content-center">
     <form action="${abs}/controller" method="post">
         <label>Your name:

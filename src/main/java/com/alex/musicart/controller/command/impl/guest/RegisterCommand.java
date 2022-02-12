@@ -52,19 +52,19 @@ public class RegisterCommand implements Command {
                     user.setPhone(phone);
                     if (userService.registerUser(user)) {
                         session.setAttribute(REGISTRATION_RESULT, true);
+                        session.setAttribute(USER, user);
                         router.setRoute(Router.RouteType.REDIRECT);
                         router.setPagePath(MAIN_PAGE);
+                        return router;
                     } else {
                         session.setAttribute(REGISTRATION_RESULT, "Could not register user.");
-                        router.setRoute(Router.RouteType.FORWARD);
-                        router.setPagePath(REGISTRATION_PAGE);
                     }
                 } else {
-                    router.setPagePath(REGISTRATION_PAGE);
                     session.setAttribute(REGISTRATION_RESULT, "Please fill all the inputs correctly.");
-                    router.setRoute(Router.RouteType.FORWARD);
                 }
             }
+            router.setPagePath(REGISTRATION_PAGE);
+            router.setRoute(Router.RouteType.FORWARD);
             return router;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Could not authenticate client.");

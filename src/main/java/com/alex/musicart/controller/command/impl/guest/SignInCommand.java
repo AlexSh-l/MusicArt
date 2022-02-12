@@ -44,16 +44,13 @@ public class SignInCommand implements Command {
                 session.setAttribute(USER, user);
                 session.setAttribute(SIGN_IN_RESULT, true);
                 if (user.getRole() == User.UserRole.ADMIN) {
-
                     List<Item> items = itemService.findAllItems();
                     session.setAttribute(ITEMS, items);
-
-                    router.setPagePath(ITEM_MANAGEMENT_PAGE);
                 } else {
                     Cart cart = new Cart();
                     session.setAttribute(CART, cart);
-                    router.setPagePath(MAIN_PAGE);
                 }
+                router.setPagePath(MAIN_PAGE);
             } else {
                 session.setAttribute(SIGN_IN_RESULT, false);
                 router.setPagePath(REGISTRATION_PAGE);

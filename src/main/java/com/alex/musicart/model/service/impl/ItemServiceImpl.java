@@ -58,11 +58,11 @@ public class ItemServiceImpl implements ItemService {
                 Item item = optionalItem.get();
                 int itemSubcategoryId = item.getSubcategoryId();
                 Optional<Subcategory> optionalSubcategory = subCategoryDao.findSubcategoryById(itemSubcategoryId);
-                if(optionalSubcategory.isPresent()) {
+                if (optionalSubcategory.isPresent()) {
                     Subcategory subcategory = optionalSubcategory.get();
                     item.setSubcategory(subcategory.getName());
                     Optional<Category> optionalCategory = categoryDao.findCategoryById(optionalSubcategory.get().getCategoryId());
-                    if(optionalCategory.isPresent()) {
+                    if (optionalCategory.isPresent()) {
                         Category category = optionalCategory.get();
                         item.setCategory(category.getName());
                         //return Optional.of(item);
@@ -84,11 +84,11 @@ public class ItemServiceImpl implements ItemService {
                 Item item = optionalItem.get();
                 int itemSubcategoryId = item.getSubcategoryId();
                 Optional<Subcategory> optionalSubcategory = subCategoryDao.findSubcategoryById(itemSubcategoryId);
-                if(optionalSubcategory.isPresent()) {
+                if (optionalSubcategory.isPresent()) {
                     Subcategory subcategory = optionalSubcategory.get();
                     item.setSubcategory(subcategory.getName());
                     Optional<Category> optionalCategory = categoryDao.findCategoryById(subcategory.getCategoryId());
-                    if(optionalCategory.isPresent()) {
+                    if (optionalCategory.isPresent()) {
                         Category category = optionalCategory.get();
                         item.setCategory(category.getName());
                         //return Optional.of(item);
@@ -113,5 +113,12 @@ public class ItemServiceImpl implements ItemService {
         }
     }*/
 
-
+    public boolean createNewItem(Item item) throws ServiceException {
+        try {
+            return itemDao.addNewItem(item);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Unable to create an item.");
+            throw new ServiceException("Unable to create an item.", e);
+        }
+    }
 }
