@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Алексей
-  Date: 01.02.2022
-  Time: 1:09
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -16,38 +9,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Sign In</title>
+    <title><fmt:message key="sign_in.title"/></title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
             <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main">MusicArt</a>
-
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="to_main">
-            <button class="btn btn-primary" type="submit">To catalog</button>
+            <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="sign_out">
-            <button class="btn btn-primary" type="submit">Sign Out</button>
+            <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_out"/></button>
         </form>
     </div>
 </nav>
 <div class="d-flex justify-content-center">
     <form action="${abs}/controller" method="post">
-        <br><label>Your login:
+        <br><label><fmt:message key="registration.login"/>
         <br><input type="text" name="login">
     </label>
-        <br><label>Your password:
+        <br><label><fmt:message key="registration.password"/>
         <br><input type="password" name="password">
     </label>
         <div class="mx-auto">
             <div>
                 <input type="hidden" name="command" value="sign_in">
                 <br>
-                <button class="btn btn-primary" type="submit">Sign In</button>
+                <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_in"/></button>
             </div>
         </div>
     </form>

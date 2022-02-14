@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Алексей
-  Date: 07.02.2022
-  Time: 21:32
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -16,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Edit orders</title>
+    <title><fmt:message key="order_edit.title"/></title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,30 +19,30 @@
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="to_main">
-            <button class="btn btn-primary" type="submit">To main</button>
+            <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="sign_out">
-            <button class="btn btn-primary" type="submit">Sign Out</button>
+            <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_out"/></button>
         </form>
     </div>
 </nav>
 <div class="d-flex justify-content-center">
     <form action="${abs}/controller" method="post">
-        <label>Order status:
+        <label><fmt:message key="order_edit.status"/>
             <br><input type="text" name="order_status">
         </label>
-        <br><label>Order payment type:
+        <br><label><fmt:message key="order_edit.payment_type"/>
         <br><input type="text" name="order_payment_type">
     </label>
-        <br><label>Order address:
+        <br><label><fmt:message key="order_edit.address"/>
         <br><input type="text" name="order_address">
     </label>
         <div class="mx-auto">
             <div>
                 <input type="hidden" name="command" value="edit_order">
                 <br>
-                <button class="btn btn-primary" type="submit">Edit</button>
+                <button class="btn btn-primary" type="submit"><fmt:message key="items.edit"/></button>
             </div>
         </div>
     </form>

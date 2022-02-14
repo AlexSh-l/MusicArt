@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Алексей
-  Date: 11.02.2022
-  Time: 1:17
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -16,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Cart</title>
+    <title><fmt:message key="cart.title"/></title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -25,21 +18,21 @@
             <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main">MusicArt</a>
             <form class="d-flex" action="${abs}/controller" method="get">
                 <input type="hidden" name="command" value="item_search">
-                <input class="form-control me-2" name="item_name" placeholder="Search"
+                <input class="form-control me-2" name="item_name" placeholder="<fmt:message key="nav.search"/>"
                        aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <button class="btn btn-outline-primary" type="submit"><fmt:message key="nav.search"/></button>
             </form>
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="to_main">
-            <button class="btn btn-primary" type="submit">To catalog</button>
+            <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
         <div class="nav-link">
-            <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_order">Оформить</a>
+            <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_order"><fmt:message key="cart.checkout"/></a>
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="sign_out">
-            <button class="btn btn-primary" type="submit">Sign Out</button>
+            <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_out"/></button>
         </form>
     </div>
 </nav>
@@ -54,23 +47,23 @@
                     ${item.description}
             </div>
             <div class="col">
-                Category:
+                <fmt:message key="items.item_category"/>
                 <br>${item.category}
-                <br>Subcategory:
+                <br><fmt:message key="items.item_subcategory"/>
                 <br>${item.subcategory}
             </div>
             <div class="col">
-                    ${item.price} Br
+                    ${item.price} <fmt:message key="add_item.item_price_currency"/>
             </div>
             <div class="col">
-                <c:if test="${item.inStock eq true}">In stock</c:if>
-                <c:if test="${item.inStock eq false}">Sold out</c:if>
+                <c:if test="${item.inStock eq true}"><fmt:message key="items.in_stock"/></c:if>
+                <c:if test="${item.inStock eq false}"><fmt:message key="items.sold_out"/></c:if>
             </div>
             <div class="col">
                 <form class="nav-link" action="${abs}/controller" method="get">
                     <input type="hidden" name="command" value="remove_from_cart">
                     <input type="hidden" name="item_id" value="${item.itemId}">
-                    <button class="btn btn-primary" type="submit">Remove</button>
+                    <button class="btn btn-primary" type="submit"><fmt:message key="cart.remove"/></button>
                 </form>
             </div>
 

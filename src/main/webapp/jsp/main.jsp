@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Алексей
-  Date: 30.01.2022
-  Time: 14:29
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -18,32 +11,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Catalog</title>
+    <title><fmt:message key="catalog.title"/></title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
             <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main">MusicArt</a>
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Category
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="${abs}/controller?command=to_main">None</a></li>
-                    <li><a class="dropdown-item" href="#">Guitars</a></li>
-                </ul>
-            </div>
             <form class="d-flex" action="${abs}/controller" method="get">
                 <input type="hidden" name="command" value="item_search">
-                <input class="form-control me-2" name="item_name" placeholder="Search"
+                <input class="form-control me-2" name="item_name" placeholder="<fmt:message key="nav.search"/>"
                        aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit"><fmt:message key="catalog.search"/></button>
+                <button class="btn btn-outline-primary" type="submit"><fmt:message key="nav.search"/></button>
             </form>
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Language
+                <fmt:message key="nav.language"/>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
@@ -53,11 +37,12 @@
                         <button class="btn btn-outline-primary" type="submit">English</button>
                     </form>
                 </li>
-                <li><form class="dropdown-item" action="${abs}/controller" method="get">
-                    <input type="hidden" name="command" value="change_locale">
-                    <input type="hidden" name="language" value="ru_RU">
-                    <button class="btn btn-outline-primary" type="submit">Русский</button>
-                </form>
+                <li>
+                    <form class="dropdown-item" action="${abs}/controller" method="get">
+                        <input type="hidden" name="command" value="change_locale">
+                        <input type="hidden" name="language" value="ru_RU">
+                        <button class="btn btn-outline-primary" type="submit">Русский</button>
+                    </form>
                 </li>
             </ul>
         </div>
@@ -65,39 +50,38 @@
             <c:when test="${sign_in_result eq true}">
                 <c:if test="${user.role eq 'CLIENT'}">
                     <div class="nav-link">
-                        <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_cart">${cart.cartSize} items
-                            in your cart</a>
+                        <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_cart">${cart.cartSize}
+                            <fmt:message key="nav.cart"/></a>
                     </div>
                 </c:if>
                 <c:if test="${user.role eq 'ADMIN'}">
                     <form class="nav-link" action="${abs}/controller" method="get">
                         <input type="hidden" name="command" value="to_orders">
-                        <button class="btn btn-primary" type="submit">Show orders</button>
+                        <button class="btn btn-primary" type="submit"><fmt:message key="nav.show_orders"/></button>
                     </form>
                     <form class="nav-link" action="${abs}/controller" method="get">
                         <input type="hidden" name="command" value="to_add_item">
-                        <button class="btn btn-primary" type="submit">Add new item</button>
+                        <button class="btn btn-primary" type="submit"><fmt:message key="nav.add_new_item"/></button>
                     </form>
                 </c:if>
                 <form class="nav-link" action="${abs}/controller" method="get">
                     <input type="hidden" name="command" value="sign_out">
-                    <button class="btn btn-primary" type="submit">Sign Out</button>
+                    <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_out"/></button>
                 </form>
             </c:when>
             <c:otherwise>
                 <form class="nav-link" action="${abs}/controller" method="get">
                     <input type="hidden" name="command" value="to_sign_in">
-                    <button class="btn btn-primary" type="submit">Sign In</button>
+                    <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_in"/></button>
                 </form>
                 <form class="nav-link" action="${abs}/controller" method="get">
                     <input type="hidden" name="command" value="to_registration">
-                    <button class="btn btn-primary" type="submit">Register</button>
+                    <button class="btn btn-primary" type="submit"><fmt:message key="nav.register"/></button>
                 </form>
             </c:otherwise>
         </c:choose>
     </div>
 </nav>
-
 <c:forEach var="item" items="${items}">
     <div class="container">
         <div class="row">
@@ -114,18 +98,18 @@
                 <br>${item.subcategory}
             </div>
             <div class="col">
-                    ${item.price} Br
+                    ${item.price} <fmt:message key="add_item.item_price_currency"/>
             </div>
             <div class="col">
-                <c:if test="${item.inStock eq true}">In stock</c:if>
-                <c:if test="${item.inStock eq false}">Sold out</c:if>
+                <c:if test="${item.inStock eq true}"><fmt:message key="items.in_stock"/></c:if>
+                <c:if test="${item.inStock eq false}"><fmt:message key="items.sold_out"/></c:if>
             </div>
             <c:if test="${sign_in_result eq true and item.inStock eq true and user.role eq 'CLIENT'}">
                 <div class="col">
                     <form class="nav-link" action="${abs}/controller" method="get">
                         <input type="hidden" name="command" value="add_to_cart">
                         <input type="hidden" name="item_id" value="${item.itemId}">
-                        <button class="btn btn-primary" type="submit">Add to cart</button>
+                        <button class="btn btn-primary" type="submit"><fmt:message key="items.add_to_cart"/></button>
                     </form>
                 </div>
             </c:if>
@@ -134,7 +118,7 @@
                     <form class="nav-link" action="${abs}/controller" method="get">
                         <input type="hidden" name="command" value="to_item_edit">
                         <input type="hidden" name="item_id" value="${item.itemId}">
-                        <button class="btn btn-outline-primary" type="submit">Edit</button>
+                        <button class="btn btn-outline-primary" type="submit"><fmt:message key="items.edit"/></button>
                     </form>
                 </div>
             </c:if>

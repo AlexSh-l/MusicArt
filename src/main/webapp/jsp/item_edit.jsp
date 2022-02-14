@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Алексей
-  Date: 07.02.2022
-  Time: 22:50
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -16,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Edit store items</title>
+    <title><fmt:message key="item_edit.title"/></title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,11 +19,11 @@
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="to_main">
-            <button class="btn btn-primary" type="submit">To main</button>
+            <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="sign_out">
-            <button class="btn btn-primary" type="submit">Sign Out</button>
+            <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_out"/></button>
         </form>
     </div>
 </nav>
@@ -41,48 +34,49 @@
                 <div class="col">
                     <br>${item.name}
                     <br>${item.description}
-                    <br>Category:
+                    <br><fmt:message key="items.item_category"/>
                     <br>${item.category}
-                    <br>Subcategory:
+                    <br><fmt:message key="items.item_subcategory"/>
                     <br>${item.subcategory}
-                    <br> ${item.price} Br
-                    <br><c:if test="${item.inStock eq true}">Is in stock</c:if>
-                    <br><c:if test="${item.inStock eq false}">Sold out</c:if>
+                    <br> ${item.price} <fmt:message key="add_item.item_price_currency"/>
+                    <br><c:if test="${item.inStock eq true}"><fmt:message key="items.in_stock"/></c:if>
+                    <br><c:if test="${item.inStock eq false}"><fmt:message key="items.sold_out"/></c:if>
                     <br>
                     <form class="col" action="${abs}/controller" method="get">
                         <input type="hidden" name="command" value="delete_item">
-                        <button class="btn btn-danger" type="submit">Delete</button>
+                        <button class="btn btn-danger" type="submit"><fmt:message key="item_edit.delete"/></button>
                     </form>
                 </div>
                 <form class="col" action="${abs}/controller" method="post">
-                    <label>Item name:
+                    <label><fmt:message key="add_item.item_name"/>
                         <br><input type="text" name="item_name">
                     </label>
-                    <br><label>Item description:
+                    <br><label><fmt:message key="add_item.item_description"/>
                     <br><input type="text" name="item_description">
                 </label>
-                    <br><label>Item category:
+                    <br><label><fmt:message key="add_item.item_category"/>
                     <br><input type="text" name="item_category">
                 </label>
-                    <br><label>Item subcategory:
+                    <br><label><fmt:message key="add_item.item_subcategory"/>
                     <br><input type="text" name="item_subcategory">
                 </label>
-                    <br><label>Item price:
-                    <br><input type="text" name="item_price"> Br
+                    <br><label><fmt:message key="add_item.item_price"/>
+                    <br><input type="text" name="item_price"> <fmt:message key="add_item.item_price_currency"/>
                 </label>
-                    <br><label>Item stock:
+                    <br><label><fmt:message key="add_item.item_stock"/>
                     <br>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="item_in_stock"
                                checked>
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Item is in stock</label>
+                        <label class="form-check-label" for="flexSwitchCheckChecked"><fmt:message
+                                key="add_item.item_is_in_stock"/></label>
                     </div>
                 </label>
                     <div class="mx-auto">
                         <div>
                             <input type="hidden" name="command" value="edit_item">
                             <br>
-                            <button class="btn btn-primary" type="submit">Edit</button>
+                            <button class="btn btn-primary" type="submit"><fmt:message key="items.edit"/></button>
                         </div>
                     </div>
                 </form>

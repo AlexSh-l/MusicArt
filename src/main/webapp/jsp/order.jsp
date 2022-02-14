@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Алексей
-  Date: 12.02.2022
-  Time: 13:13
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -16,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Order</title>
+    <title><fmt:message key="order.title"/></title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,34 +19,34 @@
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="to_main">
-            <button class="btn btn-primary" type="submit">To catalog</button>
+            <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="sign_out">
-            <button class="btn btn-primary" type="submit">Sign Out</button>
+            <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_out"/></button>
         </form>
     </div>
 </nav>
 <div class="d-flex justify-content-center">
     <form action="${abs}/controller" method="post">
-        <label>Please, enter address:
+        <label><fmt:message key="order.address"/>
             <br><input type="text" name="address">
         </label>
         <br>
         <br>
         <label>
-            <strong>Способ оплаты:</strong>
+            <strong><fmt:message key="order.payment_type"/></strong>
         </label>
         <br><label>
-        <input name="payment_type" type="radio" value="card"> Картой
+        <input name="payment_type" type="radio" value="card"> <fmt:message key="order.card"/>
     </label>
         <br><label>
-        <input name="payment_type" type="radio" value="cash" checked> Наличными
+        <input name="payment_type" type="radio" value="cash" checked> <fmt:message key="order.cash"/>
     </label>
         <div class="mx-auto">
             <input type="hidden" name="command" value="confirm_order">
             <br>
-            <button class="btn btn-primary" type="submit">Order</button>
+            <button class="btn btn-primary" type="submit"><fmt:message key="order.title"/></button>
             <c:choose>
                 <c:when test="${order_result eq true}">
                     <br><label>Заказ оформлен</label>
