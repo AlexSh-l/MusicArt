@@ -1,6 +1,7 @@
 package com.alex.musicart.exception;
 
 public class ServiceException extends Exception {
+
     public ServiceException() {
     }
 

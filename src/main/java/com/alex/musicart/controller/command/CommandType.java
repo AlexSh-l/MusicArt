@@ -6,60 +6,48 @@ import com.alex.musicart.controller.command.impl.general.ChangeLocaleCommand;
 import com.alex.musicart.controller.command.impl.general.NonExistentCommand;
 import com.alex.musicart.controller.command.impl.general.ToMainCommand;
 import com.alex.musicart.controller.command.impl.guest.*;
-import com.alex.musicart.model.entity.User;
-
-import java.util.EnumSet;
 
 public enum CommandType {
-    /* general commands */
-    NON_EXISTENT(new NonExistentCommand()/*, EnumSet.of(ADMIN, CLIENT)*/),
-
-    TO_MAIN(new ToMainCommand()),
-
-    TO_SIGN_IN(new ToSignInCommand()),
-    SIGN_IN(new SignInCommand()),
-    SIGN_OUT(new SignOutCommand()),
-    REGISTER(new RegisterCommand()),
-    TO_REGISTRATION(new ToRegistrationCommand()),
-    ITEM_SEARCH(new ItemSearchCommand()),
-    ADD_TO_CART(new AddItemToCart()),
-    TO_CART(new ToCart()),
-    REMOVE_FROM_CART(new RemoveItemFromCart()),
-    TO_ITEM_EDIT(new ToEditItemCommand()),
-    ADD_ITEM(new AddItemCommand()),
-    TO_ADD_ITEM(new ToAddItemCommand()),
-    CONFIRM_ORDER(new ConfirmOrderCommand()),
-    TO_ORDER(new ToOrderCommand()),
-    TO_ORDERS(new ToOrdersCommand()),
-    TO_ORDER_EDIT(new ToOrderEditCommand()),
-    DELETE_ORDER(new DeleteOrderCommand()),
-    DELETE_ITEM(new DeleteItemCommand()),
-    EDIT_ITEM(new EditItemCommand()),
-    TO_ORDER_ITEMS(new ToOrderItemsCommand()),
-    CHANGE_LOCALE(new ChangeLocaleCommand()),
-    EDIT_ORDER(new OrderEditCommand());
-    /* customer commands */
-
-
-
-
 
     /* admin commands */
+    ADD_ITEM(new AddItemCommand()),
+    DELETE_ITEM(new DeleteItemCommand()),
+    DELETE_ORDER(new DeleteOrderCommand()),
+    EDIT_ITEM(new EditItemCommand()),
+    EDIT_ORDER(new OrderEditCommand()),
+    TO_ADD_ITEM(new ToAddItemCommand()),
+    TO_ITEM_EDIT(new ToEditItemCommand()),
+    TO_ORDER_EDIT(new ToOrderEditCommand()),
+    TO_ORDER_ITEMS(new ToOrderItemsCommand()),
+    TO_ORDERS(new ToOrdersCommand()),
 
+    /* client commands */
+    ADD_TO_CART(new AddItemToCart()),
+    CONFIRM_ORDER(new ConfirmOrderCommand()),
+    REMOVE_FROM_CART(new RemoveItemFromCart()),
+    TO_CART(new ToCart()),
+    TO_ORDER(new ToOrderCommand()),
+
+    /* general commands */
+    CHANGE_LOCALE(new ChangeLocaleCommand()),
+    NON_EXISTENT(new NonExistentCommand()),
+    TO_MAIN(new ToMainCommand()),
+
+    /* guest commands */
+    ITEM_SEARCH(new ItemSearchCommand()),
+    REGISTER(new RegisterCommand()),
+    SIGN_IN(new SignInCommand()),
+    SIGN_OUT(new SignOutCommand()),
+    TO_REGISTRATION(new ToRegistrationCommand()),
+    TO_SIGN_IN(new ToSignInCommand());
 
     private Command command;
-    private EnumSet<User.UserRole> allowedRoles;
 
-    CommandType(Command command/*, EnumSet<User.UserRole> allowedRoles*/) {
+    CommandType(Command command) {
         this.command = command;
-        //this.allowedRoles = allowedRoles;
     }
 
     public Command getCurrentCommand() {
         return command;
-    }
-
-    public EnumSet<User.UserRole> getAllowedRoles() {
-        return allowedRoles;
     }
 }

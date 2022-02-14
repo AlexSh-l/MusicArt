@@ -6,6 +6,7 @@ import com.alex.musicart.exception.CommandException;
 import com.alex.musicart.exception.ServiceException;
 import com.alex.musicart.model.entity.User;
 import com.alex.musicart.model.service.impl.UserServiceImpl;
+import com.alex.musicart.util.PasswordEncryptor;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +22,6 @@ import static com.alex.musicart.controller.command.SessionAttributeName.*;
 public class RegisterCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
-
     private final UserServiceImpl userService = UserServiceImpl.getInstance();
 
     @Override
@@ -41,13 +41,12 @@ public class RegisterCommand implements Command {
                 router.setPagePath(REGISTRATION_PAGE);
                 session.setAttribute(REGISTRATION_RESULT, "This user is already registered.");
                 router.setRoute(Router.RouteType.FORWARD);
-                //router.setPagePath(MAIN_PAGE);
             } else {
                 if ((password.compareTo(confirmPassword) == 0) && !isUserEmpty) {
                     User user = new User();
                     user.setName(name);
                     user.setLogin(login);
-                    user.setPassword(password);
+                    user.setPassword(PasswordEncryptor.hashPassword(password));
                     user.setEmail(email);
                     user.setPhone(phone);
                     if (userService.registerUser(user)) {

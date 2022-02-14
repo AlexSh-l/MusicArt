@@ -7,7 +7,6 @@ public final class SessionAttributeName {
     public static final String ORDER_RESULT = "order_result";
     public static final String ITEMS = "items";
     public static final String ORDERS = "orders";
-    //public static final String ITEM = "item";
     public static final String CART = "cart";
     public static final String ITEM_CREATION_RESULT = "item_creation_result";
     public static final String ITEM_UPDATE_RESULT = "item_update_result";

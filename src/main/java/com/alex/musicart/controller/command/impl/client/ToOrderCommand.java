@@ -7,7 +7,6 @@ import com.alex.musicart.exception.CommandException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static com.alex.musicart.controller.command.PagePath.CART_PAGE;
 import static com.alex.musicart.controller.command.PagePath.ORDER_PAGE;
 import static com.alex.musicart.controller.command.SessionAttributeName.CURRENT_PAGE;
 

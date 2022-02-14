@@ -5,8 +5,6 @@ import com.alex.musicart.controller.command.Command;
 import com.alex.musicart.exception.CommandException;
 import com.alex.musicart.exception.ServiceException;
 import com.alex.musicart.model.entity.Item;
-import com.alex.musicart.model.entity.Order;
-import com.alex.musicart.model.service.OrderService;
 import com.alex.musicart.model.service.impl.OrderServiceImpl;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static com.alex.musicart.controller.command.PagePath.ORDERS_PAGE;
 import static com.alex.musicart.controller.command.PagePath.ORDER_ITEMS_PAGE;
 import static com.alex.musicart.controller.command.ParameterName.ORDER_ID;
 import static com.alex.musicart.controller.command.SessionAttributeName.*;

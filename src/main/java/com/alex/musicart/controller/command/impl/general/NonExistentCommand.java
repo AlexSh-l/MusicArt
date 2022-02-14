@@ -6,7 +6,6 @@ import com.alex.musicart.controller.command.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static com.alex.musicart.controller.command.PagePath.CART_PAGE;
 import static com.alex.musicart.controller.command.PagePath.ERROR_404_PAGE;
 import static com.alex.musicart.controller.command.SessionAttributeName.CURRENT_PAGE;
 

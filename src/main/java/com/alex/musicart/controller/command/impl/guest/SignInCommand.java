@@ -9,13 +9,13 @@ import com.alex.musicart.model.entity.Item;
 import com.alex.musicart.model.entity.User;
 import com.alex.musicart.model.service.impl.ItemServiceImpl;
 import com.alex.musicart.model.service.impl.UserServiceImpl;
+import com.alex.musicart.util.PasswordEncryptor;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +27,6 @@ import static com.alex.musicart.controller.command.SessionAttributeName.CART;
 public class SignInCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
-
     private final UserServiceImpl userService = UserServiceImpl.getInstance();
     private final ItemServiceImpl itemService = ItemServiceImpl.getInstance();
 
@@ -37,8 +36,9 @@ public class SignInCommand implements Command {
         HttpSession session = request.getSession();
         String login = request.getParameter(LOGIN);
         String password = request.getParameter(PASSWORD);
+        String encryptedPassword = PasswordEncryptor.hashPassword(password);
         try {
-            Optional<User> optionalUser = userService.findClientByLoginAndPassword(login, password);
+            Optional<User> optionalUser = userService.findClientByLoginAndPassword(login, encryptedPassword);
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
                 session.setAttribute(USER, user);
@@ -57,7 +57,6 @@ public class SignInCommand implements Command {
                 session.setAttribute(CURRENT_PAGE, REGISTRATION_PAGE);
                 router.setPagePath(REGISTRATION_PAGE);
             }
-            //router.setPagePath(REGISTRATION_PAGE);
             router.setRoute(Router.RouteType.REDIRECT);
             return router;
         } catch (ServiceException e) {

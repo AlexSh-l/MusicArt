@@ -17,8 +17,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static com.alex.musicart.controller.command.PagePath.*;
@@ -45,7 +43,7 @@ public class AddItemCommand implements Command {
         BigDecimal price = BigDecimal.valueOf(priceInDouble);
         String isItemInStock = request.getParameter(ITEM_IN_STOCK);
         boolean itemInStock = true;
-        if (isItemInStock==null) {
+        if (isItemInStock == null) {
             itemInStock = false;
         }
         try {

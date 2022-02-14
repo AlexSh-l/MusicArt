@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 import static com.alex.musicart.controller.command.PagePath.CART_PAGE;
-import static com.alex.musicart.controller.command.PagePath.MAIN_PAGE;
 import static com.alex.musicart.controller.command.ParameterName.ITEM_ID;
 import static com.alex.musicart.controller.command.SessionAttributeName.*;
 

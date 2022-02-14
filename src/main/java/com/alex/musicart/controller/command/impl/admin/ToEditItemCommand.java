@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +33,7 @@ public class ToEditItemCommand implements Command {
         long itemId = Long.parseLong(request.getParameter(ITEM_ID));
         try {
             Optional<Item> optionalItem = itemService.findItemById(itemId);
-            if(optionalItem.isPresent()){
+            if (optionalItem.isPresent()) {
                 List<Item> items = new ArrayList<>();
                 items.add(optionalItem.get());
                 session.setAttribute(ITEMS, items);

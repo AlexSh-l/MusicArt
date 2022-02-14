@@ -1,6 +1,7 @@
 package com.alex.musicart.exception;
 
 public class CommandException extends Exception {
+
     public CommandException() {
     }
 

@@ -12,10 +12,8 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.util.List;
 
-import static com.alex.musicart.controller.command.PagePath.CART_PAGE;
 import static com.alex.musicart.controller.command.PagePath.MAIN_PAGE;
 import static com.alex.musicart.controller.command.ParameterName.LANGUAGE;
 import static com.alex.musicart.controller.command.SessionAttributeName.*;
@@ -30,7 +28,8 @@ public class ToMainCommand implements Command {
         HttpSession session = request.getSession();
         Router router = new Router();
         String language = request.getParameter(LANGUAGE);
-        if (language == null) {
+        String locale = (String) session.getAttribute(LOCALE);
+        if ((language == null) && (locale == null)) {
             session.setAttribute(LOCALE, "en_EN");
         }
         List<Item> items;

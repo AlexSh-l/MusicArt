@@ -12,14 +12,11 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static com.alex.musicart.controller.command.PagePath.ITEM_EDIT_PAGE;
 import static com.alex.musicart.controller.command.PagePath.ORDER_EDIT_PAGE;
 import static com.alex.musicart.controller.command.ParameterName.*;
-import static com.alex.musicart.controller.command.ParameterName.ITEM_IN_STOCK;
 import static com.alex.musicart.controller.command.SessionAttributeName.*;
 
 public class OrderEditCommand implements Command {

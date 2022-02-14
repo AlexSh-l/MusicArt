@@ -5,9 +5,7 @@ import com.alex.musicart.controller.command.Command;
 import com.alex.musicart.exception.CommandException;
 import com.alex.musicart.exception.ServiceException;
 import com.alex.musicart.model.entity.Item;
-import com.alex.musicart.model.entity.User;
 import com.alex.musicart.model.service.impl.ItemServiceImpl;
-import com.alex.musicart.model.service.impl.UserServiceImpl;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +19,6 @@ import java.util.Optional;
 import static com.alex.musicart.controller.command.PagePath.*;
 import static com.alex.musicart.controller.command.ParameterName.*;
 import static com.alex.musicart.controller.command.SessionAttributeName.*;
-import static com.alex.musicart.controller.command.SessionAttributeName.SIGN_IN_RESULT;
 
 public class ItemSearchCommand implements Command {
 

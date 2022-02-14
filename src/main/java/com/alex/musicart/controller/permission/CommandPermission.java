@@ -35,20 +35,20 @@ public enum CommandPermission {
 
     GUEST(Set.of(CommandType.NON_EXISTENT.name(),
             CommandType.TO_MAIN.name(),
-          CommandType.TO_SIGN_IN.name(),
-          CommandType.SIGN_IN.name(),
-          CommandType.TO_REGISTRATION.name(),
-          CommandType.REGISTER.name(),
-          CommandType.ITEM_SEARCH.name(),
-          CommandType.CHANGE_LOCALE.name()));
+            CommandType.TO_SIGN_IN.name(),
+            CommandType.SIGN_IN.name(),
+            CommandType.TO_REGISTRATION.name(),
+            CommandType.REGISTER.name(),
+            CommandType.ITEM_SEARCH.name(),
+            CommandType.CHANGE_LOCALE.name()));
 
     private final Set<String> allowedCommands;
 
-    CommandPermission(Set<String> allowedCommands){
+    CommandPermission(Set<String> allowedCommands) {
         this.allowedCommands = allowedCommands;
     }
 
-    public Set<String> getAllowedCommands(){
+    public Set<String> getAllowedCommands() {
         return allowedCommands;
     }
 }

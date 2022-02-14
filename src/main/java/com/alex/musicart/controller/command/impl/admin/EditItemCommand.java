@@ -22,7 +22,6 @@ import java.util.Optional;
 
 import static com.alex.musicart.controller.command.PagePath.ITEM_EDIT_PAGE;
 import static com.alex.musicart.controller.command.ParameterName.*;
-import static com.alex.musicart.controller.command.ParameterName.ITEM_IN_STOCK;
 import static com.alex.musicart.controller.command.SessionAttributeName.*;
 
 public class EditItemCommand implements Command {
@@ -40,30 +39,30 @@ public class EditItemCommand implements Command {
         List<Item> items = (List<Item>) session.getAttribute(ITEMS);
         item = items.get(0);
         try {
-        String name = request.getParameter(ITEM_NAME);
-        String description = request.getParameter(ITEM_DESCRIPTION);
-        String categoryName = request.getParameter(ITEM_CATEGORY);
-        Optional<Category> optionalCategory = categoryService.findCategoryByName(categoryName);
-        if(optionalCategory.isPresent()) {
-            String subcategoryName = request.getParameter(ITEM_SUBCATEGORY);
-            Optional<Subcategory> optionalSubcategory = subcategoryService.findSubcategoryByName(subcategoryName);
-            if(optionalSubcategory.isPresent()) {
-                double priceInDouble = Double.parseDouble(request.getParameter(ITEM_PRICE));
-                BigDecimal price = BigDecimal.valueOf(priceInDouble);
-                String isItemInStock = request.getParameter(ITEM_IN_STOCK);
-                boolean itemInStock = true;
-                if (isItemInStock == null) {
-                    itemInStock = false;
+            String name = request.getParameter(ITEM_NAME);
+            String description = request.getParameter(ITEM_DESCRIPTION);
+            String categoryName = request.getParameter(ITEM_CATEGORY);
+            Optional<Category> optionalCategory = categoryService.findCategoryByName(categoryName);
+            if (optionalCategory.isPresent()) {
+                String subcategoryName = request.getParameter(ITEM_SUBCATEGORY);
+                Optional<Subcategory> optionalSubcategory = subcategoryService.findSubcategoryByName(subcategoryName);
+                if (optionalSubcategory.isPresent()) {
+                    double priceInDouble = Double.parseDouble(request.getParameter(ITEM_PRICE));
+                    BigDecimal price = BigDecimal.valueOf(priceInDouble);
+                    String isItemInStock = request.getParameter(ITEM_IN_STOCK);
+                    boolean itemInStock = true;
+                    if (isItemInStock == null) {
+                        itemInStock = false;
+                    }
+                    int subcategoryId = optionalSubcategory.get().getSubcategoryId();
+                    itemService.updateItem(item, name, subcategoryId, description, price, itemInStock);
+                    session.setAttribute(ITEM_UPDATE_RESULT, true);
+                    session.setAttribute(CURRENT_PAGE, ITEM_EDIT_PAGE);
+                    router.setPagePath(ITEM_EDIT_PAGE);
+                    router.setRoute(Router.RouteType.FORWARD);
+                    return router;
                 }
-                int subcategoryId = optionalSubcategory.get().getSubcategoryId();
-                itemService.updateItem(item, name, subcategoryId, description, price, itemInStock);
-                session.setAttribute(ITEM_UPDATE_RESULT, true);
-                session.setAttribute(CURRENT_PAGE, ITEM_EDIT_PAGE);
-                router.setPagePath(ITEM_EDIT_PAGE);
-                router.setRoute(Router.RouteType.FORWARD);
-                return router;
             }
-        }
             session.setAttribute(ITEM_UPDATE_RESULT, "Unable to update this item.");
             session.setAttribute(CURRENT_PAGE, ITEM_EDIT_PAGE);
             router.setPagePath(ITEM_EDIT_PAGE);

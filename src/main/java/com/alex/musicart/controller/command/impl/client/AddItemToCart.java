@@ -2,7 +2,6 @@ package com.alex.musicart.controller.command.impl.client;
 
 import com.alex.musicart.controller.Router;
 import com.alex.musicart.controller.command.Command;
-import com.alex.musicart.controller.command.SessionAttributeName;
 import com.alex.musicart.exception.CommandException;
 import com.alex.musicart.exception.ServiceException;
 import com.alex.musicart.model.entity.Cart;
@@ -14,9 +13,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static com.alex.musicart.controller.command.PagePath.MAIN_PAGE;

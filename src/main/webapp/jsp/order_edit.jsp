@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="ctg" uri="customtags" %>
 <c:set var="abs">${pageContext.request.contextPath}</c:set>
+<fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setBundle basename="/localization/locale"/>
 <html>
 <head>
     <meta charset="utf-8">
@@ -16,6 +18,27 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
             <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main">MusicArt</a>
+        </div>
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <fmt:message key="nav.language"/>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                    <form class="dropdown-item" action="${abs}/controller" method="get">
+                        <input type="hidden" name="command" value="change_locale">
+                        <input type="hidden" name="language" value="en_EN">
+                        <button class="btn btn-outline-primary" type="submit">English</button>
+                    </form>
+                </li>
+                <li>
+                    <form class="dropdown-item" action="${abs}/controller" method="get">
+                        <input type="hidden" name="command" value="change_locale">
+                        <input type="hidden" name="language" value="ru_RU">
+                        <button class="btn btn-outline-primary" type="submit">Русский</button>
+                    </form>
+                </li>
+            </ul>
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="to_main">

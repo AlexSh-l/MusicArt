@@ -3,10 +3,8 @@ package com.alex.musicart.model.dao.impl;
 import com.alex.musicart.exception.DaoException;
 import com.alex.musicart.model.dao.CategoryDao;
 import com.alex.musicart.model.entity.Category;
-import com.alex.musicart.model.entity.Subcategory;
 import com.alex.musicart.model.mapper.EntityMapper;
 import com.alex.musicart.model.mapper.impl.CategoryMapper;
-import com.alex.musicart.model.mapper.impl.SubcategoryMapper;
 import com.alex.musicart.model.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +14,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +21,6 @@ public class CategoryDaoImpl implements CategoryDao {
     private static final Logger logger = LogManager.getLogger();
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private final EntityMapper<Category> mapper = new CategoryMapper();
-    //private final EntityMapper<Category> categoryMapper = new CategoryMapper();
 
     private static final String SQL_SELECT_ALL_CATEGORIES =
             "SELECT ca_id, ca_name " +

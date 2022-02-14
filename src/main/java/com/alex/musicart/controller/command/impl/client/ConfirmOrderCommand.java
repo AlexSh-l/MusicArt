@@ -7,7 +7,6 @@ import com.alex.musicart.exception.ServiceException;
 import com.alex.musicart.model.entity.*;
 import com.alex.musicart.model.service.OrderService;
 import com.alex.musicart.model.service.OrderStatusService;
-import com.alex.musicart.model.service.impl.ItemServiceImpl;
 import com.alex.musicart.model.service.impl.OrderServiceImpl;
 import com.alex.musicart.model.service.impl.OrderStatusServiceImpl;
 import com.alex.musicart.model.service.impl.PaymentTypeServiceImpl;
@@ -15,10 +14,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -46,15 +43,13 @@ public class ConfirmOrderCommand implements Command {
         Order order = new Order();
         String address = request.getParameter(ADDRESS);
         String paymentTypeName = request.getParameter(PAYMENT_TYPE);
-        //long itemId = Long.parseLong(request.getParameter(ITEM_ID));
-        boolean isOrderEmpty = address.isEmpty() && paymentTypeName.isEmpty();
         try {
-            if(paymentTypeName.equals("cash")){
+            if (paymentTypeName.equals("cash")) {
                 paymentTypeName = "наличными";
-            }else if(paymentTypeName.equals("card")){
+            } else if (paymentTypeName.equals("card")) {
                 paymentTypeName = "картой";
             }
-            if(!address.isEmpty()) {
+            if (!address.isEmpty()) {
                 Optional<PaymentType> optionalPaymentType = paymentTypeService.findPaymentTypeByName(paymentTypeName);
                 if (optionalPaymentType.isPresent()) {
                     PaymentType paymentType = optionalPaymentType.get();
@@ -63,7 +58,6 @@ public class ConfirmOrderCommand implements Command {
                     Optional<OrderStatus> optionalOrderStatus = orderStatusService.findOrderStatusByName("принят");
                     if (optionalOrderStatus.isPresent()) {
                         OrderStatus orderStatus = optionalOrderStatus.get();
-                        //order.setStatus(orderStatus.get);
                         order.setStatusId(orderStatus.getOrderStatusId());
                         order.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
                         User user = (User) session.getAttribute(USER);
@@ -87,7 +81,7 @@ public class ConfirmOrderCommand implements Command {
                 } else {
                     session.setAttribute(ORDER_RESULT, "This payment type does not exist.");
                 }
-            }else {
+            } else {
                 session.setAttribute(ORDER_RESULT, "Please, fill in the address.");
             }
         } catch (ServiceException e) {

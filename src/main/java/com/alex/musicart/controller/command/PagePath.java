@@ -4,7 +4,6 @@ public final class PagePath {
 
     public static final String ERROR_404_PAGE = "/jsp/error/error404.jsp";
     public static final String ERROR_500_PAGE = "/jsp/error/error500.jsp";
-
     public static final String INDEX_PAGE = "/index.jsp";
     public static final String MAIN_PAGE = "/jsp/main.jsp";
     public static final String SIGN_IN_PAGE = "/jsp/sign_in.jsp";
@@ -17,6 +16,6 @@ public final class PagePath {
     public static final String ORDERS_PAGE = "/jsp/orders.jsp";
     public static final String ORDER_ITEMS_PAGE = "/jsp/order_items.jsp";
 
-    private PagePath(){
+    private PagePath() {
     }
 }
