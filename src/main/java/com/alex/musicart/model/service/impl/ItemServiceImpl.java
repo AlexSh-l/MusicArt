@@ -18,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.text.html.Option;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,15 +104,35 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
-    /*@Override
-    public boolean updateName(long id, String newName, String password) throws ServiceException {
+    @Override
+    public boolean updateItem(Item item, String name, int subcategoryId, String description, BigDecimal price, boolean isInStock) throws ServiceException {
         try {
-            return UserValidator.isNameValid(newName) && userDao.updateName(id, newName, password);
+            boolean isNameUpdated = false;
+            boolean isSubcategoryUpdated = false;
+            boolean isDescriptionUpdated = false;
+            boolean isPriceUpdated = false;
+            boolean isItemStockUpdated = false;
+            if (!item.getName().equals(name)) {
+                isNameUpdated = itemDao.updateItemName(item.getItemId(), name);
+            }
+            if (item.getSubcategoryId() != subcategoryId) {
+                isSubcategoryUpdated = itemDao.updateItemSubcategory(item.getItemId(), subcategoryId);
+            }
+            if (!item.getDescription().equals(description)) {
+                isDescriptionUpdated = itemDao.updateItemDescription(item.getItemId(), description);
+            }
+            if (!item.getPrice().equals(price)) {
+                isPriceUpdated = itemDao.updateItemPrice(item.getItemId(), price);
+            }
+            if (item.isInStock() != isInStock) {
+                isItemStockUpdated = itemDao.updateItemStock(item.getItemId(), isInStock);
+            }
+            return (isNameUpdated || isSubcategoryUpdated || isDescriptionUpdated || isPriceUpdated || isItemStockUpdated);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Unable to update name.");
-            throw new ServiceException("Unable to update name.", e);
+            logger.log(Level.ERROR, "Unable to update item.");
+            throw new ServiceException("Unable to update item.", e);
         }
-    }*/
+    }
 
     @Override
     public boolean createNewItem(Item item) throws ServiceException {

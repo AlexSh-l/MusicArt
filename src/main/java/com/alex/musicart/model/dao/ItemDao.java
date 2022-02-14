@@ -16,6 +16,8 @@ public interface ItemDao extends RootDao {
 
     List<Item> findAllItems() throws DaoException;
 
+    List<Item> findAllItemsByOrderId(long orderId) throws DaoException;
+
     Optional<Item> findItemByName(String name) throws DaoException;
 
     Optional<Item> findItemById(long id) throws DaoException;

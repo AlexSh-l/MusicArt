@@ -76,6 +76,21 @@ public class OrderDaoImpl implements OrderDao {
                     "(m2m_item_id, m2m_order_id) " +
                     "VALUES (?, ?)";
 
+    private static final String SQL_UPDATE_ORDER_PAYMENT_TYPE =
+            "UPDATE orders " +
+                    "SET or_payment_type = ? " +
+                    "WHERE or_id = ?";
+
+    private static final String SQL_UPDATE_ORDER_STATUS =
+            "UPDATE orders " +
+                    "SET or_status_id = ? " +
+                    "WHERE or_id = ?";
+
+    private static final String SQL_UPDATE_ORDER_ADDRESS =
+            "UPDATE orders " +
+                    "SET or_address = ? " +
+                    "WHERE or_id = ?";
+
     private static final String SQL_DELETE_ORDER_ITEMS_BY_ORDER_ID =
             "DELETE FROM items_m2m_orders " +
                     "WHERE m2m_order_id = ?";
@@ -136,6 +151,60 @@ public class OrderDaoImpl implements OrderDao {
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Unable to create order.");
             throw new DaoException("Unable to create order.", e);
+        }
+    }
+
+    public boolean updateOrderStatus(long id, short orderStatusId) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER_STATUS)) {
+            statement.setShort(1, orderStatusId);
+            statement.setLong(2, id);
+            boolean isUpdated = statement.executeUpdate() == 1;
+            if (!isUpdated) {
+                logger.log(Level.INFO, "Unable to update order's status.");
+                return false;
+            }
+            logger.log(Level.INFO, "Order's status updated.");
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to update order's status. Database error.", e);
+            throw new DaoException("Unable to update order's status. Database error.", e);
+        }
+    }
+
+    public boolean updateOrderPaymentType(long id, short paymentTypeId) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER_PAYMENT_TYPE)) {
+            statement.setShort(1, paymentTypeId);
+            statement.setLong(2, id);
+            boolean isUpdated = statement.executeUpdate() == 1;
+            if (!isUpdated) {
+                logger.log(Level.INFO, "Unable to update order's payment type.");
+                return false;
+            }
+            logger.log(Level.INFO, "Order's payment type updated.");
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to update order's payment type. Database error.", e);
+            throw new DaoException("Unable to update order's payment type. Database error.", e);
+        }
+    }
+
+    public boolean updateOrderAddress(long id, String address) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER_ADDRESS)) {
+            statement.setString(1, address);
+            statement.setLong(2, id);
+            boolean isUpdated = statement.executeUpdate() == 1;
+            if (!isUpdated) {
+                logger.log(Level.INFO, "Unable to update order's address.");
+                return false;
+            }
+            logger.log(Level.INFO, "Order's address updated.");
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to update order's address. Database error.", e);
+            throw new DaoException("Unable to update order's address. Database error.", e);
         }
     }
 

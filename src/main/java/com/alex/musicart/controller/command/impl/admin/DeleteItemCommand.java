@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.alex.musicart.controller.command.PagePath.ADD_ITEM_PAGE;
+import static com.alex.musicart.controller.command.PagePath.ITEM_EDIT_PAGE;
 import static com.alex.musicart.controller.command.ParameterName.*;
 import static com.alex.musicart.controller.command.ParameterName.ITEM_IN_STOCK;
 import static com.alex.musicart.controller.command.SessionAttributeName.*;
@@ -36,10 +37,15 @@ public class DeleteItemCommand implements Command {
         HttpSession session = request.getSession();
         Item item;
         List<Item> items = (List<Item>) session.getAttribute(ITEMS);
-        item = items.get(1);
-
-        session.setAttribute(CURRENT_PAGE, ADD_ITEM_PAGE);
-        router.setPagePath(ADD_ITEM_PAGE);
+        item = items.get(0);
+        try {
+            itemService.deleteItem(item.getItemId());
+        } catch (ServiceException e) {
+            logger.log(Level.ERROR, "Could not delete this item.");
+            throw new CommandException("Could not delete this item.", e);
+        }
+        session.setAttribute(CURRENT_PAGE, ITEM_EDIT_PAGE);
+        router.setPagePath(ITEM_EDIT_PAGE);
         router.setRoute(Router.RouteType.FORWARD);
         return router;
     }

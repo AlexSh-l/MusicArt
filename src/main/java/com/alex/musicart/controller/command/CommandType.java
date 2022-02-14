@@ -33,8 +33,11 @@ public enum CommandType {
     TO_ORDERS(new ToOrdersCommand()),
     TO_ORDER_EDIT(new ToOrderEditCommand()),
     DELETE_ORDER(new DeleteOrderCommand()),
+    DELETE_ITEM(new DeleteItemCommand()),
+    EDIT_ITEM(new EditItemCommand()),
     TO_ORDER_ITEMS(new ToOrderItemsCommand()),
-    CHANGE_LOCALE(new ChangeLocaleCommand());
+    CHANGE_LOCALE(new ChangeLocaleCommand()),
+    EDIT_ORDER(new OrderEditCommand());
     /* customer commands */
 
 

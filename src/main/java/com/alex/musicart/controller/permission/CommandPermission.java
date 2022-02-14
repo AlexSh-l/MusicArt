@@ -17,7 +17,10 @@ public enum CommandPermission {
             CommandType.TO_ORDER_EDIT.name(),
             CommandType.DELETE_ORDER.name(),
             CommandType.TO_ORDER_ITEMS.name(),
-            CommandType.CHANGE_LOCALE.name())),
+            CommandType.CHANGE_LOCALE.name(),
+            CommandType.EDIT_ITEM.name(),
+            CommandType.EDIT_ORDER.name(),
+            CommandType.DELETE_ITEM.name())),
 
     CLIENT(Set.of(CommandType.NON_EXISTENT.name(),
             CommandType.TO_MAIN.name(),

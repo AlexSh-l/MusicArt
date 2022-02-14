@@ -44,9 +44,9 @@ public class AddItemCommand implements Command {
         double priceInDouble = Double.parseDouble(request.getParameter(ITEM_PRICE));
         BigDecimal price = BigDecimal.valueOf(priceInDouble);
         String isItemInStock = request.getParameter(ITEM_IN_STOCK);
-        boolean itemInStock = false;
-        if (isItemInStock.equals("on")) {
-            itemInStock = true;
+        boolean itemInStock = true;
+        if (isItemInStock==null) {
+            itemInStock = false;
         }
         try {
             Optional<Category> optionalCategory = categoryService.findCategoryByName(categoryName);

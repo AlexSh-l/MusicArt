@@ -10,7 +10,10 @@ public final class SessionAttributeName {
     //public static final String ITEM = "item";
     public static final String CART = "cart";
     public static final String ITEM_CREATION_RESULT = "item_creation_result";
+    public static final String ITEM_UPDATE_RESULT = "item_update_result";
+    public static final String ITEM_DELETION_RESULT = "item_deletion_result";
     public static final String ORDER_DELETION_RESULT = "order_deletion_result";
+    public static final String ORDER_UPDATE_RESULT = "order_update_result";
     public static final String CURRENT_PAGE = "current_page";
     public static final String LOCALE = "locale";
 }

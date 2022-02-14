@@ -15,6 +15,7 @@ public final class PagePath {
     public static final String CART_PAGE = "/jsp/cart.jsp";
     public static final String ADD_ITEM_PAGE = "/jsp/add_item.jsp";
     public static final String ORDERS_PAGE = "/jsp/orders.jsp";
+    public static final String ORDER_ITEMS_PAGE = "/jsp/order_items.jsp";
 
     private PagePath(){
     }

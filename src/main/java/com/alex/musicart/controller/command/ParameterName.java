@@ -28,23 +28,9 @@ public final class ParameterName {
     public static final String ADDRESS = "address";
     public static final String PAYMENT_TYPE = "payment_type";
     public static final String ORDER_ID = "order_id";
-
-    public static final String INVALID_FIRST_NAME_RESULT = "invalidName";
-
-    public static final String INVALID_LOGIN_RESULT = "invalidLogin";
-    public static final String NOT_UNIQUE_EMAIL_RESULT = "notUniqueEmail";
-    public static final String NOT_UNIQUE_LOGIN_RESULT = "notUniqueLogin";
-
-
-    public static final String OLD_PASSWORD = "old_password";
-    public static final String NEW_PASSWORD = "new_password";
-    public static final String INVALID_PASSWORD_RESULT = "invalidPassword";
-
-    public static final String INVALID_EMAIL_RESULT = "invalidEmail";
-
-    public static final String INVALID_PHONE_NUMBER_RESULT = "invalidPhoneNumber";
-    public static final String TRUE = "true";
-    public static final String SESSION_LOCALE = "locale";
+    public static final String ORDER_STATUS = "order_status";
+    public static final String ORDER_PAYMENT_TYPE = "order_payment_type";
+    public static final String ORDER_ADDRESS = "order_address";
 
     private ParameterName() {
     }

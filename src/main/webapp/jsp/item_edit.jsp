@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="ctg" uri="customtags" %>
 <c:set var="abs">${pageContext.request.contextPath}</c:set>
 <html>
 <head>
@@ -34,62 +35,63 @@
     </div>
 </nav>
 <div class="d-flex justify-content-center">
-<c:forEach var="item" items="${items}">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <br>${item.name}
-                <br>${item.description}
-                <br>Category:
-                <br>${item.category}
-                <br>Subcategory:
-                <br>${item.subcategory}
-                <br> ${item.price} Br
-                <br><c:if test="${item.inStock eq true}">Is in stock</c:if>
-                <br><c:if test="${item.inStock eq false}">Sold out</c:if>
-                <br>
-                <form class="col" action="${abs}/controller" method="get">
-                    <input type="hidden" name="command" value="delete_item">
-                    <button type="button" class="btn btn-danger">Delete</button>
+    <c:forEach var="item" items="${items}">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <br>${item.name}
+                    <br>${item.description}
+                    <br>Category:
+                    <br>${item.category}
+                    <br>Subcategory:
+                    <br>${item.subcategory}
+                    <br> ${item.price} Br
+                    <br><c:if test="${item.inStock eq true}">Is in stock</c:if>
+                    <br><c:if test="${item.inStock eq false}">Sold out</c:if>
+                    <br>
+                    <form class="col" action="${abs}/controller" method="get">
+                        <input type="hidden" name="command" value="delete_item">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </div>
+                <form class="col" action="${abs}/controller" method="post">
+                    <label>Item name:
+                        <br><input type="text" name="item_name">
+                    </label>
+                    <br><label>Item description:
+                    <br><input type="text" name="item_description">
+                </label>
+                    <br><label>Item category:
+                    <br><input type="text" name="item_category">
+                </label>
+                    <br><label>Item subcategory:
+                    <br><input type="text" name="item_subcategory">
+                </label>
+                    <br><label>Item price:
+                    <br><input type="text" name="item_price"> Br
+                </label>
+                    <br><label>Item stock:
+                    <br>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="item_in_stock"
+                               checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Item is in stock</label>
+                    </div>
+                </label>
+                    <div class="mx-auto">
+                        <div>
+                            <input type="hidden" name="command" value="edit_item">
+                            <br>
+                            <button class="btn btn-primary" type="submit">Edit</button>
+                        </div>
+                    </div>
                 </form>
             </div>
-            <form class="col" action="${abs}/controller" method="post">
-                <label>Item name:
-                    <br><input type="text" name="item_name">
-                </label>
-                <br><label>Item description:
-                <br><input type="text" name="item_description">
-            </label>
-                <br><label>Item category:
-                <br><input type="text" name="item_category">
-            </label>
-                <br><label>Item subcategory:
-                <br><input type="text" name="item_subcategory">
-            </label>
-                <br><label>Item price:
-                <br><input type="text" name="item_price"> Br
-            </label>
-                <br><label>Item stock:
-                <br>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="item_in_stock"
-                           checked>
-                    <label class="form-check-label" for="flexSwitchCheckChecked">Item is in stock</label>
-                </div>
-            </label>
-                <div class="mx-auto">
-                    <div>
-                        <input type="hidden" name="command" value="edit_item">
-                        <br>
-                        <button class="btn btn-primary" type="submit">Edit</button>
-                    </div>
-                </div>
-            </form>
+            <br>
         </div>
-        <br>
-    </div>
-</c:forEach>
+    </c:forEach>
 </div>
+<ctg:footertag/>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
         crossorigin="anonymous"></script>
