@@ -113,15 +113,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean registerUser(User user) throws ServiceException {
         try {
-            String name = user.getName();
-            String login = user.getLogin();
-            String password = user.getPassword();
-            String email = user.getEmail();
-            String phone = user.getPhone();
-            if (UserValidator.isNameValid(name) && UserValidator.isLoginValid(login) && UserValidator.isPasswordValid(password) && UserValidator.isEmailValid(email) && UserValidator.isPhoneValid(phone)) {
+            boolean name = UserValidator.isNameValid(user.getName()) ;
+            boolean login = UserValidator.isLoginValid(user.getLogin());
+            boolean password = UserValidator.isPasswordValid(user.getPassword());
+            boolean email = UserValidator.isEmailValid(user.getEmail());
+            boolean phone = UserValidator.isPhoneValid(user.getPhone());
+            if ( name && login && password && email && phone) {
                 User.UserRole userRole = user.getRole();
                 short roleId = userRole.getRoleId();
-                return userDao.createUser(name, login, password, email, phone, roleId);
+                return userDao.createUser(user.getName(), user.getLogin(), user.getPassword(), user.getEmail(), user.getPhone(), roleId);
             }
             return false;
         } catch (DaoException e) {

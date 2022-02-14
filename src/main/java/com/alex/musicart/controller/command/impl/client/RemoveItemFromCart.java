@@ -18,7 +18,7 @@ import java.util.Optional;
 import static com.alex.musicart.controller.command.PagePath.CART_PAGE;
 import static com.alex.musicart.controller.command.PagePath.MAIN_PAGE;
 import static com.alex.musicart.controller.command.ParameterName.ITEM_ID;
-import static com.alex.musicart.controller.command.SessionAttributeName.CART;
+import static com.alex.musicart.controller.command.SessionAttributeName.*;
 
 public class RemoveItemFromCart implements Command {
 
@@ -42,6 +42,7 @@ public class RemoveItemFromCart implements Command {
             logger.log(Level.ERROR, "An error has occurred while loading item.");
             throw new CommandException("An error has occurred while loading item.", e);
         }
+        session.setAttribute(CURRENT_PAGE, CART_PAGE);
         router.setPagePath(CART_PAGE);
         router.setRoute(Router.RouteType.FORWARD);
         return router;

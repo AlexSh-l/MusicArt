@@ -84,6 +84,10 @@ public class ItemDaoImpl implements ItemDao {
                     "SET it_is_in_stock = b'?'" +
                     "WHERE it_id = (?)";
 
+    private static final String SQL_DELETE_ITEM =
+            "DELETE FROM items " +
+                    "WHERE it_id = ?";
+
 
     public List<Item> findAllItems() throws DaoException {
         try (Connection connection = connectionPool.getConnection();
@@ -241,6 +245,23 @@ public class ItemDaoImpl implements ItemDao {
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Unable to create item. Database error.", e);
             throw new DaoException("Unable to create item. Database error.", e);
+        }
+    }
+
+    public boolean deleteItem(long itemId) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ITEM)) {
+            statement.setLong(1, itemId);
+            boolean isDeleted = statement.executeUpdate() == 1;
+            if (!isDeleted) {
+                logger.log(Level.INFO, "Unable to delete item.");
+                return false;
+            }
+            logger.log(Level.INFO, "Item deleted.");
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to delete item. Database error.", e);
+            throw new DaoException("Unable to delete item. Database error.", e);
         }
     }
 }

@@ -23,8 +23,7 @@ import java.util.Optional;
 
 import static com.alex.musicart.controller.command.PagePath.*;
 import static com.alex.musicart.controller.command.ParameterName.*;
-import static com.alex.musicart.controller.command.SessionAttributeName.ITEMS;
-import static com.alex.musicart.controller.command.SessionAttributeName.ITEM_CREATION_RESULT;
+import static com.alex.musicart.controller.command.SessionAttributeName.*;
 
 public class AddItemCommand implements Command {
 
@@ -72,6 +71,7 @@ public class AddItemCommand implements Command {
             logger.log(Level.ERROR, "Could not add this item.");
             throw new CommandException("Could not add this item.", e);
         }
+        session.setAttribute(CURRENT_PAGE, ADD_ITEM_PAGE);
         router.setPagePath(ADD_ITEM_PAGE);
         router.setRoute(Router.RouteType.FORWARD);
         return router;

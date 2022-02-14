@@ -19,7 +19,7 @@ import java.util.List;
 
 import static com.alex.musicart.controller.command.PagePath.ADD_ITEM_PAGE;
 import static com.alex.musicart.controller.command.PagePath.ORDERS_PAGE;
-import static com.alex.musicart.controller.command.SessionAttributeName.ORDERS;
+import static com.alex.musicart.controller.command.SessionAttributeName.*;
 
 public class ToOrdersCommand implements Command {
 
@@ -33,6 +33,7 @@ public class ToOrdersCommand implements Command {
         try {
             List<Order> orders = orderService.findAllOrders();
             session.setAttribute(ORDERS, orders);
+            session.setAttribute(CURRENT_PAGE, ORDERS_PAGE);
             router.setPagePath(ORDERS_PAGE);
             router.setRoute(Router.RouteType.FORWARD);
             return router;

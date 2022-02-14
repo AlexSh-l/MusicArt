@@ -19,4 +19,8 @@ public interface ItemService {
     Optional<Item> findItemByName(String name) throws ServiceException;
 
     //boolean updateName(long id, String newName, String password) throws ServiceException;
+
+    boolean createNewItem(Item item) throws ServiceException;
+
+    boolean deleteItem(long itemId) throws ServiceException;
 }

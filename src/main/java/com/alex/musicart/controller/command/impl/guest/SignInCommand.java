@@ -50,9 +50,11 @@ public class SignInCommand implements Command {
                     Cart cart = new Cart();
                     session.setAttribute(CART, cart);
                 }
+                session.setAttribute(CURRENT_PAGE, MAIN_PAGE);
                 router.setPagePath(MAIN_PAGE);
             } else {
                 session.setAttribute(SIGN_IN_RESULT, false);
+                session.setAttribute(CURRENT_PAGE, REGISTRATION_PAGE);
                 router.setPagePath(REGISTRATION_PAGE);
             }
             //router.setPagePath(REGISTRATION_PAGE);

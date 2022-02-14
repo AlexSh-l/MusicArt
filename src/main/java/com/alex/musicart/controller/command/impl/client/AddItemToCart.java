@@ -21,8 +21,7 @@ import java.util.Optional;
 
 import static com.alex.musicart.controller.command.PagePath.MAIN_PAGE;
 import static com.alex.musicart.controller.command.ParameterName.ITEM_ID;
-import static com.alex.musicart.controller.command.SessionAttributeName.CART;
-import static com.alex.musicart.controller.command.SessionAttributeName.ITEMS;
+import static com.alex.musicart.controller.command.SessionAttributeName.*;
 
 public class AddItemToCart implements Command {
 
@@ -34,7 +33,6 @@ public class AddItemToCart implements Command {
         Router router = new Router();
         HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute(CART);
-        //var t = session.getAttribute(ITEMS);
         long itemId = Long.parseLong(request.getParameter(ITEM_ID));
         try {
             Optional<Item> optionalItem = itemService.findItemById(itemId);
@@ -47,6 +45,7 @@ public class AddItemToCart implements Command {
             logger.log(Level.ERROR, "An error has occurred while loading item.");
             throw new CommandException("An error has occurred while loading item.", e);
         }
+        session.setAttribute(CURRENT_PAGE, MAIN_PAGE);
         router.setPagePath(MAIN_PAGE);
         router.setRoute(Router.RouteType.FORWARD);
         return router;

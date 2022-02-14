@@ -41,6 +41,7 @@ public class ItemSearchCommand implements Command {
                 items.add(item);
                 session.setAttribute(ITEMS, items);
             }
+            session.setAttribute(CURRENT_PAGE, MAIN_PAGE);
             router.setPagePath(MAIN_PAGE);
             router.setRoute(Router.RouteType.FORWARD);
             return router;

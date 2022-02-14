@@ -15,9 +15,10 @@ import javax.servlet.http.HttpSession;
 
 import java.util.List;
 
+import static com.alex.musicart.controller.command.PagePath.CART_PAGE;
 import static com.alex.musicart.controller.command.PagePath.MAIN_PAGE;
-import static com.alex.musicart.controller.command.SessionAttributeName.ITEMS;
-import static com.alex.musicart.controller.command.SessionAttributeName.SIGN_IN_RESULT;
+import static com.alex.musicart.controller.command.ParameterName.LANGUAGE;
+import static com.alex.musicart.controller.command.SessionAttributeName.*;
 
 public class ToMainCommand implements Command {
 
@@ -28,6 +29,10 @@ public class ToMainCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         Router router = new Router();
+        String language = request.getParameter(LANGUAGE);
+        if (language == null) {
+            session.setAttribute(LOCALE, "en_EN");
+        }
         List<Item> items;
         try {
             items = itemService.findAllItems();
@@ -36,7 +41,9 @@ public class ToMainCommand implements Command {
             logger.log(Level.ERROR, "An error has occurred while loading items.");
             throw new CommandException("An error has occurred while loading items.", e);
         }
+        session.setAttribute(CURRENT_PAGE, MAIN_PAGE);
         router.setPagePath(MAIN_PAGE);
+        router.setRoute(Router.RouteType.FORWARD);
         return router;
     }
 }

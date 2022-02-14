@@ -31,4 +31,8 @@ public interface ItemDao extends RootDao {
     boolean updateItemDescription(long id, String description) throws DaoException;
 
     boolean updateItemPrice(long id, BigDecimal price) throws DaoException;
+
+    boolean addNewItem(Item item) throws DaoException;
+
+    boolean deleteItem(long itemId) throws DaoException;
 }

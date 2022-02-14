@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import static com.alex.musicart.controller.command.PagePath.ITEM_EDIT_PAGE;
 import static com.alex.musicart.controller.command.ParameterName.ITEM_ID;
+import static com.alex.musicart.controller.command.SessionAttributeName.CURRENT_PAGE;
 import static com.alex.musicart.controller.command.SessionAttributeName.ITEMS;
 
 public class ToEditItemCommand implements Command {
@@ -38,6 +39,7 @@ public class ToEditItemCommand implements Command {
                 items.add(optionalItem.get());
                 session.setAttribute(ITEMS, items);
             }
+            session.setAttribute(CURRENT_PAGE, ITEM_EDIT_PAGE);
             router.setPagePath(ITEM_EDIT_PAGE);
             router.setRoute(Router.RouteType.FORWARD);
             return router;

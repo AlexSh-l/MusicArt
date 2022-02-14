@@ -26,8 +26,8 @@ public class SignOutCommand implements Command {
         HttpSession session = request.getSession();
         session.removeAttribute(USER);
         session.removeAttribute(CART);
-        //session.setAttribute(USER, null);
         session.setAttribute(SIGN_IN_RESULT, false);
+        session.setAttribute(CURRENT_PAGE, MAIN_PAGE);
         router.setPagePath(MAIN_PAGE);
         router.setRoute(Router.RouteType.FORWARD);
         return router;

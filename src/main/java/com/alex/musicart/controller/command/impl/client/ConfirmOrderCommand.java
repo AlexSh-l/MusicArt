@@ -66,7 +66,6 @@ public class ConfirmOrderCommand implements Command {
                         //order.setStatus(orderStatus.get);
                         order.setStatusId(orderStatus.getOrderStatusId());
                         order.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
-                        //order.setTimestamp(LocalDateTime.now());
                         User user = (User) session.getAttribute(USER);
                         order.setUserId(user.getUserId());
                         order.setUser(user);
@@ -95,6 +94,7 @@ public class ConfirmOrderCommand implements Command {
             logger.log(Level.ERROR, "An error has occurred while loading item.");
             throw new CommandException("An error has occurred while loading item.", e);
         }
+        session.setAttribute(CURRENT_PAGE, ORDER_PAGE);
         router.setPagePath(ORDER_PAGE);
         router.setRoute(Router.RouteType.FORWARD);
         return router;

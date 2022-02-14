@@ -113,12 +113,23 @@ public class ItemServiceImpl implements ItemService {
         }
     }*/
 
+    @Override
     public boolean createNewItem(Item item) throws ServiceException {
         try {
             return itemDao.addNewItem(item);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Unable to create an item.");
             throw new ServiceException("Unable to create an item.", e);
+        }
+    }
+
+    @Override
+    public boolean deleteItem(long itemId) throws ServiceException {
+        try {
+            return itemDao.deleteItem(itemId);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Unable to delete an item.");
+            throw new ServiceException("Unable to delete an item.", e);
         }
     }
 }

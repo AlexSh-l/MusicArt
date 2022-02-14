@@ -2,15 +2,13 @@ package com.alex.musicart.controller.command;
 
 import com.alex.musicart.controller.command.impl.admin.*;
 import com.alex.musicart.controller.command.impl.client.*;
+import com.alex.musicart.controller.command.impl.general.ChangeLocaleCommand;
 import com.alex.musicart.controller.command.impl.general.NonExistentCommand;
 import com.alex.musicart.controller.command.impl.general.ToMainCommand;
 import com.alex.musicart.controller.command.impl.guest.*;
 import com.alex.musicart.model.entity.User;
 
 import java.util.EnumSet;
-
-import static com.alex.musicart.model.entity.User.UserRole.ADMIN;
-import static com.alex.musicart.model.entity.User.UserRole.CLIENT;
 
 public enum CommandType {
     /* general commands */
@@ -35,7 +33,8 @@ public enum CommandType {
     TO_ORDERS(new ToOrdersCommand()),
     TO_ORDER_EDIT(new ToOrderEditCommand()),
     DELETE_ORDER(new DeleteOrderCommand()),
-    TO_ORDER_ITEMS(new ToOrderItemsCommand());
+    TO_ORDER_ITEMS(new ToOrderItemsCommand()),
+    CHANGE_LOCALE(new ChangeLocaleCommand());
     /* customer commands */
 
 

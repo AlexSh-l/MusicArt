@@ -54,6 +54,7 @@ public class RegisterCommand implements Command {
                         session.setAttribute(REGISTRATION_RESULT, true);
                         session.setAttribute(USER, user);
                         router.setRoute(Router.RouteType.REDIRECT);
+                        session.setAttribute(CURRENT_PAGE, MAIN_PAGE);
                         router.setPagePath(MAIN_PAGE);
                         return router;
                     } else {
@@ -63,6 +64,7 @@ public class RegisterCommand implements Command {
                     session.setAttribute(REGISTRATION_RESULT, "Please fill all the inputs correctly.");
                 }
             }
+            session.setAttribute(CURRENT_PAGE, REGISTRATION_PAGE);
             router.setPagePath(REGISTRATION_PAGE);
             router.setRoute(Router.RouteType.FORWARD);
             return router;

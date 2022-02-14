@@ -23,8 +23,7 @@ import java.util.Optional;
 import static com.alex.musicart.controller.command.PagePath.*;
 import static com.alex.musicart.controller.command.ParameterName.ITEM_ID;
 import static com.alex.musicart.controller.command.ParameterName.ORDER_ID;
-import static com.alex.musicart.controller.command.SessionAttributeName.ITEMS;
-import static com.alex.musicart.controller.command.SessionAttributeName.ORDER_DELETION_RESULT;
+import static com.alex.musicart.controller.command.SessionAttributeName.*;
 
 public class DeleteOrderCommand implements Command {
 
@@ -42,6 +41,7 @@ public class DeleteOrderCommand implements Command {
             } else {
                 session.setAttribute(ORDER_DELETION_RESULT, "Unable to delete this order.");
             }
+            session.setAttribute(CURRENT_PAGE, ORDERS_PAGE);
             router.setPagePath(ORDERS_PAGE);
             router.setRoute(Router.RouteType.FORWARD);
             return router;

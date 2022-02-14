@@ -31,9 +31,10 @@ public class UserDaoImpl implements UserDao {
     private static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
             "SELECT us_id, us_name, us_login, us_password, us_email, us_phone, us_role_id " +
                     "FROM users " +
-                    "JOIN roles ON roles.ro_id = users.us_role_id " +
+                    "JOIN roles " +
                     "WHERE us_login = (?) " +
-                    "AND us_password = (?)";
+                    "AND us_password = (?) " +
+                    "AND roles.ro_id = users.us_role_id";
     private static final String SQL_SELECT_CLIENT_BY_LOGIN =
             "SELECT us_id, us_name, us_login, us_password, us_email, us_phone, us_role_id " +
                     "FROM users " +

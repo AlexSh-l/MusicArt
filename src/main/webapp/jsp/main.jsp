@@ -9,6 +9,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="abs">${pageContext.request.contextPath}</c:set>
+<fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setBundle basename="/localization/locale"/>
 <html>
 <head>
     <meta charset="utf-8">
@@ -35,8 +37,28 @@
                 <input type="hidden" name="command" value="item_search">
                 <input class="form-control me-2" name="item_name" placeholder="Search"
                        aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <button class="btn btn-outline-primary" type="submit"><fmt:message key="catalog.search"/></button>
             </form>
+        </div>
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Language
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                    <form class="dropdown-item" action="${abs}/controller" method="get">
+                        <input type="hidden" name="command" value="change_locale">
+                        <input type="hidden" name="language" value="en_EN">
+                        <button class="btn btn-outline-primary" type="submit">English</button>
+                    </form>
+                </li>
+                <li><form class="dropdown-item" action="${abs}/controller" method="get">
+                    <input type="hidden" name="command" value="change_locale">
+                    <input type="hidden" name="language" value="ru_RU">
+                    <button class="btn btn-outline-primary" type="submit">Русский</button>
+                </form>
+                </li>
+            </ul>
         </div>
         <c:choose>
             <c:when test="${sign_in_result eq true}">

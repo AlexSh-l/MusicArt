@@ -1,7 +1,7 @@
 package com.alex.musicart.validator;
 
 public class UserValidator {
-    private static final String REGEX_NAME = "[\\w, '-]{8,100}";
+    private static final String REGEX_NAME = "[\\w, '-]{100}";
     private static final String REGEX_LOGIN = "[\\w]{8,100}";
     private static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,100}$";
     private static final String REGEX_EMAIL = "[\\S]+\\@[\\S]+\\.[\\a-z]+";

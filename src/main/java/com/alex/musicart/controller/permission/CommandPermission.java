@@ -16,7 +16,8 @@ public enum CommandPermission {
             CommandType.TO_ORDERS.name(),
             CommandType.TO_ORDER_EDIT.name(),
             CommandType.DELETE_ORDER.name(),
-            CommandType.TO_ORDER_ITEMS.name())),
+            CommandType.TO_ORDER_ITEMS.name(),
+            CommandType.CHANGE_LOCALE.name())),
 
     CLIENT(Set.of(CommandType.NON_EXISTENT.name(),
             CommandType.TO_MAIN.name(),
@@ -26,7 +27,8 @@ public enum CommandPermission {
             CommandType.TO_CART.name(),
             CommandType.REMOVE_FROM_CART.name(),
             CommandType.CONFIRM_ORDER.name(),
-            CommandType.TO_ORDER.name())),
+            CommandType.TO_ORDER.name(),
+            CommandType.CHANGE_LOCALE.name())),
 
     GUEST(Set.of(CommandType.NON_EXISTENT.name(),
             CommandType.TO_MAIN.name(),
@@ -34,7 +36,8 @@ public enum CommandPermission {
           CommandType.SIGN_IN.name(),
           CommandType.TO_REGISTRATION.name(),
           CommandType.REGISTER.name(),
-          CommandType.ITEM_SEARCH.name()));
+          CommandType.ITEM_SEARCH.name(),
+          CommandType.CHANGE_LOCALE.name()));
 
     private final Set<String> allowedCommands;
 
