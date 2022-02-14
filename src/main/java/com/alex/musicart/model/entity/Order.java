@@ -2,6 +2,8 @@ package com.alex.musicart.model.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order extends CustomEntity {
 
@@ -14,6 +16,8 @@ public class Order extends CustomEntity {
     private String address;
     private Timestamp timestamp;
     private short paymentTypeId;
+    private String paymentType;
+    private List<Item> items = new ArrayList<>();
 
     public Order() {
     }
@@ -88,5 +92,21 @@ public class Order extends CustomEntity {
 
     public void setPaymentTypeId(short paymentTypeId) {
         this.paymentTypeId = paymentTypeId;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

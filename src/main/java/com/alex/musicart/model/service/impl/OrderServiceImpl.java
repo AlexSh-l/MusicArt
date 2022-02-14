@@ -9,6 +9,12 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 public class OrderServiceImpl implements OrderService {
     static Logger logger = LogManager.getLogger();
     private static OrderServiceImpl instance;
@@ -25,10 +31,32 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findAllOrders() throws ServiceException {
+        try {
+            return orderDao.findAllOrders();
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Unable to find all orders.");
+            throw new ServiceException("Unable to find all orders.", e);
+        }
+    }
+
+    @Override
     public boolean createOrder(Order order) throws ServiceException {
         try {
             //if (UserValidator.isNameValid(name) && UserValidator.isLoginValid(login) && UserValidator.isPasswordValid(password) && UserValidator.isEmailValid(email) && UserValidator.isPhoneValid(phone)) {
             return orderDao.createOrder(order);
+            //}
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Unable to create order.");
+            throw new ServiceException("Unable to create order.", e);
+        }
+    }
+
+    @Override
+    public boolean deleteOrder(long orderId) throws ServiceException {
+        try {
+            //if (UserValidator.isNameValid(name) && UserValidator.isLoginValid(login) && UserValidator.isPasswordValid(password) && UserValidator.isEmailValid(email) && UserValidator.isPhoneValid(phone)) {
+            return orderDao.deleteOrder(orderId);
             //}
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Unable to create order.");

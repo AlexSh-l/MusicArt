@@ -3,7 +3,7 @@ package com.alex.musicart.model.entity;
 public class User extends CustomEntity {
 
     public enum UserRole {
-        CLIENT((short) 1), ADMIN((short) 2);
+        CLIENT((short) 1), ADMIN((short) 2), GUEST((short) 2);
         private short roleId;
 
         UserRole(short id){

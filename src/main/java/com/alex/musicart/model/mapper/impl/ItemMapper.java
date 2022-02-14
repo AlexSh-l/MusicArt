@@ -36,7 +36,6 @@ public class ItemMapper implements EntityMapper {
         List<Item> items = new ArrayList<>();
 
         while (resultSet.next()) {
-            var t = resultSet.getString(ITEMS_NAME);
             //if (resultSet.next()) {
                 Item item = new Item();
                 item.setItemId(resultSet.getLong(ITEMS_ID));

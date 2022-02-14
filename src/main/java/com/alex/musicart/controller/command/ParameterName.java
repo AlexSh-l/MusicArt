@@ -22,11 +22,12 @@ public final class ParameterName {
     public static final String ITEM_IN_STOCK = "item_in_stock";
     public static final String ITEM_ID = "item_id";
     public static final String ADD_ITEM = "add_item";
-    public static final String CART = "cart";
+    //public static final String CART = "cart";
     public static final String ADD_TO_CART = "add_to_cart";
     public static final String REMOVE_FROM_CART = "remove_from_cart";
     public static final String ADDRESS = "address";
     public static final String PAYMENT_TYPE = "payment_type";
+    public static final String ORDER_ID = "order_id";
 
     public static final String INVALID_FIRST_NAME_RESULT = "invalidName";
 

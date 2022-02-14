@@ -54,7 +54,7 @@ public class ConfirmOrderCommand implements Command {
             }else if(paymentTypeName.equals("card")){
                 paymentTypeName = "картой";
             }
-            if(address.isEmpty()) {
+            if(!address.isEmpty()) {
                 Optional<PaymentType> optionalPaymentType = paymentTypeService.findPaymentTypeByName(paymentTypeName);
                 if (optionalPaymentType.isPresent()) {
                     PaymentType paymentType = optionalPaymentType.get();
@@ -69,11 +69,13 @@ public class ConfirmOrderCommand implements Command {
                         //order.setTimestamp(LocalDateTime.now());
                         User user = (User) session.getAttribute(USER);
                         order.setUserId(user.getUserId());
+                        order.setUser(user);
                         double totalPrice = 0.0;
                         for (Item item : items) {
                             totalPrice += item.getPrice().doubleValue();
                         }
                         order.setPrice(BigDecimal.valueOf(totalPrice));
+                        order.setItems(items);
                         if (orderService.createOrder(order)) {
                             session.setAttribute(ORDER_RESULT, true);
                             session.removeAttribute(CART);

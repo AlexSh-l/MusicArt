@@ -48,6 +48,10 @@
                 </c:if>
                 <c:if test="${user.role eq 'ADMIN'}">
                     <form class="nav-link" action="${abs}/controller" method="get">
+                        <input type="hidden" name="command" value="to_orders">
+                        <button class="btn btn-primary" type="submit">Show orders</button>
+                    </form>
+                    <form class="nav-link" action="${abs}/controller" method="get">
                         <input type="hidden" name="command" value="to_add_item">
                         <button class="btn btn-primary" type="submit">Add new item</button>
                     </form>
