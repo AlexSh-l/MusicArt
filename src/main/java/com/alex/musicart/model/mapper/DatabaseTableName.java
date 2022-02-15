@@ -16,9 +16,6 @@ public final class DatabaseTableName {
     public static final String ITEMS_PRICE = "items.it_price";
     public static final String ITEMS_IS_IN_STOCK = "items.it_is_in_stock";
 
-    public static final String BRANDS_ID = "brands.br_id";
-    public static final String BRANDS_NAME = "brands.br_name";
-
     public static final String SUBCATEGORIES_ID = "subcategories.su_id";
     public static final String SUBCATEGORIES_NAME = "subcategories.su_name";
     public static final String SUBCATEGORIES_CATEGORY_ID = "subcategories.su_category_id";
@@ -40,6 +37,6 @@ public final class DatabaseTableName {
     public static final String ORDERS_PAYMENT_TYPE = "orders.or_payment_type";
     public static final String ORDERS_ADDRESS = "orders.or_address";
 
-    private DatabaseTableName(){
+    private DatabaseTableName() {
     }
 }

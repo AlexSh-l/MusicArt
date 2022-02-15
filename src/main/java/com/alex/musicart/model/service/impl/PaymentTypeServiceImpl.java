@@ -2,22 +2,20 @@ package com.alex.musicart.model.service.impl;
 
 import com.alex.musicart.exception.DaoException;
 import com.alex.musicart.exception.ServiceException;
-import com.alex.musicart.model.dao.impl.CategoryDaoImpl;
-import com.alex.musicart.model.dao.impl.ItemDaoImpl;
+import com.alex.musicart.model.dao.PaymentTypeDao;
 import com.alex.musicart.model.dao.impl.PaymentTypeDaoImpl;
-import com.alex.musicart.model.dao.impl.SubcategoryDaoImpl;
 import com.alex.musicart.model.entity.PaymentType;
-import com.alex.musicart.model.entity.Subcategory;
+import com.alex.musicart.model.service.PaymentTypeService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
-public class PaymentTypeServiceImpl {
+public class PaymentTypeServiceImpl implements PaymentTypeService {
     static Logger logger = LogManager.getLogger();
     private static PaymentTypeServiceImpl instance;
-    private final PaymentTypeDaoImpl paymentTypeDao = new PaymentTypeDaoImpl();
+    private final PaymentTypeDao paymentTypeDao = new PaymentTypeDaoImpl();
 
     private PaymentTypeServiceImpl() {
     }
@@ -32,7 +30,7 @@ public class PaymentTypeServiceImpl {
     public Optional<PaymentType> findPaymentTypeByName(String name) throws ServiceException {
         try {
             Optional<PaymentType> optionalPaymentType = paymentTypeDao.findPaymentTypeByName(name);
-            if (optionalPaymentType.isPresent()){
+            if (optionalPaymentType.isPresent()) {
                 return optionalPaymentType;
             }
         } catch (DaoException e) {

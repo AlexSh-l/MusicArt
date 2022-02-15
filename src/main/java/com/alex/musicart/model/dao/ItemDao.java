@@ -2,13 +2,8 @@ package com.alex.musicart.model.dao;
 
 import com.alex.musicart.exception.DaoException;
 import com.alex.musicart.model.entity.Item;
-import org.apache.logging.log4j.Level;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +20,8 @@ public interface ItemDao extends RootDao {
     Optional<Item> findItemByCategory(String category) throws DaoException;
 
     List<Item> findAllItemsInStock() throws DaoException;
+
+    boolean updateItemSubcategory(long id, int subcategoryId) throws DaoException;
 
     boolean updateItemStock(long id, boolean isInStock) throws DaoException;
 

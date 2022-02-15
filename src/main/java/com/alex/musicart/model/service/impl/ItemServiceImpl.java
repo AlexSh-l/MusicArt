@@ -2,22 +2,20 @@ package com.alex.musicart.model.service.impl;
 
 import com.alex.musicart.exception.DaoException;
 import com.alex.musicart.exception.ServiceException;
-import com.alex.musicart.model.dao.UserDao;
+import com.alex.musicart.model.dao.CategoryDao;
+import com.alex.musicart.model.dao.ItemDao;
+import com.alex.musicart.model.dao.SubcategoryDao;
 import com.alex.musicart.model.dao.impl.CategoryDaoImpl;
 import com.alex.musicart.model.dao.impl.ItemDaoImpl;
 import com.alex.musicart.model.dao.impl.SubcategoryDaoImpl;
-import com.alex.musicart.model.dao.impl.UserDaoImpl;
 import com.alex.musicart.model.entity.Category;
 import com.alex.musicart.model.entity.Item;
 import com.alex.musicart.model.entity.Subcategory;
-import com.alex.musicart.model.entity.User;
 import com.alex.musicart.model.service.ItemService;
-import com.alex.musicart.validator.UserValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +23,9 @@ import java.util.Optional;
 public class ItemServiceImpl implements ItemService {
     static Logger logger = LogManager.getLogger();
     private static ItemServiceImpl instance;
-    private final ItemDaoImpl itemDao = new ItemDaoImpl();
-    private final CategoryDaoImpl categoryDao = new CategoryDaoImpl();
-    private final SubcategoryDaoImpl subCategoryDao = new SubcategoryDaoImpl();
+    private final ItemDao itemDao = new ItemDaoImpl();
+    private final CategoryDao categoryDao = new CategoryDaoImpl();
+    private final SubcategoryDao subCategoryDao = new SubcategoryDaoImpl();
 
     private ItemServiceImpl() {
     }
@@ -42,8 +40,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> findAllItems() throws ServiceException {
         try {
-            //List<Item> items = itemDao.findAllItems();
-
             return itemDao.findAllItems();
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Unable to find all items.");
@@ -66,7 +62,6 @@ public class ItemServiceImpl implements ItemService {
                     if (optionalCategory.isPresent()) {
                         Category category = optionalCategory.get();
                         item.setCategory(category.getName());
-                        //return Optional.of(item);
                     }
                 }
                 return Optional.of(item);
@@ -78,6 +73,7 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
+    @Override
     public Optional<Item> findItemById(long id) throws ServiceException {
         try {
             Optional<Item> optionalItem = itemDao.findItemById(id);
@@ -92,7 +88,6 @@ public class ItemServiceImpl implements ItemService {
                     if (optionalCategory.isPresent()) {
                         Category category = optionalCategory.get();
                         item.setCategory(category.getName());
-                        //return Optional.of(item);
                     }
                 }
                 return Optional.of(item);

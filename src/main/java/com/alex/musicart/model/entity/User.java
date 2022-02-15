@@ -22,7 +22,6 @@ public class User extends CustomEntity {
     private String email;
     private String phone;
     private UserRole role;
-    //private UserState state;
 
     public User(){
     }

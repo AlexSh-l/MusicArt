@@ -1,6 +1,5 @@
 package com.alex.musicart.model.mapper.impl;
 
-import com.alex.musicart.model.entity.Item;
 import com.alex.musicart.model.entity.Order;
 import com.alex.musicart.model.entity.User;
 import com.alex.musicart.model.mapper.EntityMapper;
@@ -16,13 +15,12 @@ import static com.alex.musicart.model.mapper.DatabaseTableName.*;
 public class OrderMapper implements EntityMapper {
     @Override
     public Optional map(ResultSet resultSet) throws SQLException {
-        if(resultSet.next()) {
+        if (resultSet.next()) {
             Order order = new Order();
             order.setOrderId(resultSet.getLong(ORDERS_ID));
             order.setPrice(resultSet.getBigDecimal(ORDERS_PRICE));
             order.setStatusId(resultSet.getShort(ORDERS_STATUS_ID));
             order.setUserId(resultSet.getLong(ORDERS_USER_ID));
-            //var t = resultSet.getDate(ORDERS_DATETIME);
             order.setTimestamp(resultSet.getTimestamp(ORDERS_TIMESTAMP));
             order.setPaymentTypeId(resultSet.getShort(ORDERS_PAYMENT_TYPE));
             order.setAddress(resultSet.getString(ORDERS_ADDRESS));
@@ -35,7 +33,6 @@ public class OrderMapper implements EntityMapper {
     public List<Order> mapList(ResultSet resultSet) throws SQLException {
         List<Order> orders = new ArrayList<>();
         while (resultSet.next()) {
-            //if (resultSet.next()) {
             Order order = new Order();
             order.setOrderId(resultSet.getLong(ORDERS_ID));
             order.setPrice(resultSet.getBigDecimal(ORDERS_PRICE));
@@ -54,7 +51,6 @@ public class OrderMapper implements EntityMapper {
             user.setPhone(resultSet.getString(USERS_PHONE));
             order.setUser(user);
             orders.add(order);
-            //}
         }
         return orders;
     }

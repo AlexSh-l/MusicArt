@@ -4,9 +4,7 @@ import com.alex.musicart.exception.DaoException;
 import com.alex.musicart.exception.ServiceException;
 import com.alex.musicart.model.dao.OrderStatusDao;
 import com.alex.musicart.model.dao.impl.OrderStatusDaoImpl;
-import com.alex.musicart.model.dao.impl.PaymentTypeDaoImpl;
 import com.alex.musicart.model.entity.OrderStatus;
-import com.alex.musicart.model.entity.PaymentType;
 import com.alex.musicart.model.service.OrderStatusService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -33,7 +31,7 @@ public class OrderStatusServiceImpl implements OrderStatusService {
     public Optional<OrderStatus> findOrderStatusByName(String name) throws ServiceException {
         try {
             Optional<OrderStatus> optionalOrderStatus = orderStatusDao.findOrderStatusByName(name);
-            if (optionalOrderStatus.isPresent()){
+            if (optionalOrderStatus.isPresent()) {
                 return optionalOrderStatus;
             }
         } catch (DaoException e) {

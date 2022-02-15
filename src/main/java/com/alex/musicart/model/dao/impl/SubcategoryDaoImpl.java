@@ -2,11 +2,8 @@ package com.alex.musicart.model.dao.impl;
 
 import com.alex.musicart.exception.DaoException;
 import com.alex.musicart.model.dao.SubcategoryDao;
-import com.alex.musicart.model.entity.Item;
 import com.alex.musicart.model.entity.Subcategory;
-import com.alex.musicart.model.entity.User;
 import com.alex.musicart.model.mapper.EntityMapper;
-import com.alex.musicart.model.mapper.impl.ItemMapper;
 import com.alex.musicart.model.mapper.impl.SubcategoryMapper;
 import com.alex.musicart.model.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
@@ -45,6 +42,7 @@ public class SubcategoryDaoImpl implements SubcategoryDao {
                     "SET su_name = (?)" +
                     "WHERE su_id = (?)";
 
+    @Override
     public List<Subcategory> findAllSubcategories() throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_SUBCATEGORIES)) {
@@ -58,6 +56,7 @@ public class SubcategoryDaoImpl implements SubcategoryDao {
         }
     }
 
+    @Override
     public Optional<Subcategory> findSubcategoryByName(String subcategory) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SELECT_SUBCATEGORY_BY_NAME)) {
@@ -70,6 +69,7 @@ public class SubcategoryDaoImpl implements SubcategoryDao {
         }
     }
 
+    @Override
     public Optional<Subcategory> findSubcategoryById(int subcategoryId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SELECT_SUBCATEGORY_BY_ID)) {
@@ -82,6 +82,7 @@ public class SubcategoryDaoImpl implements SubcategoryDao {
         }
     }
 
+    @Override
     public List<Subcategory> findSubcategoriesOfCategory(int categoryId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_SUBCATEGORIES_BY_CATEGORY_ID)) {
@@ -96,6 +97,7 @@ public class SubcategoryDaoImpl implements SubcategoryDao {
         }
     }
 
+    @Override
     public boolean updateSubcategoryName(long id, String name) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_SUBCATEGORY_NAME)) {

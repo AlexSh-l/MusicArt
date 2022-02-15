@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -113,17 +112,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean registerUser(User user) throws ServiceException {
         try {
-            boolean name = UserValidator.isNameValid(user.getName()) ;
-            boolean login = UserValidator.isLoginValid(user.getLogin());
-            boolean password = UserValidator.isPasswordValid(user.getPassword());
-            boolean email = UserValidator.isEmailValid(user.getEmail());
-            boolean phone = UserValidator.isPhoneValid(user.getPhone());
-            if ( name && login && password && email && phone) {
-                User.UserRole userRole = user.getRole();
-                short roleId = userRole.getRoleId();
-                return userDao.createUser(user.getName(), user.getLogin(), user.getPassword(), user.getEmail(), user.getPhone(), roleId);
-            }
-            return false;
+            User.UserRole userRole = user.getRole();
+            short roleId = userRole.getRoleId();
+            return userDao.createUser(user.getName(), user.getLogin(), user.getPassword(), user.getEmail(), user.getPhone(), roleId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Unable to register user.");
             throw new ServiceException("Unable to register user.", e);

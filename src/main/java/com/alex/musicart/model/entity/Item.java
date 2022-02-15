@@ -13,7 +13,7 @@ public class Item extends CustomEntity {
     private BigDecimal price;
     private boolean inStock;
 
-    public Item(){
+    public Item() {
     }
 
     public long getItemId() {
@@ -84,9 +84,7 @@ public class Item extends CustomEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Item item = (Item) o;
-
         if (itemId != item.itemId) return false;
         if (subcategoryId != item.subcategoryId) return false;
         if (inStock != item.inStock) return false;
@@ -108,5 +106,20 @@ public class Item extends CustomEntity {
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (inStock ? 1 : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Item{");
+        sb.append("itemId=").append(itemId);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", category='").append(category).append('\'');
+        sb.append(", subcategory='").append(subcategory).append('\'');
+        sb.append(", subcategoryId=").append(subcategoryId);
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", price=").append(price);
+        sb.append(", inStock=").append(inStock);
+        sb.append('}');
+        return sb.toString();
     }
 }

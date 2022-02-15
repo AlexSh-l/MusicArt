@@ -3,10 +3,8 @@ package com.alex.musicart.model.dao.impl;
 import com.alex.musicart.exception.DaoException;
 import com.alex.musicart.model.dao.OrderStatusDao;
 import com.alex.musicart.model.entity.OrderStatus;
-import com.alex.musicart.model.entity.PaymentType;
 import com.alex.musicart.model.mapper.EntityMapper;
 import com.alex.musicart.model.mapper.impl.OrderStatusMapper;
-import com.alex.musicart.model.mapper.impl.PaymentTypeMapper;
 import com.alex.musicart.model.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -28,6 +26,7 @@ public class OrderStatusDaoImpl implements OrderStatusDao {
                     "FROM statuses " +
                     "WHERE st_name = ?";
 
+    @Override
     public Optional<OrderStatus> findOrderStatusByName(String name) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ORDER_STATUS_BY_NAME)) {

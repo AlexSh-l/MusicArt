@@ -23,7 +23,6 @@ public class ConnectionFactory {
     static final int POOL_SIZE;
 
     static {
-        //ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         ClassLoader classLoader = ConnectionFactory.class.getClassLoader();
         try (InputStream inputStream = classLoader.getResourceAsStream(PROPERTIES_PATH)) {
             properties.load(inputStream);

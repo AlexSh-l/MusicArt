@@ -53,16 +53,16 @@
 <div class="d-flex justify-content-center">
     <form action="${abs}/controller" method="post">
         <label><fmt:message key="add_item.item_name"/>
-            <br><input type="text" name="item_name">
+            <br><input type="text" name="item_name" pattern="[\w, '-]{1,100}">
         </label>
         <br><label><fmt:message key="add_item.item_description"/>
-        <br><input type="text" name="item_description">
+        <br><input type="text" name="item_description" pattern="[\w, '-]{1,1000}">
     </label>
         <br><label><fmt:message key="add_item.item_category"/>
-        <br><input type="text" name="item_category">
+        <br><input type="text" name="item_category" pattern="[\w, '-]{1,100}">
     </label>
         <br><label><fmt:message key="add_item.item_subcategory"/>
-        <br><input type="text" name="item_subcategory">
+        <br><input type="text" name="item_subcategory" pattern="[\w, '-]{1,100}">
     </label>
         <br><label><fmt:message key="add_item.item_price"/>
         <br><input type="text" name="item_price"> <fmt:message key="add_item.item_price_currency"/>

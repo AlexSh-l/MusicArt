@@ -2,6 +2,8 @@ package com.alex.musicart.model.service.impl;
 
 import com.alex.musicart.exception.DaoException;
 import com.alex.musicart.exception.ServiceException;
+import com.alex.musicart.model.dao.ItemDao;
+import com.alex.musicart.model.dao.OrderDao;
 import com.alex.musicart.model.dao.impl.ItemDaoImpl;
 import com.alex.musicart.model.dao.impl.OrderDaoImpl;
 import com.alex.musicart.model.entity.Item;
@@ -11,14 +13,13 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
     static Logger logger = LogManager.getLogger();
     private static OrderServiceImpl instance;
-    private final OrderDaoImpl orderDao = new OrderDaoImpl();
-    private final ItemDaoImpl itemDao = new ItemDaoImpl();
+    private final OrderDao orderDao = new OrderDaoImpl();
+    private final ItemDao itemDao = new ItemDaoImpl();
 
     private OrderServiceImpl() {
     }
@@ -30,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
         return instance;
     }
 
+    @Override
     public List<Item> findAllItemsOfOrder(long orderId) throws ServiceException {
         try {
             return itemDao.findAllItemsByOrderId(orderId);
@@ -51,15 +53,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean createOrder(Order order) throws ServiceException {
         try {
-            //if (UserValidator.isNameValid(name) && UserValidator.isLoginValid(login) && UserValidator.isPasswordValid(password) && UserValidator.isEmailValid(email) && UserValidator.isPhoneValid(phone)) {
             return orderDao.createOrder(order);
-            //}
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Unable to create order.");
             throw new ServiceException("Unable to create order.", e);
         }
     }
 
+    @Override
     public boolean updateOrder(Order order, short orderStatusId, short orderPaymentTypeId, String orderAddress) throws ServiceException {
         try {
             boolean isStatusUpdated = false;
@@ -84,9 +85,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean deleteOrder(long orderId) throws ServiceException {
         try {
-            //if (UserValidator.isNameValid(name) && UserValidator.isLoginValid(login) && UserValidator.isPasswordValid(password) && UserValidator.isEmailValid(email) && UserValidator.isPhoneValid(phone)) {
             return orderDao.deleteOrder(orderId);
-            //}
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Unable to create order.");
             throw new ServiceException("Unable to create order.", e);

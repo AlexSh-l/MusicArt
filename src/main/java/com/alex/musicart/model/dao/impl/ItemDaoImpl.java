@@ -61,7 +61,6 @@ public class ItemDaoImpl implements ItemDao {
                     "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
                     "WHERE it_is_in_stock = b'1'";
 
-
     private static final String SQL_INSERT_NEW_ITEM =
             "INSERT INTO items " +
                     "(it_name, it_subcategory_id, it_description, it_price, it_is_in_stock) "+
@@ -217,6 +216,7 @@ public class ItemDaoImpl implements ItemDao {
         }
     }
 
+    @Override
     public boolean updateItemSubcategory(long id, int subcategoryId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_SUBCATEGORY_ID)) {
@@ -235,6 +235,7 @@ public class ItemDaoImpl implements ItemDao {
         }
     }
 
+    @Override
     public boolean updateItemDescription(long id, String description) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_DESCRIPTION)) {
@@ -253,6 +254,7 @@ public class ItemDaoImpl implements ItemDao {
         }
     }
 
+    @Override
     public boolean updateItemPrice(long id, BigDecimal price) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_PRICE)) {
@@ -271,6 +273,7 @@ public class ItemDaoImpl implements ItemDao {
         }
     }
 
+    @Override
     public boolean addNewItem(Item item) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_ITEM)) {
@@ -292,6 +295,7 @@ public class ItemDaoImpl implements ItemDao {
         }
     }
 
+    @Override
     public boolean deleteItem(long itemId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ITEM)) {

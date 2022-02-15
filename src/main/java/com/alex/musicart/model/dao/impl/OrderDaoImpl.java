@@ -5,7 +5,6 @@ import com.alex.musicart.model.dao.OrderDao;
 import com.alex.musicart.model.entity.Item;
 import com.alex.musicart.model.entity.Order;
 import com.alex.musicart.model.mapper.EntityMapper;
-import com.alex.musicart.model.mapper.impl.ItemMapper;
 import com.alex.musicart.model.mapper.impl.OrderMapper;
 import com.alex.musicart.model.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
@@ -37,15 +36,6 @@ public class OrderDaoImpl implements OrderDao {
                     "       AND st_id = or_status_id " +
                     "       AND pt_id = or_payment_type";
 
-    private static final String SQL_SELECT_ORDER_BY_USER_ID =
-            "SELECT or_id, or_price, or_status_id, or_user_id, or_timestamp, or_payment_type, or_address, us_id, us_name, us_login, us_email, us_phone " +
-                    "FROM orders " +
-                    "JOIN users " +
-                    "JOIN roles " +
-                    "WHERE or_user_id = ? " +
-                    "AND or_user_id = us_id " +
-                    "AND ro_name = 'client'";
-
     private static final String SQL_SELECT_LAST_ORDER_BY_USER_ID =
             "SELECT      or_id, or_price, or_status_id, or_user_id, or_timestamp, or_payment_type, or_address, us_id, us_name, us_login, us_email, us_phone " +
                     "FROM orders " +
@@ -55,16 +45,6 @@ public class OrderDaoImpl implements OrderDao {
                     "AND or_user_id = us_id " +
                     "AND ro_name = 'client' " +
                     "ORDER BY or_timestamp DESC;";
-
-    private static final String SQL_SELECT_ORDER_ID_BY_USER_ID =
-            "SELECT or_id " +
-                    "FROM orders " +
-                    "WHERE or_user_id = ? ";
-
-    private static final String SQL_SELECT_ORDER_ITEMS =
-            "INSERT INTO items_m2m_orders " +
-                    "(m2m_item_id, m2m_order_id) " +
-                    "VALUES (?, ?)";
 
     private static final String SQL_INSERT_NEW_ORDER =
             "INSERT INTO orders " +
@@ -154,6 +134,7 @@ public class OrderDaoImpl implements OrderDao {
         }
     }
 
+    @Override
     public boolean updateOrderStatus(long id, short orderStatusId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER_STATUS)) {
@@ -172,6 +153,7 @@ public class OrderDaoImpl implements OrderDao {
         }
     }
 
+    @Override
     public boolean updateOrderPaymentType(long id, short paymentTypeId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER_PAYMENT_TYPE)) {
@@ -190,6 +172,7 @@ public class OrderDaoImpl implements OrderDao {
         }
     }
 
+    @Override
     public boolean updateOrderAddress(long id, String address) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER_ADDRESS)) {

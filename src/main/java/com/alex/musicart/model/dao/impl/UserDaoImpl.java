@@ -41,7 +41,6 @@ public class UserDaoImpl implements UserDao {
                     "JOIN roles ON roles.ro_id = users.us_role_id " +
                     "WHERE ro_name = 'client' " +
                     "AND us_login = (?)";
-
     private static final String SQL_UPDATE_USER_NAME =
             "UPDATE users " +
                     "SET us_name = (?) " +
@@ -67,7 +66,6 @@ public class UserDaoImpl implements UserDao {
                     "SET us_phone = (?) " +
                     "WHERE us_id = (?) " +
                     "AND us_password = (?)";
-
     private static final String SQL_INSERT_USER =
             "INSERT INTO users " +
                     "(us_name, us_login, us_password, us_email, us_phone, us_role_id) " +

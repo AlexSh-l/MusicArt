@@ -39,6 +39,7 @@ public class CategoryDaoImpl implements CategoryDao {
                     "SET ca_name = (?)" +
                     "WHERE ca_id = (?)";
 
+    @Override
     public List<Category> findAllCategories() throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_CATEGORIES)) {
@@ -52,6 +53,7 @@ public class CategoryDaoImpl implements CategoryDao {
         }
     }
 
+    @Override
     public Optional<Category> findCategoryByName(String category) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CATEGORY_BY_NAME)) {
@@ -64,6 +66,7 @@ public class CategoryDaoImpl implements CategoryDao {
         }
     }
 
+    @Override
     public Optional<Category> findCategoryById(int categoryId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CATEGORY_BY_ID)) {
@@ -76,6 +79,7 @@ public class CategoryDaoImpl implements CategoryDao {
         }
     }
 
+    @Override
     public boolean updateCategoryName(long id, String name) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_CATEGORY_NAME)) {
