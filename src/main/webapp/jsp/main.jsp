@@ -21,7 +21,7 @@
             <form class="d-flex" action="${abs}/controller" method="get">
                 <input type="hidden" name="command" value="item_search">
                 <input class="form-control me-2" name="item_name" placeholder="<fmt:message key="nav.search"/>"
-                       aria-label="Search" pattern="[\w, '-]{1,100}">
+                       aria-label="Search">
                 <button class="btn btn-outline-primary" type="submit"><fmt:message key="nav.search"/></button>
             </form>
         </div>
