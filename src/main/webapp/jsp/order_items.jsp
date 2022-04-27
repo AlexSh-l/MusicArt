@@ -68,10 +68,6 @@
             <div class="col">
                     ${item.price} <fmt:message key="add_item.item_price_currency"/>
             </div>
-            <div class="col">
-                <c:if test="${item.inStock eq true}"><fmt:message key="items.in_stock"/></c:if>
-                <c:if test="${item.inStock eq false}"><fmt:message key="items.sold_out"/></c:if>
-            </div>
         </div>
         <br>
     </div>

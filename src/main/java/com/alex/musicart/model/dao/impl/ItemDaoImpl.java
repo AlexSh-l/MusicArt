@@ -24,42 +24,47 @@ public class ItemDaoImpl implements ItemDao {
     private final EntityMapper<Item> mapper = new ItemMapper();
 
     private static final String SQL_SELECT_ALL_ITEMS =
-            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock " +
+            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock, it_is_deleted " +
                     "FROM items " +
                     "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
-                    "JOIN categories ON categories.ca_id = subcategories.su_category_id ";
+                    "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
+                    "WHERE it_is_deleted = b'0'";
     private static final String SQL_SELECT_ALL_ITEMS_BY_ORDER_ID =
-            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock " +
-                    "        FROM items " +
-                    "        JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
-                    "        JOIN categories ON categories.ca_id = subcategories.su_category_id " +
-                    "        JOIN items_m2m_orders ON m2m_item_id = it_id " +
-                    "        WHERE m2m_order_id = ?";
+            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock, it_is_deleted " +
+                    "FROM items " +
+                    "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
+                    "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
+                    "JOIN items_m2m_orders ON m2m_item_id = it_id " +
+                    "WHERE m2m_order_id = ?";
     private static final String SQL_SELECT_ITEM_BY_NAME =
-            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock " +
+            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock, it_is_deleted " +
                     "FROM items " +
                     "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
                     "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
-                    "WHERE it_name = (?)";
+                    "WHERE it_name = (?)" +
+                    "AND it_is_deleted = b'0'";
     private static final String SQL_SELECT_ITEM_BY_ID =
-            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock " +
+            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock, it_is_deleted " +
                     "FROM items " +
                     "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
                     "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
-                    "WHERE it_id = (?)";
+                    "WHERE it_id = (?)" +
+                    "AND it_is_deleted = b'0'";
     private static final String SQL_SELECT_ITEM_BY_CATEGORY =
-            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock " +
+            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock, it_is_deleted " +
                     "FROM items " +
                     "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
                     "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
-                    "WHERE ca_name = (?)";
+                    "WHERE ca_name = (?)" +
+                    "AND it_is_deleted = b'0'";
 
     private static final String SQL_SELECT_ALL_ITEMS_IN_STOCK =
-            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock " +
+            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock, it_is_deleted " +
                     "FROM items " +
                     "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
                     "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
-                    "WHERE it_is_in_stock = b'1'";
+                    "WHERE it_is_in_stock = b'1'"+
+                    "AND it_is_deleted = b'0'";
 
     private static final String SQL_INSERT_NEW_ITEM =
             "INSERT INTO items " +
@@ -88,9 +93,9 @@ public class ItemDaoImpl implements ItemDao {
                     "WHERE it_id = (?)";
 
     private static final String SQL_DELETE_ITEM =
-            "DELETE FROM items " +
-                    "WHERE it_id = ?";
-
+            "UPDATE items " +
+                    "SET it_is_deleted = b?" +
+                    "WHERE it_id = (?)";
 
     @Override
     public List<Item> findAllItems() throws DaoException {
@@ -299,7 +304,8 @@ public class ItemDaoImpl implements ItemDao {
     public boolean deleteItem(long itemId) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ITEM)) {
-            statement.setLong(1, itemId);
+            statement.setString(1, "1");
+            statement.setLong(2, itemId);
             boolean isDeleted = statement.executeUpdate() == 1;
             if (!isDeleted) {
                 logger.log(Level.INFO, "Unable to delete item.");
