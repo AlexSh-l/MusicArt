@@ -38,12 +38,28 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findAllItems() throws ServiceException {
+    public List<Item> findSetAmountOfItemsById(long itemId, int itemAmount) throws ServiceException {
         try {
-            return itemDao.findAllItems();
+            return itemDao.findSetAmountOfItemsById(itemId, itemAmount);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Unable to find all items.");
-            throw new ServiceException("Unable to find all items.", e);
+            logger.log(Level.ERROR, "Unable to find " + itemAmount + " items with this id.");
+            throw new ServiceException("Unable to find " + itemAmount + " items with this id.", e);
+        }
+    }
+
+    @Override
+    public Optional<Long> findLastItemByIdWithSetAmount(int itemAmount) throws ServiceException {
+        try {
+            Optional<Item> optionalItem = itemDao.findLastItemByIdWithSetAmount(itemAmount);
+            if(optionalItem.isPresent()) {
+                Item item = optionalItem.get();
+                long itemId = item.getItemId();
+                return Optional.of(itemId);
+            }
+            return Optional.empty();
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Unable to find last item with set amount of items.");
+            throw new ServiceException("Unable to find last item with set amount of items.", e);
         }
     }
 

@@ -31,6 +31,7 @@ public final class ParameterName {
     public static final String ORDER_STATUS = "order_status";
     public static final String ORDER_PAYMENT_TYPE = "order_payment_type";
     public static final String ORDER_ADDRESS = "order_address";
+    public static final String PAGE_NUMBER = "page_number";
 
     private ParameterName() {
     }

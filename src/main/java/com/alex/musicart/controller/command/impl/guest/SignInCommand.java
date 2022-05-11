@@ -44,7 +44,7 @@ public class SignInCommand implements Command {
                 session.setAttribute(USER, user);
                 session.setAttribute(SIGN_IN_RESULT, true);
                 if (user.getRole() == User.UserRole.ADMIN) {
-                    List<Item> items = itemService.findAllItems();
+                    List<Item> items = itemService.findSetAmountOfItemsById(0, 10);
                     session.setAttribute(ITEMS, items);
                 } else {
                     Cart cart = new Cart();

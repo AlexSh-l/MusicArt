@@ -15,4 +15,6 @@ public final class SessionAttributeName {
     public static final String ORDER_UPDATE_RESULT = "order_update_result";
     public static final String CURRENT_PAGE = "current_page";
     public static final String LOCALE = "locale";
+    public static final String CURRENT_PAGE_NUMBER = "current_page_number";
+    public static final String NEXT_PAGES = "next_pages";
 }

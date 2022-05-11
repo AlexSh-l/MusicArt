@@ -63,12 +63,12 @@ public class ItemDaoImpl implements ItemDao {
                     "FROM items " +
                     "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
                     "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
-                    "WHERE it_is_in_stock = b'1'"+
+                    "WHERE it_is_in_stock = b'1'" +
                     "AND it_is_deleted = b'0'";
 
     private static final String SQL_INSERT_NEW_ITEM =
             "INSERT INTO items " +
-                    "(it_name, it_subcategory_id, it_description, it_price, it_is_in_stock) "+
+                    "(it_name, it_subcategory_id, it_description, it_price, it_is_in_stock) " +
                     "VALUES (?, ?, ?, ?, ?)";
 
     private static final String SQL_UPDATE_ITEM_NAME =
@@ -96,6 +96,24 @@ public class ItemDaoImpl implements ItemDao {
             "UPDATE items " +
                     "SET it_is_deleted = b?" +
                     "WHERE it_id = (?)";
+
+    private static final String SQL_SELECT_SET_AMOUNT_OF_ITEMS_BY_ID =
+            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock " +
+                    "FROM items " +
+                    "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
+                    "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
+                    "WHERE it_id > ? " +
+                    "ORDER BY it_id ASC LIMIT ?";
+
+    private static final String SQL_SELECT_LAST_ITEM_ID_WITH_SET_AMOUNT =
+            "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock " +
+                    "FROM (SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock " +
+                            "FROM items " +
+                            "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
+                            "JOIN categories ON categories.ca_id = subcategories.su_category_id "+
+                            "ORDER BY it_id ASC LIMIT ?) AS items " +
+                    "ORDER BY it_id DESC LIMIT 1";
+
 
     @Override
     public List<Item> findAllItems() throws DaoException {
@@ -149,6 +167,35 @@ public class ItemDaoImpl implements ItemDao {
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Unable to find item with that id.");
             throw new DaoException("Unable to find item with that id.", e);
+        }
+    }
+
+    @Override
+    public List<Item> findSetAmountOfItemsById(long id, int itemAmount) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_SET_AMOUNT_OF_ITEMS_BY_ID)) {
+            statement.setLong(1, id);
+            statement.setInt(2, itemAmount);
+            ResultSet resultSet = statement.executeQuery();
+            List<Item> items;
+            items = mapper.mapList(resultSet);
+            return items;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to find " + itemAmount + " items with that id.");
+            throw new DaoException("Unable to find " + itemAmount + " items with that id.", e);
+        }
+    }
+
+    @Override
+    public Optional<Item> findLastItemByIdWithSetAmount(int itemAmount) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_LAST_ITEM_ID_WITH_SET_AMOUNT)) {
+            statement.setInt(1, itemAmount);
+            ResultSet resultSet = statement.executeQuery();
+            return mapper.map(resultSet);
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to find last item with set amount of items.");
+            throw new DaoException("Unable to find last item with set amount of items.", e);
         }
     }
 

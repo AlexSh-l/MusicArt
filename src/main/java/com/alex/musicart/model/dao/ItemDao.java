@@ -17,6 +17,10 @@ public interface ItemDao extends RootDao {
 
     Optional<Item> findItemById(long id) throws DaoException;
 
+    List<Item> findSetAmountOfItemsById(long id, int itemAmount) throws DaoException;
+
+    Optional<Item> findLastItemByIdWithSetAmount(int itemAmount) throws DaoException;
+
     Optional<Item> findItemByCategory(String category) throws DaoException;
 
     List<Item> findAllItemsInStock() throws DaoException;

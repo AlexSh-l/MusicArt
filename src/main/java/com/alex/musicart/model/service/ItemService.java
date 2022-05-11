@@ -9,7 +9,9 @@ import java.util.Optional;
 
 public interface ItemService {
 
-    List<Item> findAllItems() throws ServiceException;
+    List<Item> findSetAmountOfItemsById(long itemId, int itemAmount) throws ServiceException;
+
+    Optional<Long> findLastItemByIdWithSetAmount(int itemAmount) throws ServiceException;
 
     Optional<Item> findItemByName(String name) throws ServiceException;
 
