@@ -57,8 +57,11 @@ public class AddItemCommand implements Command {
                     item.setSubcategoryId(subcategoryId);
                     item.setPrice(price);
                     item.setInStock(itemInStock);
-                    itemService.createNewItem(item);
-                    session.setAttribute(ITEM_CREATION_RESULT, true);
+                    if (itemService.createNewItem(item)) {
+                        session.setAttribute(ITEM_CREATION_RESULT, true);
+                    } else {
+                        session.setAttribute(ITEM_CREATION_RESULT, "Unable to add this item.");
+                    }
                 } else {
                     session.setAttribute(ITEM_CREATION_RESULT, "This subcategory does not exist.");
                 }
@@ -66,12 +69,12 @@ public class AddItemCommand implements Command {
                 session.setAttribute(ITEM_CREATION_RESULT, "This category does not exist.");
             }
         } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Could not add this item.");
-            throw new CommandException("Could not add this item.", e);
+            logger.log(Level.ERROR, "Could not add this item due to error.");
+            throw new CommandException("Could not add this item due to error.", e);
         }
         session.setAttribute(CURRENT_PAGE, ADD_ITEM_PAGE);
         router.setPagePath(ADD_ITEM_PAGE);
-        router.setRoute(Router.RouteType.FORWARD);
+        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 }

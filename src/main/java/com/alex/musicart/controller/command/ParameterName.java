@@ -21,6 +21,7 @@ public final class ParameterName {
     public static final String ITEM_PRICE = "item_price";
     public static final String ITEM_IN_STOCK = "item_in_stock";
     public static final String ITEM_ID = "item_id";
+    public static final String ITEM_PATH = "item_path";
     public static final String ADD_ITEM = "add_item";
     public static final String LANGUAGE = "language";
     public static final String ADD_TO_CART = "add_to_cart";

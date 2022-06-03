@@ -12,7 +12,7 @@ import static com.alex.musicart.model.mapper.DatabaseTableName.*;
 public class OrderStatusMapper implements EntityMapper {
     @Override
     public Optional map(ResultSet resultSet) throws SQLException {
-        if(resultSet.next()) {
+        if (resultSet.next()) {
             OrderStatus orderStatus = new OrderStatus();
             orderStatus.setOrderStatusId(resultSet.getShort(STATUSES_ID));
             orderStatus.setName(resultSet.getString(STATUSES_NAME));

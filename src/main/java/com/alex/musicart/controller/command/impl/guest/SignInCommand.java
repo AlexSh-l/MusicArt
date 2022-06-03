@@ -51,7 +51,7 @@ public class SignInCommand implements Command {
                     session.setAttribute(CART, cart);
                 }
                 session.setAttribute(CURRENT_PAGE, MAIN_PAGE);
-                router.setPagePath(MAIN_PAGE);
+                router.setPagePath("/controller?command=to_main&page_number=1");
             } else {
                 session.setAttribute(SIGN_IN_RESULT, false);
                 session.setAttribute(CURRENT_PAGE, REGISTRATION_PAGE);

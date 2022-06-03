@@ -65,7 +65,7 @@ public class RegisterCommand implements Command {
                         session.setAttribute(USER, user);
                         router.setRoute(Router.RouteType.REDIRECT);
                         session.setAttribute(CURRENT_PAGE, MAIN_PAGE);
-                        router.setPagePath(MAIN_PAGE);
+                        router.setPagePath("/controller?command=to_main&page_number=1");
                         return router;
                     } else {
                         session.setAttribute(REGISTRATION_RESULT, "Could not register user.");
@@ -76,7 +76,7 @@ public class RegisterCommand implements Command {
             }
             session.setAttribute(CURRENT_PAGE, REGISTRATION_PAGE);
             router.setPagePath(REGISTRATION_PAGE);
-            router.setRoute(Router.RouteType.FORWARD);
+            router.setRoute(Router.RouteType.REDIRECT);
             return router;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Could not authenticate client.");

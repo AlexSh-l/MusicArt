@@ -6,11 +6,11 @@ public class User extends CustomEntity {
         CLIENT((short) 1), ADMIN((short) 2), GUEST((short) 2);
         private short roleId;
 
-        UserRole(short id){
+        UserRole(short id) {
             roleId = id;
         }
 
-        public short getRoleId(){
+        public short getRoleId() {
             return roleId;
         }
     }
@@ -23,7 +23,7 @@ public class User extends CustomEntity {
     private String phone;
     private UserRole role;
 
-    public User(){
+    public User() {
     }
 
     public User(long userId, String name, String login, String password, String email, String phone, UserRole role) {

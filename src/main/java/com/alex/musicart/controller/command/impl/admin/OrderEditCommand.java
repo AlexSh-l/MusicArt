@@ -2,6 +2,7 @@ package com.alex.musicart.controller.command.impl.admin;
 
 import com.alex.musicart.controller.Router;
 import com.alex.musicart.controller.command.Command;
+import com.alex.musicart.controller.command.SessionAttributeName;
 import com.alex.musicart.exception.CommandException;
 import com.alex.musicart.exception.ServiceException;
 import com.alex.musicart.model.entity.*;
@@ -30,9 +31,14 @@ public class OrderEditCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         HttpSession session = request.getSession();
-        Order order;
+        Order order = null;
         List<Order> orders = (List<Order>) session.getAttribute(ORDERS);
-        order = orders.get(0);
+        long orderId = (long) session.getAttribute(SessionAttributeName.ORDER_ID);
+        for (Order temporaryOrder : orders) {
+            if (temporaryOrder.getOrderId() == orderId) {
+                order = temporaryOrder;
+            }
+        }
         try {
             String statusName = request.getParameter(ORDER_STATUS);
             String paymentTypeName = request.getParameter(ORDER_PAYMENT_TYPE);
@@ -42,20 +48,23 @@ public class OrderEditCommand implements Command {
             Optional<OrderStatus> optionalStatus = orderStatusService.findOrderStatusByName(statusName);
             if (optionalStatus.isPresent()) {
                 statusId = optionalStatus.get().getOrderStatusId();
+
+                Optional<PaymentType> optionalPaymentType = paymentTypeService.findPaymentTypeByName(paymentTypeName);
+                if (optionalPaymentType.isPresent()) {
+                    paymentTypeId = optionalPaymentType.get().getPaymentTypeId();
+                }
+                orderService.updateOrder(order, statusId, paymentTypeId, address);
+                session.setAttribute(ORDER_UPDATE_RESULT, true);
+            } else {
+                session.setAttribute(ORDER_UPDATE_RESULT, "Unable to edit this order.");
             }
-            Optional<PaymentType> optionalPaymentType = paymentTypeService.findPaymentTypeByName(paymentTypeName);
-            if (optionalPaymentType.isPresent()) {
-                paymentTypeId = optionalPaymentType.get().getPaymentTypeId();
-            }
-            orderService.updateOrder(order, statusId, paymentTypeId, address);
-            session.setAttribute(ORDER_UPDATE_RESULT, true);
             session.setAttribute(CURRENT_PAGE, ORDER_EDIT_PAGE);
             router.setPagePath(ORDER_EDIT_PAGE);
-            router.setRoute(Router.RouteType.FORWARD);
+            router.setRoute(Router.RouteType.REDIRECT);
             return router;
         } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Could not delete this order.");
-            throw new CommandException("Could not delete this order.", e);
+            logger.log(Level.ERROR, "Could not edit this order.");
+            throw new CommandException("Could not edit this order.", e);
         }
     }
 }

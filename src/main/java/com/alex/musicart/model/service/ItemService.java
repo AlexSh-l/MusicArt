@@ -22,4 +22,8 @@ public interface ItemService {
     boolean createNewItem(Item item) throws ServiceException;
 
     boolean deleteItem(long itemId) throws ServiceException;
+
+    boolean addNewImage(long itemId, String imageName, String imagePath) throws ServiceException;
+
+    List<Item> findImagesForSetItems(List<Item> items) throws ServiceException;
 }

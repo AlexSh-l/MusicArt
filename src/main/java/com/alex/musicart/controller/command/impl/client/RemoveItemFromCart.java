@@ -43,7 +43,7 @@ public class RemoveItemFromCart implements Command {
         }
         session.setAttribute(CURRENT_PAGE, CART_PAGE);
         router.setPagePath(CART_PAGE);
-        router.setRoute(Router.RouteType.FORWARD);
+        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 }

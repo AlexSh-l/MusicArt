@@ -43,7 +43,7 @@ public class AddItemToCart implements Command {
         }
         session.setAttribute(CURRENT_PAGE, MAIN_PAGE);
         router.setPagePath(MAIN_PAGE);
-        router.setRoute(Router.RouteType.FORWARD);
+        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 }

@@ -4,7 +4,7 @@ public class OrderStatus extends CustomEntity {
     private short orderStatusId;
     private String name;
 
-    public OrderStatus(){
+    public OrderStatus() {
     }
 
     public short getOrderStatusId() {

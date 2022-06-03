@@ -37,19 +37,14 @@ public class PaginationTag extends TagSupport {
 
     @Override
     public int doStartTag() throws JspException {
-
         if (page_number != null) {
-            //Integer total_records = (Integer) request.getAttribute("total_records");
-            //Integer page_size = (Integer) request.getAttribute("page_size");
-            //Integer current_page = (Integer) request.getAttribute( "current_page" );
             Integer current_page = page_number;
             Integer total_records = next_pages;
-            Integer page_size = 2;
+            Integer page_size = 12;
             int pages = total_records / page_size;
             if (total_records % page_size > 0) {
                 pages++;
             }
-
             int last_page = current_page + pages;
             // сколько ссылок отображается начиная с самой первой (не может быть установлено в 0)
             final int N_PAGES_FIRST = 1;
@@ -60,55 +55,26 @@ public class PaginationTag extends TagSupport {
             // сколько ссылок отображается в конце списка страниц (не может быть установлено в 0)
             final int N_PAGES_LAST = 1;
             if (N_PAGES_FIRST < 1 || N_PAGES_LAST < 1) throw new AssertionError();
-            // показывать ли полностью все ссылки на страницы слева от текущей, или вставить многоточие
-            boolean showAllPrev;
-            // показывать ли полностью все ссылки на страницы справа от текущей, или вставить многоточие
-            boolean showAllNext;
-            showAllPrev = N_PAGES_FIRST >= (current_page - N_PAGES_PREV);
-            showAllNext = current_page + N_PAGES_NEXT >= last_page - N_PAGES_LAST;
-            //"<%-- show left pages --%>" +
-            String tagText = "<div style=\"text-align: center\">";
+            String tagText = "<div class=\"d-flex justify-content-center\">";
+            tagText = tagText + "<ul class=\"pagination\">";
             if (current_page > 1) {
-                tagText = tagText + "<a href=\"" + url + "to_main&page_number=" + (current_page - 1 >= 1 ? current_page - 1 : 1) + "\" class=\"prev\">&lt; Prev</a>";
+                tagText = tagText + "<li class=\"page-item\"><a class=\"page-link\" href=\"" + url + "to_main&page_number=" + (current_page - 1 >= 1 ? current_page - 1 : 1) + "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
             }
-            //if (showAllPrev) {
-                if (current_page > 1) {
-                    for (int i = 1; i < current_page; i++) {
-                        tagText = tagText + "<a href=\"" + url + "to_main&page_number=" + i + "\">" + i + "</a>";
-                    }
+            if (current_page > 1) {
+                for (int i = 1; i < current_page; i++) {
+                    tagText = tagText + "<li class=\"page-item\"><a class=\"page-link\" href=\"" + url + "to_main&page_number=" + i + "\"><span aria-hidden=\"true\">" + i + "</span></a></li>";
                 }
-            /*} else {
-                for (int i = 1; i <= N_PAGES_FIRST; i++) {
-                    tagText = tagText + "<a href=\"" + url + "to_main&page_number=" + i + "\">" + i + "</a>";
-                }
-                tagText = tagText + "<span style=\"margin-right: 5px\"> ... </span>";
-                for (int i = current_page - N_PAGES_PREV; i <= current_page; i++) {
-                    tagText = tagText + "<a href=\"" + url + "to_main&page_number=" + i + "\">" + i + "</a>";
-                }
-            }*/
-
+            }
             //"    <%-- show current page --%>\n" +
-            tagText = tagText + "<a href=\"" + url + "to_main&page_number=" + current_page + "\" class=\"current\">" + current_page + "</a>\n";
-
+            tagText = tagText + "<li class=\"page-item active\"><a class=\"page-link\" href=\"" + url + "to_main&page_number=" + current_page + "\"><span aria-hidden=\"true\">" + current_page + "</span></a></li>";
             //"    <%-- show right pages --%>\n" +
-            //if (showAllNext) {
-                for (int i = current_page + 1; i <= last_page; i++) {
-                    tagText = tagText + "<a href=\"" + url + "to_main&page_number=" + i + "\">" + i + "</a>";
-                }
-            /*} else {
-                for (int i = current_page + 1; i <= (current_page + 1 + N_PAGES_NEXT); i++) {
-                    tagText = tagText + "<a href=\"" + url + "to_main&page_number=" + i + "\">" + i + "</a>";
-                }
-                tagText = tagText + "<span style=\"margin-right: 5px\"> ... </span>";
-                for (int i = last_page - N_PAGES_LAST; i <= last_page; i++) {
-                    tagText = tagText + "<a href=\"" + url + "to_main&page_number=" + i + "\">" + i + "</a>";
-                }
-            }*/
-
-            if (current_page < last_page) {
-                //tagText = tagText + "<a href=\"" + url + "to_main&page_number=" + (current_page + 1 > last_page ? last_page : current_page + 1) + "\" class=\"next\">Next &gt;</a>";
-                tagText = tagText + "<a href=\"" + url + "to_main&page_number=" + (current_page + 1 > last_page ? last_page : current_page + 1) + "\" class=\"next\">Next &gt;</a>";
+            for (int i = current_page + 1; i <= last_page; i++) {
+                tagText = tagText + "<li class=\"page-item\"><a class=\"page-link\" href=\"" + url + "to_main&page_number=" + i + "\"><span aria-hidden=\"true\">" + i + "</span></a></li>";
             }
+            if (current_page < last_page) {
+                tagText = tagText + "<li class=\"page-item\"><a class=\"page-link\" href=\"" + url + "to_main&page_number=" + (current_page + 1 > last_page ? last_page : current_page + 1) + "\"><span aria-hidden=\"true\">&raquo;</span></a></li>";
+            }
+            tagText = tagText + "</ul>";
             tagText = tagText + "</div>";
             try {
                 JspWriter out = pageContext.getOut();

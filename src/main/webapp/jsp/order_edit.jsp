@@ -17,7 +17,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
-            <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main">MusicArt</a>
+            <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main&page_number=1">MusicArt</a>
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,7 +41,7 @@
             </ul>
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
-            <input type="hidden" name="command" value="to_main">
+            <input type="hidden" name="command" value="to_main&page_number=1">
             <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
         <form class="nav-link" action="${abs}/controller" method="get">
@@ -68,6 +68,14 @@
                 <button class="btn btn-primary" type="submit"><fmt:message key="items.edit"/></button>
             </div>
         </div>
+        <c:choose>
+            <c:when test="${order_update_result eq true}">
+                <br><label>Order was successfully changed</label>
+            </c:when>
+            <c:otherwise>
+                <br><label>${order_update_result}</label>
+            </c:otherwise>
+        </c:choose>
     </form>
 </div>
 <ctg:footertag/>

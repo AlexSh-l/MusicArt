@@ -17,7 +17,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
-            <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main">MusicArt</a>
+            <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main&page_number=1">MusicArt</a>
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -53,16 +53,16 @@
 <div class="d-flex justify-content-center">
     <form action="${abs}/controller" method="post">
         <label><fmt:message key="add_item.item_name"/>
-            <br><input type="text" name="item_name" pattern="[\w, '-]{1,100}">
+            <br><input type="text" name="item_name">
         </label>
         <br><label><fmt:message key="add_item.item_description"/>
-        <br><input type="text" name="item_description" >
+        <br><input type="text" name="item_description">
     </label>
         <br><label><fmt:message key="add_item.item_category"/>
-        <br><input type="text" name="item_category" >
+        <br><input type="text" name="item_category">
     </label>
         <br><label><fmt:message key="add_item.item_subcategory"/>
-        <br><input type="text" name="item_subcategory" >
+        <br><input type="text" name="item_subcategory">
     </label>
         <br><label><fmt:message key="add_item.item_price"/>
         <br><input type="text" name="item_price"> <fmt:message key="add_item.item_price_currency"/>
@@ -80,7 +80,8 @@
             <div>
                 <input type="hidden" name="command" value="add_item">
                 <br>
-                <button class="btn btn-primary" type="submit"><fmt:message key="add_item.item_add"/></button>
+                <button class="btn btn-primary" id="invokesToastMessage" type="submit"><fmt:message
+                        key="add_item.item_add"/></button>
             </div>
         </div>
     </form>

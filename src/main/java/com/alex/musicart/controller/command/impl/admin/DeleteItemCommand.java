@@ -39,7 +39,7 @@ public class DeleteItemCommand implements Command {
         }
         session.setAttribute(CURRENT_PAGE, ITEM_EDIT_PAGE);
         router.setPagePath(ITEM_EDIT_PAGE);
-        router.setRoute(Router.RouteType.FORWARD);
+        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 }

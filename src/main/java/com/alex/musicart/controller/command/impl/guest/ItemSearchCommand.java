@@ -29,15 +29,17 @@ public class ItemSearchCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         HttpSession session = request.getSession();
+        session.setAttribute(NEXT_PAGES, 0);
         String itemName = request.getParameter(ITEM_NAME);
         try {
+            List<Item> items = new ArrayList<>();
             Optional<Item> optionalItem = itemService.findItemByName(itemName);
             if (optionalItem.isPresent()) {
                 Item item = optionalItem.get();
-                List<Item> items = new ArrayList<>();
                 items.add(item);
-                session.setAttribute(ITEMS, items);
+                items = itemService.findImagesForSetItems(items);
             }
+            session.setAttribute(ITEMS, items);
             session.setAttribute(CURRENT_PAGE, MAIN_PAGE);
             router.setPagePath(MAIN_PAGE);
             router.setRoute(Router.RouteType.FORWARD);

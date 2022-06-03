@@ -9,7 +9,7 @@ public class Category extends CustomEntity {
     private String name;
     private List<Subcategory> subcategories = new ArrayList<>();
 
-    public Category(){
+    public Category() {
     }
 
     public int getCategoryId() {
@@ -36,15 +36,15 @@ public class Category extends CustomEntity {
         this.subcategories = subcategories;
     }
 
-    public void addSubcategory(Subcategory subcategory){
+    public void addSubcategory(Subcategory subcategory) {
         subcategories.add(subcategory);
     }
 
-    public void removeSubcategory(Subcategory subcategory){
+    public void removeSubcategory(Subcategory subcategory) {
         subcategories.remove(subcategory);
     }
 
-    public void clearSubcategories(){
+    public void clearSubcategories() {
         subcategories.clear();
     }
 }

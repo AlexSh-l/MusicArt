@@ -51,7 +51,7 @@ public class ItemServiceImpl implements ItemService {
     public Optional<Long> findLastItemByIdWithSetAmount(int itemAmount) throws ServiceException {
         try {
             Optional<Item> optionalItem = itemDao.findLastItemByIdWithSetAmount(itemAmount);
-            if(optionalItem.isPresent()) {
+            if (optionalItem.isPresent()) {
                 Item item = optionalItem.get();
                 long itemId = item.getItemId();
                 return Optional.of(itemId);
@@ -162,6 +162,53 @@ public class ItemServiceImpl implements ItemService {
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Unable to delete an item.");
             throw new ServiceException("Unable to delete an item.", e);
+        }
+    }
+
+    @Override
+    public boolean addNewImage(long itemId, String imageName, String imagePath) throws ServiceException {
+        try {
+            Optional<Long> optionalImageId = itemDao.findImageByItemId(itemId);
+            boolean isImageAdded = false;
+            if (optionalImageId.isPresent()) {
+                optionalImageId = itemDao.findImageByNameAndPath(imageName, imagePath);
+                if (optionalImageId.isPresent()) {
+                    long imageId = optionalImageId.get();
+                    return itemDao.updateImage(imageId, itemId);
+                } else {
+                    isImageAdded = itemDao.addImage(imageName, imagePath);
+                    if (isImageAdded) {
+                        optionalImageId = itemDao.findImageByNameAndPath(imageName, imagePath);
+                        if (optionalImageId.isPresent()) {
+                            long imageId = optionalImageId.get();
+                            return itemDao.updateImage(imageId, itemId);
+                        }
+                    }
+                }
+            } else {
+                isImageAdded = itemDao.addImage(imageName, imagePath);
+                if (isImageAdded) {
+                    optionalImageId = itemDao.findImageByNameAndPath(imageName, imagePath);
+                    if (optionalImageId.isPresent()) {
+                        long imageId = optionalImageId.get();
+                        return itemDao.addItemImage(itemId, imageId);
+                    }
+                }
+            }
+            return false;
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Unable to add an image.");
+            throw new ServiceException("Unable to add an image.", e);
+        }
+    }
+
+    @Override
+    public List<Item> findImagesForSetItems(List<Item> items) throws ServiceException {
+        try {
+            return itemDao.findImagesForSetItems(items);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Unable to find images for these items.");
+            throw new ServiceException("Unable to find images for these items.", e);
         }
     }
 }

@@ -10,12 +10,12 @@ import java.util.Optional;
 import static com.alex.musicart.model.mapper.DatabaseTableName.*;
 
 public class SubcategoryMapper implements EntityMapper {
-    public SubcategoryMapper(){
+    public SubcategoryMapper() {
     }
 
     @Override
     public Optional map(ResultSet resultSet) throws SQLException {
-        if(resultSet.next()) {
+        if (resultSet.next()) {
             Subcategory subcategory = new Subcategory();
             subcategory.setSubcategoryId(resultSet.getInt(SUBCATEGORIES_ID));
             subcategory.setName(resultSet.getString(SUBCATEGORIES_NAME));

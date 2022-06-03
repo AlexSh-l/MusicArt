@@ -16,6 +16,10 @@ public final class DatabaseTableName {
     public static final String ITEMS_PRICE = "items.it_price";
     public static final String ITEMS_IS_IN_STOCK = "items.it_is_in_stock";
 
+    public static final String IMAGES_ID = "images.im_id";
+    public static final String IMAGES_NAME = "images.im_name";
+    public static final String IMAGES_PATH = "images.im_path";
+
     public static final String SUBCATEGORIES_ID = "subcategories.su_id";
     public static final String SUBCATEGORIES_NAME = "subcategories.su_name";
     public static final String SUBCATEGORIES_CATEGORY_ID = "subcategories.su_category_id";

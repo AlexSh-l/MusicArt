@@ -15,8 +15,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.alex.musicart.model.mapper.DatabaseTableName.*;
 
 public class ItemDaoImpl implements ItemDao {
     private static final Logger logger = LogManager.getLogger();
@@ -108,12 +111,39 @@ public class ItemDaoImpl implements ItemDao {
     private static final String SQL_SELECT_LAST_ITEM_ID_WITH_SET_AMOUNT =
             "SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock " +
                     "FROM (SELECT it_id, it_name, ca_name, su_name, it_subcategory_id, it_description, it_price, it_is_in_stock " +
-                            "FROM items " +
-                            "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
-                            "JOIN categories ON categories.ca_id = subcategories.su_category_id "+
-                            "ORDER BY it_id ASC LIMIT ?) AS items " +
+                    "FROM items " +
+                    "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
+                    "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
+                    "ORDER BY it_id ASC LIMIT ?) AS items " +
                     "ORDER BY it_id DESC LIMIT 1";
 
+    private static final String SQL_INSERT_IMAGES_ITEMS =
+            "INSERT INTO images_m2m_items " +
+                    "(m2m_it_id, m2m_im_id) " +
+                    "VALUES (?, ?)";
+
+    private static final String SQL_INSERT_IMAGE =
+            "INSERT INTO images " +
+                    "(im_name, im_path) " +
+                    "VALUES (?, ?)";
+
+    private static final String SQL_SELECT_IMAGE_BY_NAME_AND_PATH =
+            "SELECT im_id, im_name, im_path " +
+                    "FROM images " +
+                    "WHERE im_name = ? " +
+                    "AND im_path = ?";
+
+    private static final String SQL_SELECT_IMAGE_BY_ITEM_ID =
+            "SELECT im_id, im_name, im_path " +
+                    "FROM images " +
+                    "JOIN images_m2m_items ON images.im_id = images_m2m_items.m2m_im_id " +
+                    "JOIN items ON items.it_id = images_m2m_items.m2m_it_id " +
+                    "WHERE it_id = ?";
+
+    private static final String SQL_UPDATE_ITEM_IMAGE =
+            "UPDATE images_m2m_items " +
+                    "SET m2m_im_id = ? " +
+                    "WHERE m2m_it_id = ?";
 
     @Override
     public List<Item> findAllItems() throws DaoException {
@@ -363,6 +393,123 @@ public class ItemDaoImpl implements ItemDao {
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Unable to delete item. Database error.", e);
             throw new DaoException("Unable to delete item. Database error.", e);
+        }
+    }
+
+    @Override
+    public boolean addItemImage(long itemId, long imageId) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_INSERT_IMAGES_ITEMS)) {
+            statement.setLong(1, itemId);
+            statement.setLong(2, imageId);
+            boolean isCreated = statement.executeUpdate() == 1;
+            if (!isCreated) {
+                logger.log(Level.INFO, "Unable to add item's image.");
+                return false;
+            }
+            logger.log(Level.INFO, "Item's image added.");
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to add item's image. Database error.", e);
+            throw new DaoException("Unable to add item's image. Database error.", e);
+        }
+    }
+
+    @Override
+    public boolean addImage(String imageName, String imagePath) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_INSERT_IMAGE)) {
+            statement.setString(1, imageName);
+            statement.setString(2, imagePath);
+            boolean isCreated = statement.executeUpdate() == 1;
+            if (!isCreated) {
+                logger.log(Level.INFO, "Unable to add image.");
+                return false;
+            }
+            logger.log(Level.INFO, "Image added.");
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to add image. Database error.", e);
+            throw new DaoException("Unable to add image. Database error.", e);
+        }
+    }
+
+    @Override
+    public boolean updateImage(long imageId, long itemId) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ITEM_IMAGE)) {
+            statement.setLong(1, imageId);
+            statement.setLong(2, itemId);
+            boolean isUpdated = statement.executeUpdate() == 1;
+            if (!isUpdated) {
+                logger.log(Level.INFO, "Unable to update image.");
+                return false;
+            }
+            logger.log(Level.INFO, "Image updated.");
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to update image. Database error.", e);
+            throw new DaoException("Unable to update image. Database error.", e);
+        }
+    }
+
+    @Override
+    public Optional<Long> findImageByNameAndPath(String imageName, String imagePath) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_IMAGE_BY_NAME_AND_PATH)) {
+            statement.setString(1, imageName);
+            statement.setString(2, imagePath);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Long imageId = resultSet.getLong(IMAGES_ID);
+                return Optional.of(imageId);
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to find image with that name and path.");
+            throw new DaoException("Unable to find image with that name and path.", e);
+        }
+    }
+
+    @Override
+    public List<Item> findImagesForSetItems(List<Item> items) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_IMAGE_BY_ITEM_ID)) {
+            long itemId;
+            List<Item> itemsWithImages = new ArrayList<>();
+            for (var item : items) {
+                itemId = item.getItemId();
+                statement.setLong(1, itemId);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    item.setImageName(resultSet.getString(IMAGES_NAME));
+                    item.setImagePath(resultSet.getString(IMAGES_PATH));
+                } else {
+                    item.setImageName("");
+                    item.setImagePath("");
+                }
+                itemsWithImages.add(item);
+            }
+            return itemsWithImages;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to find images for these items.");
+            throw new DaoException("Unable to find images for these items.", e);
+        }
+    }
+
+    @Override
+    public Optional<Long> findImageByItemId(long itemId) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_IMAGE_BY_ITEM_ID)) {
+            statement.setLong(1, itemId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(resultSet.getLong(IMAGES_ID));
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Unable to find image for this item.");
+            throw new DaoException("Unable to find image for this item.", e);
         }
     }
 }

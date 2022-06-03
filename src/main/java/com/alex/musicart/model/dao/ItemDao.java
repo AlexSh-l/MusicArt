@@ -38,4 +38,16 @@ public interface ItemDao extends RootDao {
     boolean addNewItem(Item item) throws DaoException;
 
     boolean deleteItem(long itemId) throws DaoException;
+
+    boolean addItemImage(long itemId, long imageId) throws DaoException;
+
+    boolean addImage(String imageName, String imagePath) throws DaoException;
+
+    boolean updateImage(long imageId, long itemId) throws DaoException;
+
+    Optional<Long> findImageByNameAndPath(String imageName, String imagePath) throws DaoException;
+
+    List<Item> findImagesForSetItems(List<Item> items) throws DaoException;
+
+    Optional<Long> findImageByItemId(long itemId) throws DaoException;
 }

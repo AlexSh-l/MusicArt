@@ -12,6 +12,8 @@ public class Item extends CustomEntity {
     private String description;
     private BigDecimal price;
     private boolean inStock;
+    private String imageName;
+    private String imagePath;
 
     public Item() {
     }
@@ -78,6 +80,22 @@ public class Item extends CustomEntity {
 
     public void setInStock(boolean inStock) {
         this.inStock = inStock;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     @Override

@@ -62,18 +62,16 @@ public class PermissionFilter implements Filter {
                     return;
                 }
             }
-        } else {
+        } else if (!requestURI.contains("/images")) {
             boolean isPageAllowed;
             Set<String> pages;
             switch (userRole) {
                 case ADMIN:
                     pages = PagePermission.ADMIN.getAllowedPages();
-
                     isPageAllowed = pages.stream().anyMatch(requestURI::contains);
                     break;
                 case CLIENT:
                     pages = PagePermission.CLIENT.getAllowedPages();
-
                     isPageAllowed = pages.stream().anyMatch(requestURI::contains);
                     break;
                 default:

@@ -20,6 +20,7 @@ public enum CommandType {
     TO_ORDER_EDIT(new ToOrderEditCommand()),
     TO_ORDER_ITEMS(new ToOrderItemsCommand()),
     TO_ORDERS(new ToOrdersCommand()),
+    UPLOAD_IMAGES(new UploadImageCommand()),
 
     /* client commands */
     ADD_TO_CART(new AddItemToCart()),

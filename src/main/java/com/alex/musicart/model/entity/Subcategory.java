@@ -6,7 +6,7 @@ public class Subcategory extends CustomEntity {
     private String name;
     private int categoryId;
 
-    public Subcategory(){
+    public Subcategory() {
     }
 
     public int getSubcategoryId() {

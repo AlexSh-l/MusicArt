@@ -30,34 +30,27 @@ public class ToMainCommand implements Command {
         HttpSession session = request.getSession();
         Router router = new Router();
         String language = request.getParameter(LANGUAGE);
-
         int pageNumber = Integer.parseInt(request.getParameter(PAGE_NUMBER));
         long itemId = 0;
-
         String locale = (String) session.getAttribute(LOCALE);
         if ((language == null) && (locale == null)) {
             session.setAttribute(LOCALE, "en_EN");
         }
         List<Item> items;
         try {
-            if(pageNumber>1){
-                Optional<Long> lastItemIdFromPreviousPage = itemService.findLastItemByIdWithSetAmount((pageNumber-1)*2);
-                if(lastItemIdFromPreviousPage.isPresent()){
+            if (pageNumber > 1) {
+                Optional<Long> lastItemIdFromPreviousPage = itemService.findLastItemByIdWithSetAmount((pageNumber - 1) * 12);
+                if (lastItemIdFromPreviousPage.isPresent()) {
                     itemId = lastItemIdFromPreviousPage.get();
                 }
             }
-
-            items = itemService.findSetAmountOfItemsById(itemId, 2);
-            List<Item> itemsAmount = itemService.findSetAmountOfItemsById(itemId, 2*3);
-            int nextItems = itemsAmount.size()-2;
-
+            items = itemService.findSetAmountOfItemsById(itemId, 12);
+            items = itemService.findImagesForSetItems(items);
+            List<Item> itemsAmount = itemService.findSetAmountOfItemsById(itemId, 12 * 3);
+            int nextItems = itemsAmount.size() - 12;
             session.setAttribute(ITEMS, items);
             session.setAttribute(NEXT_PAGES, nextItems);
-            //if(nextItems>0) {
-              //  session.setAttribute(CURRENT_PAGE_NUMBER, pageNumber + 1);
-            //}else {
-                session.setAttribute(CURRENT_PAGE_NUMBER, pageNumber);
-            //}
+            session.setAttribute(CURRENT_PAGE_NUMBER, pageNumber);
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "An error has occurred while loading items.");
             throw new CommandException("An error has occurred while loading items.", e);

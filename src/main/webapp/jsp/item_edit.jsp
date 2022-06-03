@@ -17,7 +17,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
-            <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main">MusicArt</a>
+            <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main&page_number=1">MusicArt</a>
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,7 +41,7 @@
             </ul>
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
-            <input type="hidden" name="command" value="to_main">
+            <input type="hidden" name="command" value="to_main&page_number=1">
             <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
         <form class="nav-link" action="${abs}/controller" method="get">
@@ -72,16 +72,16 @@
                 </div>
                 <form class="col" action="${abs}/controller" method="post">
                     <label><fmt:message key="add_item.item_name"/>
-                        <br><input type="text" name="item_name" pattern="[\w, '-]{1,100}">
+                        <br><input type="text" name="item_name">
                     </label>
                     <br><label><fmt:message key="add_item.item_description"/>
-                    <br><input type="text" name="item_description" pattern="[\w, '-]{1,1000}">
+                    <br><input type="text" name="item_description">
                 </label>
                     <br><label><fmt:message key="add_item.item_category"/>
-                    <br><input type="text" name="item_category" pattern="">
+                    <br><input type="text" name="item_category">
                 </label>
                     <br><label><fmt:message key="add_item.item_subcategory"/>
-                    <br><input type="text" name="item_subcategory" pattern="">
+                    <br><input type="text" name="item_subcategory">
                 </label>
                     <br><label><fmt:message key="add_item.item_price"/>
                     <br><input type="text" name="item_price"> <fmt:message key="add_item.item_price_currency"/>

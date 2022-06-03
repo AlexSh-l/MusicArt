@@ -12,7 +12,7 @@ import static com.alex.musicart.model.mapper.DatabaseTableName.*;
 public class PaymentTypeMapper implements EntityMapper {
     @Override
     public Optional<PaymentType> map(ResultSet resultSet) throws SQLException {
-        if(resultSet.next()) {
+        if (resultSet.next()) {
             PaymentType paymentType = new PaymentType();
             paymentType.setPaymentTypeId(resultSet.getShort(PAYMENT_TYPES_ID));
             paymentType.setName(resultSet.getString(PAYMENT_TYPES_NAME));

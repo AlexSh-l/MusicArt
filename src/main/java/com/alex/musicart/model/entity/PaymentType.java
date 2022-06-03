@@ -4,7 +4,7 @@ public class PaymentType extends CustomEntity {
     private short paymentTypeId;
     private String name;
 
-    public PaymentType(){
+    public PaymentType() {
     }
 
     public short getPaymentTypeId() {

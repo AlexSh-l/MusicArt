@@ -18,12 +18,6 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
             <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main">MusicArt</a>
-            <form class="d-flex" action="${abs}/controller" method="get">
-                <input type="hidden" name="command" value="item_search">
-                <input class="form-control me-2" name="item_name" placeholder="<fmt:message key="nav.search"/>"
-                       aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit"><fmt:message key="nav.search"/></button>
-            </form>
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,7 +45,8 @@
             <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
         <div class="nav-link">
-            <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_order"><fmt:message key="cart.checkout"/></a>
+            <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_order"><fmt:message
+                    key="cart.checkout"/></a>
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="sign_out">

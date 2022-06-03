@@ -90,7 +90,7 @@ public class ConfirmOrderCommand implements Command {
         }
         session.setAttribute(CURRENT_PAGE, ORDER_PAGE);
         router.setPagePath(ORDER_PAGE);
-        router.setRoute(Router.RouteType.FORWARD);
+        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 }

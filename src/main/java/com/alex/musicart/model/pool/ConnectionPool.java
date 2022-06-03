@@ -31,7 +31,6 @@ public class ConnectionPool {
         ClassLoader classLoader = ConnectionFactory.class.getClassLoader();
         try (InputStream inputStream = classLoader.getResourceAsStream(PROPERTIES_PATH)) {
             properties.load(inputStream);
-
         } catch (NullPointerException | IOException e) {
             logger.log(Level.FATAL, "Property file is not found", e);
             throw new ExceptionInInitializerError("Property file is not found");

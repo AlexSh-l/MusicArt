@@ -20,7 +20,8 @@ public enum CommandPermission {
             CommandType.CHANGE_LOCALE.name(),
             CommandType.EDIT_ITEM.name(),
             CommandType.EDIT_ORDER.name(),
-            CommandType.DELETE_ITEM.name())),
+            CommandType.DELETE_ITEM.name(),
+            CommandType.UPLOAD_IMAGES.name())),
 
     CLIENT(Set.of(CommandType.NON_EXISTENT.name(),
             CommandType.TO_MAIN.name(),

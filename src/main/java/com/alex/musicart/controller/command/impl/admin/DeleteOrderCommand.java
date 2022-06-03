@@ -35,7 +35,7 @@ public class DeleteOrderCommand implements Command {
             }
             session.setAttribute(CURRENT_PAGE, ORDERS_PAGE);
             router.setPagePath(ORDERS_PAGE);
-            router.setRoute(Router.RouteType.FORWARD);
+            router.setRoute(Router.RouteType.REDIRECT);
             return router;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Unable to delete this order.");

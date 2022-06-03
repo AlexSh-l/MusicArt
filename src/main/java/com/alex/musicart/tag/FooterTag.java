@@ -10,9 +10,9 @@ public class FooterTag extends TagSupport {
 
     @Override
     public int doStartTag() throws JspException {
-        try{
+        try {
             JspWriter out = pageContext.getOut();
-            String tagText = "<footer class=\"py-3 my-4 border-top\"><p class=\"text-center text-muted \">© 2022 Alex Musicart, Inc</p></footer>";
+            String tagText = "<div class=\"sticky-bottom\"><footer class=\"py-3 my-4 border-top\"><p class=\"text-center text-muted \">© 2022 Alex Musicart, Inc</p></footer></div>";
             out.write(tagText);
         } catch (IOException e) {
             throw new JspTagException(e);

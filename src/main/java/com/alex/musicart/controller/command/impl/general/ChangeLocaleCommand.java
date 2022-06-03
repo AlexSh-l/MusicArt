@@ -20,7 +20,7 @@ public class ChangeLocaleCommand implements Command {
         String language = request.getParameter(LANGUAGE);
         session.setAttribute(LOCALE, language);
         router.setPagePath(currentPage);
-        router.setRoute(Router.RouteType.FORWARD);
+        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 }
