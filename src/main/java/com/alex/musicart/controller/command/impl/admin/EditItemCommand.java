@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
 import static com.alex.musicart.controller.command.PagePath.ITEM_EDIT_PAGE;
@@ -36,31 +35,34 @@ public class EditItemCommand implements Command {
         Router router = new Router();
         HttpSession session = request.getSession();
         Item item;
-        List<Item> items = (List<Item>) session.getAttribute(ITEMS);
-        item = items.get(0);
+        long itemId = Long.parseLong(request.getParameter(ITEM_ID));
         try {
-            String name = request.getParameter(ITEM_NAME);
-            String description = request.getParameter(ITEM_DESCRIPTION);
-            String categoryName = request.getParameter(ITEM_CATEGORY);
-            Optional<Category> optionalCategory = categoryService.findCategoryByName(categoryName);
-            if (optionalCategory.isPresent()) {
-                String subcategoryName = request.getParameter(ITEM_SUBCATEGORY);
-                Optional<Subcategory> optionalSubcategory = subcategoryService.findSubcategoryByName(subcategoryName);
-                if (optionalSubcategory.isPresent()) {
-                    double priceInDouble = Double.parseDouble(request.getParameter(ITEM_PRICE));
-                    BigDecimal price = BigDecimal.valueOf(priceInDouble);
-                    String isItemInStock = request.getParameter(ITEM_IN_STOCK);
-                    boolean itemInStock = true;
-                    if (isItemInStock == null) {
-                        itemInStock = false;
+            Optional<Item> optionalItem = itemService.findItemById(itemId);
+            if (optionalItem.isPresent()) {
+                item = optionalItem.get();
+                String name = request.getParameter(ITEM_NAME);
+                String description = request.getParameter(ITEM_DESCRIPTION);
+                String categoryName = request.getParameter(ITEM_CATEGORY);
+                Optional<Category> optionalCategory = categoryService.findCategoryByName(categoryName);
+                if (optionalCategory.isPresent()) {
+                    String subcategoryName = request.getParameter(ITEM_SUBCATEGORY);
+                    Optional<Subcategory> optionalSubcategory = subcategoryService.findSubcategoryByName(subcategoryName);
+                    if (optionalSubcategory.isPresent()) {
+                        double priceInDouble = Double.parseDouble(request.getParameter(ITEM_PRICE));
+                        BigDecimal price = BigDecimal.valueOf(priceInDouble);
+                        String isItemInStock = request.getParameter(ITEM_IN_STOCK);
+                        boolean itemInStock = true;
+                        if (isItemInStock == null) {
+                            itemInStock = false;
+                        }
+                        int subcategoryId = optionalSubcategory.get().getSubcategoryId();
+                        itemService.updateItem(item, name, subcategoryId, description, price, itemInStock);
+                        session.setAttribute(ITEM_UPDATE_RESULT, true);
+                        session.setAttribute(CURRENT_PAGE, ITEM_EDIT_PAGE);
+                        router.setPagePath(ITEM_EDIT_PAGE);
+                        router.setRoute(Router.RouteType.REDIRECT);
+                        return router;
                     }
-                    int subcategoryId = optionalSubcategory.get().getSubcategoryId();
-                    itemService.updateItem(item, name, subcategoryId, description, price, itemInStock);
-                    session.setAttribute(ITEM_UPDATE_RESULT, true);
-                    session.setAttribute(CURRENT_PAGE, ITEM_EDIT_PAGE);
-                    router.setPagePath(ITEM_EDIT_PAGE);
-                    router.setRoute(Router.RouteType.REDIRECT);
-                    return router;
                 }
             }
             session.setAttribute(ITEM_UPDATE_RESULT, "Unable to update this item.");

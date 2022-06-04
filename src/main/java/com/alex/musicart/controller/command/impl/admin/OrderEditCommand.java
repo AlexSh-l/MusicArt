@@ -43,18 +43,17 @@ public class OrderEditCommand implements Command {
             String statusName = request.getParameter(ORDER_STATUS);
             String paymentTypeName = request.getParameter(ORDER_PAYMENT_TYPE);
             String address = request.getParameter(ORDER_ADDRESS);
-            short statusId = 0;
-            short paymentTypeId = 0;
+            short statusId;
+            short paymentTypeId;
             Optional<OrderStatus> optionalStatus = orderStatusService.findOrderStatusByName(statusName);
             if (optionalStatus.isPresent()) {
                 statusId = optionalStatus.get().getOrderStatusId();
-
                 Optional<PaymentType> optionalPaymentType = paymentTypeService.findPaymentTypeByName(paymentTypeName);
-                if (optionalPaymentType.isPresent()) {
+                if (optionalPaymentType.isPresent() && order != null) {
                     paymentTypeId = optionalPaymentType.get().getPaymentTypeId();
+                    orderService.updateOrder(order, statusId, paymentTypeId, address);
+                    session.setAttribute(ORDER_UPDATE_RESULT, true);
                 }
-                orderService.updateOrder(order, statusId, paymentTypeId, address);
-                session.setAttribute(ORDER_UPDATE_RESULT, true);
             } else {
                 session.setAttribute(ORDER_UPDATE_RESULT, "Unable to edit this order.");
             }

@@ -67,6 +67,7 @@
                     <br>
                     <form class="col" action="${abs}/controller" method="get">
                         <input type="hidden" name="command" value="delete_item">
+                        <input type="hidden" name="item_id" value="${item.itemId}">
                         <button class="btn btn-danger" type="submit"><fmt:message key="item_edit.delete"/></button>
                     </form>
                 </div>
@@ -97,6 +98,7 @@
                 </label>
                     <div class="mx-auto">
                         <div>
+                            <input type="hidden" name="item_id" value="${item.itemId}">
                             <input type="hidden" name="command" value="edit_item">
                             <br>
                             <button class="btn btn-primary" type="submit"><fmt:message key="items.edit"/></button>

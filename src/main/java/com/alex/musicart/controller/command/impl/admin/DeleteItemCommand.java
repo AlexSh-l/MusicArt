@@ -12,9 +12,10 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.util.Optional;
 
 import static com.alex.musicart.controller.command.PagePath.ITEM_EDIT_PAGE;
+import static com.alex.musicart.controller.command.ParameterName.ITEM_ID;
 import static com.alex.musicart.controller.command.SessionAttributeName.*;
 
 public class DeleteItemCommand implements Command {
@@ -26,12 +27,14 @@ public class DeleteItemCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         HttpSession session = request.getSession();
-        Item item;
-        List<Item> items = (List<Item>) session.getAttribute(ITEMS);
-        item = items.get(0);
+        long itemId = Long.parseLong(request.getParameter(ITEM_ID));
         try {
-            itemService.deleteItem(item.getItemId());
-            session.setAttribute(ITEM_DELETION_RESULT, "Item successfully deleted.");
+            Optional<Item> optionalItem = itemService.findItemById(itemId);
+            if (optionalItem.isPresent()) {
+                Item item = optionalItem.get();
+                itemService.deleteItem(item.getItemId());
+                session.setAttribute(ITEM_DELETION_RESULT, "Item successfully deleted.");
+            }
         } catch (ServiceException e) {
             session.setAttribute(ITEM_DELETION_RESULT, "Could not delete this item.");
             logger.log(Level.ERROR, "Could not delete this item.");
