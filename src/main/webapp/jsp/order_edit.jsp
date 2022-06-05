@@ -41,7 +41,8 @@
             </ul>
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
-            <input type="hidden" name="command" value="to_main&page_number=1">
+            <input type="hidden" name="command" value="to_main">
+            <input type="hidden" name="page_number" value="1">
             <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
         <form class="nav-link" action="${abs}/controller" method="get">
@@ -52,17 +53,15 @@
 </nav>
 <div class="d-flex justify-content-center">
     <form action="${abs}/controller" method="post">
-        <label><fmt:message key="order_edit.status"/>
-            <br><input type="text" name="order_status">
-        </label>
-        <br><label><fmt:message key="order_edit.payment_type"/>
-        <br><input type="text" name="order_payment_type">
-    </label>
-        <br><label><fmt:message key="order_edit.address"/>
-        <br><input type="text" name="order_address">
-    </label>
+        <label class="form-label"><fmt:message key="order_edit.status"/></label>
+        <br><input type="text" class="form-control" name="order_status">
+        <br><label class="form-label"><fmt:message key="order_edit.payment_type"/></label>
+        <br><input type="text" class="form-control" name="order_payment_type">
+        <br><label class="form-label"><fmt:message key="order_edit.address"/></label>
+        <br><input type="text" class="form-control" name="order_address">
         <div class="mx-auto">
-            <div>
+            <br>
+            <div class="d-flex justify-content-center">
                 <input type="hidden" name="command" value="edit_order">
                 <br>
                 <button class="btn btn-primary" type="submit"><fmt:message key="items.edit"/></button>
@@ -70,10 +69,10 @@
         </div>
         <c:choose>
             <c:when test="${order_update_result eq true}">
-                <br><label>Order was successfully changed</label>
+                <br><label class="form-label">Order was successfully changed</label>
             </c:when>
             <c:otherwise>
-                <br><label>${order_update_result}</label>
+                <br><label class="form-label">${order_update_result}</label>
             </c:otherwise>
         </c:choose>
     </form>

@@ -41,7 +41,8 @@
             </ul>
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
-            <input type="hidden" name="command" value="to_main&page_number=1">
+            <input type="hidden" name="command" value="to_main">
+            <input type="hidden" name="page_number" value="1">
             <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
         <form class="nav-link" action="${abs}/controller" method="get">

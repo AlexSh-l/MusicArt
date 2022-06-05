@@ -106,6 +106,7 @@ public class ItemDaoImpl implements ItemDao {
                     "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
                     "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
                     "WHERE it_id > ? " +
+                    "AND it_is_deleted = b'0'" +
                     "ORDER BY it_id ASC LIMIT ?";
 
     private static final String SQL_SELECT_LAST_ITEM_ID_WITH_SET_AMOUNT =
@@ -114,6 +115,7 @@ public class ItemDaoImpl implements ItemDao {
                     "FROM items " +
                     "JOIN subcategories ON subcategories.su_id = items.it_subcategory_id " +
                     "JOIN categories ON categories.ca_id = subcategories.su_category_id " +
+                    "WHERE it_is_deleted = b'0'" +
                     "ORDER BY it_id ASC LIMIT ?) AS items " +
                     "ORDER BY it_id DESC LIMIT 1";
 

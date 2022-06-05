@@ -41,37 +41,40 @@
             </ul>
         </div>
         <form class="nav-link" action="${abs}/controller" method="get">
-            <input type="hidden" name="command" value="to_main&page_number=1">
+            <input type="hidden" name="command" value="to_main">
+            <input type="hidden" name="page_number" value="1">
             <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
     </div>
 </nav>
 <div class="d-flex justify-content-center">
     <form action="${abs}/controller" method="post">
-        <label><fmt:message key="registration.name"/>
-            <br><input type="text" name="name" pattern="[\w, '-]{1,100}">
-        </label>
-        <br><label><fmt:message key="registration.login"/>
-        <br><input type="text" name="login" pattern="[\w]{8,100}">
-    </label>
-        <br><label><fmt:message key="registration.password"/>
-        <br><input type="password" name="password" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$">
-    </label>
-        <br><label><fmt:message key="registration.confirm_password"/>
-        <br><input type="password" name="confirm_password" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$">
-    </label>
-        <br><label><fmt:message key="registration.email"/>
-        <br><input type="email" name="email" pattern="[\S]+\@[\S]+\.[\a-z]+">
-    </label>
-        <br><label><fmt:message key="registration.phone"/>
-        <br><input type="text" name="phone" pattern="\+[\d]{4,12}">
-    </label>
+        <label class="form-label"><fmt:message key="registration.name"/></label>
+        <br><input type="text" class="form-control" name="name" pattern="[\w, '-]{1,100}">
+        <br><label class="form-label"><fmt:message key="registration.login"/></label>
+        <br><input type="text" class="form-control" name="login" pattern="[\w]{8,100}">
+        <br><label class="form-label"><fmt:message key="registration.password"/></label>
+        <br><input type="password" class="form-control" name="password"
+                   pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$" aria-describedby="passwordHelpBlock">
+        <div id="passwordHelpBlock" class="form-text">
+            Your password must be at least 8 characters long.
+        </div>
+        <br><label class="form-label"><fmt:message key="registration.confirm_password"/></label>
+        <br><input type="password" class="form-control" name="confirm_password"
+                   pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$">
+        <br><label class="form-label"><fmt:message key="registration.email"/></label>
+        <br><input type="email" class="form-control" name="email" pattern="[\S]+\@[\S]+\.[\a-z]+">
+        <br><label class="form-label"><fmt:message key="registration.phone"/></label>
+        <br><input type="text" class="form-control" name="phone" pattern="\+[\d]{4,12}">
         <div class="mx-auto">
-            <div>
+            <br>
+            <div class="d-flex justify-content-center">
                 <input type="hidden" name="command" value="register">
                 <br>
                 <button class="btn btn-primary" type="submit"><fmt:message key="registration.register"/></button>
-                <br><label>${registration_result}</label>
+            </div>
+            <div class="d-flex justify-content-center">
+                <br><label class="form-label">${registration_result}</label>
             </div>
         </div>
     </form>

@@ -28,6 +28,9 @@ public class ToMainCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
+        session.removeAttribute(ITEM_UPDATE_RESULT);
+        session.removeAttribute(ORDER_UPDATE_RESULT);
+        session.removeAttribute(REGISTRATION_RESULT);
         Router router = new Router();
         String language = request.getParameter(LANGUAGE);
         int pageNumber = Integer.parseInt(request.getParameter(PAGE_NUMBER));
