@@ -53,12 +53,12 @@
 </nav>
 <div class="d-flex justify-content-center">
     <form action="${abs}/controller" method="post">
-        <label><fmt:message key="order.address"/>
-            <br><input type="text" name="address">
-        </label>
+        <label class="form-label"><fmt:message key="order.address"/></label>
+        <br><input type="text" class="form-control" name="address">
+
         <br>
         <br>
-        <label>
+        <label class="form-label">
             <strong><fmt:message key="order.payment_type"/></strong>
         </label>
         <br><label>
@@ -70,15 +70,19 @@
         <div class="mx-auto">
             <input type="hidden" name="command" value="confirm_order">
             <br>
-            <button class="btn btn-primary" type="submit"><fmt:message key="order.title"/></button>
-            <c:choose>
-                <c:when test="${order_result eq true}">
-                    <br><label>Заказ оформлен</label>
-                </c:when>
-                <c:otherwise>
-                    <br><label>${order_result}</label>
-                </c:otherwise>
-            </c:choose>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary" type="submit"><fmt:message key="order.title"/></button>
+            </div>
+            <div class="d-flex justify-content-center">
+                <c:choose>
+                    <c:when test="${order_result eq true}">
+                        <br><label>Заказ оформлен</label>
+                    </c:when>
+                    <c:otherwise>
+                        <br><label>${order_result}</label>
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
     </form>
 </div>

@@ -53,22 +53,18 @@
 </nav>
 <div class="d-flex justify-content-center">
     <form action="${abs}/controller" method="post">
-        <label><fmt:message key="add_item.item_name"/>
-            <br><input type="text" name="item_name">
-        </label>
-        <br><label><fmt:message key="add_item.item_description"/>
-        <br><input type="text" name="item_description">
-    </label>
-        <br><label><fmt:message key="add_item.item_category"/>
-        <br><input type="text" name="item_category">
-    </label>
-        <br><label><fmt:message key="add_item.item_subcategory"/>
-        <br><input type="text" name="item_subcategory">
-    </label>
-        <br><label><fmt:message key="add_item.item_price"/>
-        <br><input type="text" name="item_price"> <fmt:message key="add_item.item_price_currency"/>
-    </label>
-        <br><label><fmt:message key="add_item.item_stock"/>
+        <label class="form-label"><fmt:message key="add_item.item_name"/></label>
+        <br><input type="text" class="form-control" name="item_name">
+        <br><label class="form-label"><fmt:message key="add_item.item_description"/></label>
+        <br><input type="text" class="form-control" name="item_description">
+        <br><label class="form-label"><fmt:message key="add_item.item_category"/></label>
+        <br><input type="text" class="form-control" name="item_category">
+        <br><label class="form-label"><fmt:message key="add_item.item_subcategory"/></label>
+        <br><input type="text" class="form-control" name="item_subcategory">
+        <br><label class="form-label"><fmt:message key="add_item.item_price"/> (<fmt:message
+            key="add_item.item_price_currency"/>)</label>
+        <br><input type="text" class="form-control" name="item_price">
+        <br><label class="form-label"><fmt:message key="add_item.item_stock"/></label>
         <br>
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="item_in_stock"
@@ -76,9 +72,9 @@
             <label class="form-check-label" for="flexSwitchCheckChecked"><fmt:message
                     key="add_item.item_is_in_stock"/></label>
         </div>
-    </label>
+        <br>
         <div class="mx-auto">
-            <div>
+            <div class="d-flex justify-content-center">
                 <input type="hidden" name="command" value="add_item">
                 <br>
                 <button class="btn btn-primary" id="invokesToastMessage" type="submit"><fmt:message
