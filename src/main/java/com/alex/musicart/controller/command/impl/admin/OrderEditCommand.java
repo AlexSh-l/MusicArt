@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+import static com.alex.musicart.controller.command.PagePath.ORDERS_PAGE;
 import static com.alex.musicart.controller.command.PagePath.ORDER_EDIT_PAGE;
 import static com.alex.musicart.controller.command.ParameterName.*;
 import static com.alex.musicart.controller.command.SessionAttributeName.*;
@@ -53,12 +54,14 @@ public class OrderEditCommand implements Command {
                     paymentTypeId = optionalPaymentType.get().getPaymentTypeId();
                     orderService.updateOrder(order, statusId, paymentTypeId, address);
                     session.setAttribute(ORDER_UPDATE_RESULT, true);
+                    orders = orderService.findAllOrders();
+                    session.setAttribute(ORDERS, orders);
                 }
             } else {
                 session.setAttribute(ORDER_UPDATE_RESULT, "Unable to edit this order.");
             }
-            session.setAttribute(CURRENT_PAGE, ORDER_EDIT_PAGE);
-            router.setPagePath(ORDER_EDIT_PAGE);
+            session.setAttribute(CURRENT_PAGE, ORDERS_PAGE);
+            router.setPagePath(ORDERS_PAGE);
             router.setRoute(Router.RouteType.REDIRECT);
             return router;
         } catch (ServiceException e) {

@@ -109,7 +109,7 @@
                 </form>
             </div>
         </div>
-        <br>${order_deletion_result}
+        <br>
         <br>
     </div>
 </c:forEach>

@@ -71,8 +71,8 @@ public class ItemDaoImpl implements ItemDao {
 
     private static final String SQL_INSERT_NEW_ITEM =
             "INSERT INTO items " +
-                    "(it_name, it_subcategory_id, it_description, it_price, it_is_in_stock) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+                    "(it_name, it_subcategory_id, it_description, it_price, it_is_in_stock, it_is_deleted) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
 
     private static final String SQL_UPDATE_ITEM_NAME =
             "UPDATE items " +
@@ -366,6 +366,7 @@ public class ItemDaoImpl implements ItemDao {
             statement.setString(3, item.getDescription());
             statement.setBigDecimal(4, item.getPrice());
             statement.setBoolean(5, item.isInStock());
+            statement.setBoolean(6, false);
             boolean isCreated = statement.executeUpdate() == 1;
             if (!isCreated) {
                 logger.log(Level.INFO, "Unable to create item.");

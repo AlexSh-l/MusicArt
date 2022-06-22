@@ -76,7 +76,7 @@
             <div class="d-flex justify-content-center">
                 <c:choose>
                     <c:when test="${order_result eq true}">
-                        <br><label>Заказ оформлен</label>
+                        <br><label>Order is processed</label>
                     </c:when>
                     <c:otherwise>
                         <br><label>${order_result}</label>

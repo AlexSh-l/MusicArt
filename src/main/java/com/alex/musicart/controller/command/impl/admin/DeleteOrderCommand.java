@@ -4,6 +4,7 @@ import com.alex.musicart.controller.Router;
 import com.alex.musicart.controller.command.Command;
 import com.alex.musicart.exception.CommandException;
 import com.alex.musicart.exception.ServiceException;
+import com.alex.musicart.model.entity.Order;
 import com.alex.musicart.model.service.OrderService;
 import com.alex.musicart.model.service.impl.OrderServiceImpl;
 import org.apache.logging.log4j.Level;
@@ -12,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.util.List;
 
 import static com.alex.musicart.controller.command.PagePath.*;
 import static com.alex.musicart.controller.command.ParameterName.ORDER_ID;
@@ -29,6 +32,8 @@ public class DeleteOrderCommand implements Command {
         long orderId = Long.parseLong(request.getParameter(ORDER_ID));
         try {
             if (orderService.deleteOrder(orderId)) {
+                List<Order> orders = orderService.findAllOrders();
+                session.setAttribute(ORDERS, orders);
                 session.setAttribute(ORDER_DELETION_RESULT, "Order was successfully deleted.");
             } else {
                 session.setAttribute(ORDER_DELETION_RESULT, "Unable to delete this order.");

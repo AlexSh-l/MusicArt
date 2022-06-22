@@ -93,6 +93,8 @@
                     </c:choose>
                 </div>
                 <br>
+            </form>
+            <form action="${abs}/controller" method="post">
                 <div class="d-flex justify-content-center">
                     <br>
                     <form class="col" action="${abs}/controller" method="get">

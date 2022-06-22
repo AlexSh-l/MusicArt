@@ -81,20 +81,22 @@
                         key="add_item.item_add"/></button>
             </div>
         </div>
-    </form>
-    <br>
-    <c:choose>
-        <c:when test="${item_creation_result eq true}">
+        <div class="d-flex justify-content-center">
+            <br>
+            <c:choose>
+            <c:when test="${item_creation_result eq true}">
             <label>
                 Item was created successfully.
             </label>
-        </c:when>
-        <c:otherwise>
+            </c:when>
+            <c:otherwise>
             <label>
                     ${item_creation_result}
             </label>
-        </c:otherwise>
-    </c:choose>
+            </c:otherwise>
+            </c:choose>
+        </div>
+    </form>
 </div>
 <ctg:footertag/>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
