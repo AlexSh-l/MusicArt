@@ -62,10 +62,14 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <fmt:message key="users.login"/>
+                <strong><fmt:message key="users.login"/></strong>
                 <br>${order.user.login}
-                <br><fmt:message key="users.name"/>
+                <strong><br><fmt:message key="users.name"/></strong>
                 <br>${order.user.name}
+                <strong><br><fmt:message key="users.email"/></strong>
+                <br>${order.user.email}
+                <strong><br><fmt:message key="users.phone"/></strong>
+                <br>${order.user.phone}
             </div>
             <div class="col">
                 <form class="nav-link" action="${abs}/controller" method="get">
@@ -75,7 +79,7 @@
                 </form>
             </div>
             <div class="col">
-                <fmt:message key="users.address"/>
+                <strong><fmt:message key="users.address"/></strong>
                 <br> ${order.address}
             </div>
             <div class="col">

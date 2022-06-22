@@ -98,8 +98,8 @@
                 </c:choose>
                 <div class="card-body">
                         ${item.name}<br>
-                    <br>Category: ${item.category}
-                    <br>Subcategory: ${item.subcategory}<br>
+                    <br><fmt:message key="items.item_category"/> ${item.category}
+                    <br><fmt:message key="items.item_subcategory"/> ${item.subcategory}<br>
                     <br>${item.description}<br>
                     <br>${item.price} <fmt:message key="add_item.item_price_currency"/><br>
                     <c:if test="${item.inStock eq true}"><fmt:message key="items.in_stock"/></c:if>
