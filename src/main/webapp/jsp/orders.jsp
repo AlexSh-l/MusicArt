@@ -18,7 +18,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
             <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main&page_number=1">MusicArt</a>
-            <form class="d-flex" action="${abs}/controller" method="get">
+            <form class="d-flex mb-0" action="${abs}/controller" method="get">
                 <input type="hidden" name="command" value="item_search">
                 <input class="form-control me-2" name="item_name" placeholder="<fmt:message key="nav.search"/>"
                        aria-label="Search">
@@ -46,12 +46,12 @@
                 </li>
             </ul>
         </div>
-        <form class="nav-link" action="${abs}/controller" method="get">
+        <form class="nav-link mb-0" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="to_main">
             <input type="hidden" name="page_number" value="1">
             <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
-        <form class="nav-link" action="${abs}/controller" method="get">
+        <form class="nav-link mb-0" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="sign_out">
             <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_out"/></button>
         </form>

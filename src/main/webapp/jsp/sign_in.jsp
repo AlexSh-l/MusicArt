@@ -40,7 +40,7 @@
                 </li>
             </ul>
         </div>
-        <form class="nav-link" action="${abs}/controller" method="get">
+        <form class="nav-link mb-0" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="to_main">
             <input type="hidden" name="page_number" value="1">
             <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>

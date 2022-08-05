@@ -47,4 +47,32 @@ public class Category extends CustomEntity {
     public void clearSubcategories() {
         subcategories.clear();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        if (categoryId != category.categoryId) return false;
+        if (!name.equals(category.name)) return false;
+        return subcategories.equals(category.subcategories);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = categoryId;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + subcategories.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Category{");
+        sb.append("categoryId=").append(categoryId);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", subcategories=").append(subcategories);
+        sb.append('}');
+        return sb.toString();
+    }
 }

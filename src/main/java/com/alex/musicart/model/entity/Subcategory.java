@@ -32,4 +32,32 @@ public class Subcategory extends CustomEntity {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subcategory that = (Subcategory) o;
+        if (subcategoryId != that.subcategoryId) return false;
+        if (categoryId != that.categoryId) return false;
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = subcategoryId;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + categoryId;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Subcategory{");
+        sb.append("subcategoryId=").append(subcategoryId);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", categoryId=").append(categoryId);
+        sb.append('}');
+        return sb.toString();
+    }
 }

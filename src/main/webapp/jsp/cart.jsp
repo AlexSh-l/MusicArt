@@ -40,16 +40,16 @@
                 </li>
             </ul>
         </div>
-        <form class="nav-link" action="${abs}/controller" method="get">
+        <form class="nav-link mb-0" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="to_main">
             <input type="hidden" name="page_number" value="1">
             <button class="btn btn-primary" type="submit"><fmt:message key="nav.to_catalog"/></button>
         </form>
-        <div class="nav-link">
+        <div class="nav-link mb-0">
             <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_order"><fmt:message
                     key="cart.checkout"/></a>
         </div>
-        <form class="nav-link" action="${abs}/controller" method="get">
+        <form class="nav-link mb-0" action="${abs}/controller" method="get">
             <input type="hidden" name="command" value="sign_out">
             <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_out"/></button>
         </form>

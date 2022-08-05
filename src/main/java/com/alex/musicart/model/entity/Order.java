@@ -109,4 +109,56 @@ public class Order extends CustomEntity {
     public void setItems(List<Item> items) {
         this.items = items;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        if (orderId != order.orderId) return false;
+        if (statusId != order.statusId) return false;
+        if (userId != order.userId) return false;
+        if (paymentTypeId != order.paymentTypeId) return false;
+        if (!price.equals(order.price)) return false;
+        if (!status.equals(order.status)) return false;
+        if (!user.equals(order.user)) return false;
+        if (!address.equals(order.address)) return false;
+        if (!timestamp.equals(order.timestamp)) return false;
+        if (!paymentType.equals(order.paymentType)) return false;
+        return items.equals(order.items);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (orderId ^ (orderId >>> 32));
+        result = 31 * result + price.hashCode();
+        result = 31 * result + (int) statusId;
+        result = 31 * result + status.hashCode();
+        result = 31 * result + (int) (userId ^ (userId >>> 32));
+        result = 31 * result + user.hashCode();
+        result = 31 * result + address.hashCode();
+        result = 31 * result + timestamp.hashCode();
+        result = 31 * result + (int) paymentTypeId;
+        result = 31 * result + paymentType.hashCode();
+        result = 31 * result + items.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Order{");
+        sb.append("orderId=").append(orderId);
+        sb.append(", price=").append(price);
+        sb.append(", statusId=").append(statusId);
+        sb.append(", status='").append(status).append('\'');
+        sb.append(", userId=").append(userId);
+        sb.append(", user=").append(user);
+        sb.append(", address='").append(address).append('\'');
+        sb.append(", timestamp=").append(timestamp);
+        sb.append(", paymentTypeId=").append(paymentTypeId);
+        sb.append(", paymentType='").append(paymentType).append('\'');
+        sb.append(", items=").append(items);
+        sb.append('}');
+        return sb.toString();
+    }
 }

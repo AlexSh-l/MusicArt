@@ -91,4 +91,44 @@ public class User extends CustomEntity {
     public void setRole(UserRole role) {
         this.role = role;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        if (userId != user.userId) return false;
+        if (!name.equals(user.name)) return false;
+        if (!login.equals(user.login)) return false;
+        if (!password.equals(user.password)) return false;
+        if (!email.equals(user.email)) return false;
+        if (!phone.equals(user.phone)) return false;
+        return role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (userId ^ (userId >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + login.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + phone.hashCode();
+        result = 31 * result + role.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("userId=").append(userId);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", login='").append(login).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", role=").append(role);
+        sb.append('}');
+        return sb.toString();
+    }
 }

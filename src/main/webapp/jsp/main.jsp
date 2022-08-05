@@ -18,7 +18,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
             <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_main&page_number=1">MusicArt</a>
-            <form class="d-flex" action="${abs}/controller" method="get">
+            <form class="d-flex mb-0" action="${abs}/controller" method="get">
                 <input type="hidden" name="command" value="item_search">
                 <input class="form-control me-2" name="item_name" placeholder="<fmt:message key="nav.search"/>"
                        aria-label="Search">
@@ -49,32 +49,32 @@
         <c:choose>
             <c:when test="${sign_in_result eq true}">
                 <c:if test="${user.role eq 'CLIENT'}">
-                    <div class="nav-link">
+                    <div class="nav-link mb-0">
                         <a class="navbar-brand mb-0 h1" href="${abs}/controller?command=to_cart">${cart.cartSize}
                             <fmt:message key="nav.cart"/></a>
                     </div>
                 </c:if>
                 <c:if test="${user.role eq 'ADMIN'}">
-                    <form class="nav-link" action="${abs}/controller" method="get">
+                    <form class="nav-link mb-0" action="${abs}/controller" method="get">
                         <input type="hidden" name="command" value="to_orders">
                         <button class="btn btn-primary" type="submit"><fmt:message key="nav.show_orders"/></button>
                     </form>
-                    <form class="nav-link" action="${abs}/controller" method="get">
+                    <form class="nav-link mb-0" action="${abs}/controller" method="get">
                         <input type="hidden" name="command" value="to_add_item">
                         <button class="btn btn-primary" type="submit"><fmt:message key="nav.add_new_item"/></button>
                     </form>
                 </c:if>
-                <form class="nav-link" action="${abs}/controller" method="get">
+                <form class="nav-link mb-0" action="${abs}/controller" method="get">
                     <input type="hidden" name="command" value="sign_out">
                     <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_out"/></button>
                 </form>
             </c:when>
             <c:otherwise>
-                <form class="nav-link" action="${abs}/controller" method="get">
+                <form class="nav-link mb-0" action="${abs}/controller" method="get">
                     <input type="hidden" name="command" value="to_sign_in">
                     <button class="btn btn-primary" type="submit"><fmt:message key="nav.sign_in"/></button>
                 </form>
-                <form class="nav-link" action="${abs}/controller" method="get">
+                <form class="nav-link mb-0" action="${abs}/controller" method="get">
                     <input type="hidden" name="command" value="to_registration">
                     <button class="btn btn-primary" type="submit"><fmt:message key="nav.register"/></button>
                 </form>
@@ -82,58 +82,86 @@
         </c:choose>
     </div>
 </nav>
-<div class="container">
-    <div class="d-flex flex-wrap">
+<div class="container mb-3">
+    <div class="row row-cols-1 row-cols-md-4 g-2"<%--"d-flex flex-wrap"--%>>
         <c:forEach var="item" items="${items}">
-            <div class="card" style="width: 17rem;">
-                <c:choose>
-                    <c:when test="${item.imagePath eq ''}">
-                        <img src="${abs}/images/default_image.jpg" style='width: 100%'
-                             class="card-img-top" alt=""/>
-                    </c:when>
-                    <c:otherwise>
-                        <img src="${item.imagePath}" style='width: 100%'
-                             class="card-img-top" alt=""/>
-                    </c:otherwise>
-                </c:choose>
-                <div class="card-body">
-                        ${item.name}<br>
-                    <br><fmt:message key="items.item_category"/> ${item.category}
-                    <br><fmt:message key="items.item_subcategory"/> ${item.subcategory}<br>
-                    <br>${item.description}<br>
-                    <br>${item.price} <fmt:message key="add_item.item_price_currency"/><br>
-                    <c:if test="${item.inStock eq true}"><fmt:message key="items.in_stock"/></c:if>
-                    <c:if test="${item.inStock eq false}"><fmt:message key="items.sold_out"/></c:if>
-                    <c:if test="${sign_in_result eq true and item.inStock eq true and user.role eq 'CLIENT'}">
-                        <form class="nav-link" action="${abs}/controller" method="get">
-                            <input type="hidden" name="command" value="add_to_cart">
-                            <input type="hidden" name="item_id" value="${item.itemId}">
-                            <button class="btn btn-primary" type="submit"><fmt:message
-                                    key="items.add_to_cart"/></button>
-                        </form>
-                    </c:if>
-                    <c:if test="${sign_in_result eq true and user.role eq 'ADMIN'}">
-                        <form class="nav-link" action="${abs}/controller" method="get">
-                            <input type="hidden" name="command" value="to_item_edit">
-                            <input type="hidden" name="item_id" value="${item.itemId}">
-                            <button class="btn btn-outline-primary" type="submit"><fmt:message
-                                    key="items.edit"/></button>
-                        </form>
-                        <br>
-                        <form action="${abs}/controller" method="post" enctype="multipart/form-data">
-                            <label>item image
-                                <br><input type="file" name="img" accept="image/*">
-                            </label>
-                            <input type="hidden" name="command" value="upload_images">
-                            <input type="hidden" name="item_id" value="${item.itemId}">
-                            <button class="btn btn-primary" type="submit">Upload</button>
-                        </form>
-                    </c:if>
+            <div class="col">
+                <div class="card h-100 d-flex" style="width: 17rem;">
+                    <c:choose>
+                        <c:when test="${item.imagePath eq ''}">
+                            <img src="${abs}/images/default_image.jpg" style='width: 100%'
+                                 class="card-img-top" alt=""/>
+                        </c:when>
+                        <c:otherwise>
+                            <img src="${item.imagePath}" style='width: 100%'
+                                 class="card-img-top" alt=""/>
+                        </c:otherwise>
+                    </c:choose>
+                    <div class="card-body flex-grow-0">
+                        <h5 class="card-title">${item.name}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush flex-shrink-1 flex-grow-1">
+                        <li class="list-group-item">
+                            <fmt:message key="items.item_category"/>
+                                ${item.category}
+                        </li>
+                        <li class="list-group-item">
+                            <fmt:message
+                                    key="items.item_subcategory"/>
+                                ${item.subcategory}
+                        </li>
+                        <li class="list-group-item flex-grow-1">
+                                ${item.description}
+                        </li>
+                        <li class="list-group-item">
+                                ${item.price}
+                            <fmt:message key="add_item.item_price_currency"/>
+                        </li>
+                        <c:if test="${item.inStock eq true}">
+                            <li class="list-group-item text-success">
+                                <fmt:message key="items.in_stock"/>
+                            </li>
+                        </c:if>
+                        <c:if test="${item.inStock eq false}">
+                            <li class="list-group-item text-danger">
+                                <fmt:message key="items.sold_out"/>
+                            </li>
+                        </c:if>
+                        <c:if test="${sign_in_result eq true and item.inStock eq true and user.role eq 'CLIENT'}">
+                            <li class="list-group-item">
+                                <form action="${abs}/controller" method="get">
+                                    <input type="hidden" name="command" value="add_to_cart">
+                                    <input type="hidden" name="item_id" value="${item.itemId}">
+                                    <button class="btn btn-primary" type="submit">
+                                        <fmt:message key="items.add_to_cart"/>
+                                    </button>
+                                </form>
+                            </li>
+                        </c:if>
+                        <c:if test="${sign_in_result eq true and user.role eq 'ADMIN'}">
+                            <li class="list-group-item">
+                                <form action="${abs}/controller" method="get">
+                                    <input type="hidden" name="command" value="to_item_edit">
+                                    <input type="hidden" name="item_id" value="${item.itemId}">
+                                    <button class="btn btn-outline-primary" type="submit">
+                                        <fmt:message key="items.edit"/>
+                                    </button>
+                                </form>
+                                <form action="${abs}/controller" method="post" enctype="multipart/form-data">
+                                    <label for="files" class="btn btn-outline-primary">Load File</label>
+                                    <input style="visibility:hidden;" id="files" type="file" name="img"
+                                           accept="image/*">
+                                    <input type="hidden" name="command" value="upload_images">
+                                    <input type="hidden" name="item_id" value="${item.itemId}">
+                                    <button class="btn btn-primary" type="submit">Upload</button>
+                                </form>
+                            </li>
+                        </c:if>
+                    </ul>
                 </div>
             </div>
         </c:forEach>
     </div>
-    <br>
 </div>
 <ctg:pagination page_number="${current_page_number}" next_pages="${next_pages}" url="${abs}/controller?command="/>
 <ctg:footertag/>
